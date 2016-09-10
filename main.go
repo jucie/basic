@@ -1,15 +1,31 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"os"
 )
 
-func loadSourceFile(path string) {
+var source []string
 
+func loadSourceFile(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		line := sc.Text()
+		source = append(source, line)
+	}
 }
 
 func generateExecutable() {
-
+	for _, line := range source {
+		fmt.Println(line)
+	}
 }
 
 func main() {
