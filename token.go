@@ -1,7 +1,7 @@
 package main
 
 const (
-	tokNil = iota
+	tokEof = iota
 	tokSpace
 	tokComment
 	tokInt

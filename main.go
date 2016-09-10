@@ -32,7 +32,6 @@ func compile(path string) {
 }
 
 func main() {
-	println(tokNil, tokInt, tokFloat, tokString)
 	if len(os.Args) < 2 {
 		panic("Missing args")
 	}

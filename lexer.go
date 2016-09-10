@@ -1,7 +1,8 @@
 package main
 
 import (
-	"io"
+	"bufio"
+	"unicode"
 )
 
 type coord struct {
@@ -10,12 +11,15 @@ type coord struct {
 }
 
 type lexer struct {
-	rd    io.Reader
-	pos   coord
-	token token
+	rd          *bufio.Reader
+	pos         coord
+	token       token
+	intValue    int
+	floatValue  float32
+	stringValue string
 }
 
-func newLexer(rd io.Reader) *lexer {
+func newLexer(rd *bufio.Reader) *lexer {
 	return &lexer{rd: rd}
 }
 
@@ -25,13 +29,27 @@ func (lex *lexer) peek() token {
 
 func (lex *lexer) next() {
 	for {
-		lex.walk()
+		lex.token = lex.walk()
 		if lex.token != tokSpace && lex.token != tokComment {
 			break
 		}
 	}
 }
 
-func (lex *lexer) walk() {
+func (lex *lexer) walk() token {
+	r, _, err := lex.rd.ReadRune()
+	if err != nil {
+		return tokEof
+	}
+	if unicode.IsDigit(r) {
+		for {
+			r, _, err = lex.rd.ReadRune()
+			if err != nil {
+				break
+			}
 
+		}
+
+	}
+	return tokEof
 }

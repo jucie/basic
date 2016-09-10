@@ -1,14 +1,14 @@
 package main
 
 import (
-	"io"
+	"bufio"
 )
 
 type parser struct {
 	lex *lexer
 }
 
-func newParser(rd io.Reader) *parser {
+func newParser(rd *bufio.Reader) *parser {
 	lex := newLexer(rd)
 	return &parser{lex: lex}
 }
