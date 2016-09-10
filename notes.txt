@@ -1,0 +1,22 @@
+Saturday 2016-09-10 11:30
+Ok. So I was wandering thru the internet when I found this site:
+http://www.vintage-basic.net
+It's from a nice guy named Lyle Kopnicky. You can find him at any social network you can think of. He developed a BASIC interpreter to process old programs, like the one I was willing to write. The good news is that Lyle has a hundred already typed BASIC programs from an old book zipped into a single file. Thank's, Lile. The book has a collection of GAMES coded for the DEC PDP-11.
+
+Saturday 2016-09-10 11:40
+As Lyle wrote an interpreter, I will write a compiler instead, just to be different. The acceptance criteria will be for my compiler to handle all that programs successfully. Nothing more is needed.
+To that effect I will code the compiler itself in Go and a little runtime in C. The compiler will link the generated code to the runtime and we will have a stand alone executable for each program.
+
+Saturday 2016-09-10 11:42
+I found an old DEC BASIC manual:
+http://bitsavers.trailing-edge.com/pdf/dec/pdp11/basic/DEC-11-AJPB-D_PDP-11_BASIC_Programming_Manual_Dec70.pdf
+That will be usefull when I have some doubt.
+
+Saturday 2016-09-10 11:46
+I will begin by understanding the smallest program from the pool: test1.bas
+
+
+
+Saturday 2016-09-10 11:51
+Just to add to the fun, I shall not alter the BASIC programs, in any way.
+
