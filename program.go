@@ -2,34 +2,49 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
+	"strings"
 )
 
+type instruction struct {
+}
+
+type programLine struct {
+	id           int
+	instructions []*instruction
+}
+
 type program struct {
-	source []string
+	srcPath string
+	dstPath string
+	lines   map[int]*programLine
 }
 
-func NewProgram() *program {
-	return new(program)
+func newProgram() *program {
+	return &program{lines: make(map[int]*programLine, 0)}
 }
 
-func (prog *program) load(path string) {
+func loadProgram(path string) *program {
+	prog := newProgram()
+
+	prog.srcPath = path
+	pos := strings.LastIndexByte(path, '.')
+	if pos < 0 {
+		pos = len(path)
+	}
+	prog.dstPath = path[:pos] + ".exe"
+
 	f, err := os.Open(path)
 	if err != nil {
 		panic(err)
 	}
 	defer f.Close()
 
-	sc := bufio.NewScanner(f)
-	for sc.Scan() {
-		line := sc.Text()
-		prog.source = append(prog.source, line)
-	}
+	rd := bufio.NewReader(f)
+	newParser(rd).parseProgram(prog)
+	return prog
 }
 
 func (prog *program) generate() {
-	for _, line := range prog.source {
-		fmt.Println(line)
-	}
+	// TODO
 }

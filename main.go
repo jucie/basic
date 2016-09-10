@@ -12,7 +12,7 @@ func compileFromList(path string) {
 	}
 	defer f.Close()
 
-	sc := bufio.NewScanner()
+	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		path = sc.Text()
 		compile(path)
