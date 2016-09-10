@@ -5,11 +5,12 @@ import (
 )
 
 type parser struct {
-	rd io.Reader
+	lex *lexer
 }
 
 func newParser(rd io.Reader) *parser {
-	return &parser{rd: rd}
+	lex := newLexer(rd)
+	return &parser{lex: lex}
 }
 
 func (p *parser) parseProgram(prog *program) {
