@@ -35,6 +35,6 @@ func main() {
 	for i := 1; i < len(os.Args); i++ {
 		path := os.Args[i]
 		loadSourceFile(path)
+		generateExecutable()
 	}
-	generateExecutable()
 }
