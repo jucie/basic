@@ -1,7 +1,7 @@
 package main
 
 const (
-	tokEof = iota
+	tokEof = iota + 128
 	tokEol
 	tokSpace
 	tokComment
@@ -31,6 +31,8 @@ const (
 	tokLe
 	tokGe
 	tokNe
+	tokOn
+	tokTab
 )
 
 type token int
@@ -60,7 +62,6 @@ var reservedWords = [...]reservedWord{
 	{tokDef, "DEF"},
 	{tokStop, "STOP"},
 	{tokEnd, "END"},
-	{tokLe, "<="},
-	{tokGe, ">="},
-	{tokNe, "<>"},
+	{tokOn, "ON"},
+	{tokTab, "TAB"},
 }
