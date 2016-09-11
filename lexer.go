@@ -50,12 +50,34 @@ func (lex *lexer) next() {
 	for {
 		l.pos = lex.pos
 		l.token = lex.walk()
+		if l.token == tokRem {
+			lex.consumeLine()
+			continue
+		}
 		lex.pos.col += lex.buf.Len()
 		if l.token != tokSpace {
 			break
 		}
 	}
 	l.s = string(lex.buf.Bytes())
+}
+
+func (lex *lexer) consumeLine() {
+	lex.buf.Reset()
+
+	for {
+
+		b, err := lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+
+		if b == '\n' || b == '\r' {
+			lex.rd.UnreadByte()
+			break
+		}
+		lex.buf.WriteByte(b)
+	}
 }
 
 func (lex *lexer) handleSpace(b byte) token {
