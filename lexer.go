@@ -75,7 +75,8 @@ func (lex *lexer) handleSpace(b byte) token {
 func (lex *lexer) handleNumber(b byte) token {
 	for {
 		lex.buf.WriteByte(b)
-		b, err := lex.rd.ReadByte()
+		var err error
+		b, err = lex.rd.ReadByte()
 		if err != nil {
 			break
 		}
@@ -115,7 +116,8 @@ func (lex *lexer) handleId(b byte) token {
 			return tok
 		}
 
-		b, err := lex.rd.ReadByte()
+		var err error
+		b, err = lex.rd.ReadByte()
 		if err != nil {
 			break
 		}
