@@ -5,7 +5,7 @@ const (
 	tokEol
 	tokSpace
 	tokComment
-	tokInt
+	tokNumber
 	tokString
 	tokId
 
@@ -33,6 +33,17 @@ const (
 	tokNe
 	tokOn
 	tokTab
+	tokFn
+	tokSin
+	tokCos
+	tokAtn
+	tokSqr
+	tokExp
+	tokLog
+	tokAbs
+	tokInt
+	tokRnd
+	tokSgn
 )
 
 type token int
@@ -64,4 +75,15 @@ var reservedWords = [...]reservedWord{
 	{tokEnd, "END"},
 	{tokOn, "ON"},
 	{tokTab, "TAB"},
+	{tokFn, "FN"},
+	{tokSin, "SIN"},
+	{tokCos, "COS"},
+	{tokAtn, "ATN"},
+	{tokSqr, "SQR"},
+	{tokExp, "EXP"},
+	{tokLog, "LOG"},
+	{tokAbs, "ABS"},
+	{tokInt, "INT"},
+	{tokRnd, "RND"},
+	{tokSgn, "SGN"},
 }

@@ -108,7 +108,7 @@ func (lex *lexer) handleNumber(b byte) token {
 			break
 		}
 	}
-	return tokInt
+	return tokNumber
 }
 
 func (lex *lexer) handleString(b byte) token {
