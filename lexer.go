@@ -129,8 +129,33 @@ func (lex *lexer) handleId(b byte) token {
 	return tokId
 }
 
+func (lex *lexer) handleDigraph(b byte) token {
+	lex.buf.WriteByte(b)
+
+	second, err := lex.rd.ReadByte()
+	if err != nil {
+		return token(b)
+	}
+
+	lex.buf.WriteByte(second)
+	switch string(lex.buf.Bytes()) {
+	case "<=":
+		return tokLe
+	case ">=":
+		return tokGe
+	case "<>":
+		return tokNe
+	}
+
+	lex.rd.UnreadByte() // unread second
+	lex.buf.Reset()
+	lex.buf.WriteByte(b)
+	return token(b)
+}
+
 func (lex *lexer) walk() token {
 	lex.buf.Reset()
+
 	b, err := lex.rd.ReadByte()
 	if err != nil {
 		return tokEof
@@ -156,6 +181,10 @@ func (lex *lexer) walk() token {
 
 	if b == '"' {
 		return lex.handleString(b)
+	}
+
+	if b == '>' || b == '<' {
+		return lex.handleDigraph(b)
 	}
 
 	lex.buf.WriteByte(b)
