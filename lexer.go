@@ -122,6 +122,7 @@ func (lex *lexer) handleId(b byte) token {
 			break
 		}
 		if !unicode.IsLetter(rune(b)) && !unicode.IsNumber(rune(b)) {
+			lex.rd.UnreadByte()
 			break
 		}
 	}
