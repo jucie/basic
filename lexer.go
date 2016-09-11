@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"unicode"
 )
 
@@ -10,13 +11,27 @@ type coord struct {
 	col int
 }
 
+type lexeme struct {
+	token token
+	pos   coord
+	s     string
+}
+
 type lexer struct {
-	rd          *bufio.Reader
-	pos         coord
-	token       token
-	intValue    int
-	floatValue  float32
-	stringValue string
+	rd    *bufio.Reader
+	pos   coord
+	begin coord
+	token token
+	buf   bytes.Buffer
+}
+
+var keywordMap = make(map[string]token)
+
+func init() {
+	for i, _ := range reservedWords {
+		word := &reservedWords[i]
+		keywordMap[word.s] = word.token
+	}
 }
 
 func newLexer(rd *bufio.Reader) *lexer {
@@ -29,27 +44,113 @@ func (lex *lexer) peek() token {
 
 func (lex *lexer) next() {
 	for {
+		lex.begin = lex.pos
 		lex.token = lex.walk()
-		if lex.token != tokSpace && lex.token != tokComment {
+		lex.pos.col += lex.buf.Len()
+		if lex.token != tokSpace {
 			break
 		}
 	}
 }
 
+func (lex *lexer) handleSpace(b byte) token {
+	for {
+		lex.buf.WriteByte(b)
+		b, err := lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+		if b == '\n' || !unicode.IsSpace(rune(b)) {
+			lex.rd.UnreadByte()
+			break
+		}
+	}
+	return tokSpace
+}
+
+func (lex *lexer) handleNumber(b byte) token {
+	for {
+		lex.buf.WriteByte(b)
+		b, err := lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+		if !unicode.IsDigit(rune(b)) {
+			lex.rd.UnreadByte()
+			break
+		}
+	}
+	return tokInt
+}
+
+func (lex *lexer) handleString(b byte) token {
+	lex.buf.WriteByte(b)
+	for {
+		b, err := lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+		if b == '\n' {
+			lex.rd.UnreadByte()
+			break
+		}
+		lex.buf.WriteByte(b)
+		if b == '"' {
+			break
+		}
+	}
+	return tokString
+}
+
+func (lex *lexer) handleId(b byte) token {
+	for {
+		lex.buf.WriteByte(b)
+		s := string(lex.buf.Bytes())
+		tok, ok := keywordMap[s]
+		if ok {
+			return tok
+		}
+
+		b, err := lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+		if !unicode.IsLetter(rune(b)) && !unicode.IsNumber(rune(b)) {
+			break
+		}
+	}
+	return tokId
+}
+
 func (lex *lexer) walk() token {
-	r, _, err := lex.rd.ReadRune()
+	lex.buf.Reset()
+	b, err := lex.rd.ReadByte()
 	if err != nil {
 		return tokEof
 	}
-	if unicode.IsDigit(r) {
-		for {
-			r, _, err = lex.rd.ReadRune()
-			if err != nil {
-				break
-			}
 
-		}
-
+	if b == '\n' {
+		lex.pos.row++
+		lex.pos.col = 0
+		return tokEol
 	}
-	return tokEof
+
+	if unicode.IsSpace(rune(b)) {
+		return lex.handleSpace(b)
+	}
+
+	if unicode.IsDigit(rune(b)) || b == '-' || b == '+' {
+		return lex.handleNumber(b)
+	}
+
+	if unicode.IsLetter(rune(b)) {
+		return lex.handleId(b)
+	}
+
+	if b == '"' {
+		return lex.handleString(b)
+	}
+
+	lex.buf.WriteByte(b)
+	return token(b)
 }
