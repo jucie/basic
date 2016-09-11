@@ -28,6 +28,9 @@ const (
 	tokDef
 	tokStop
 	tokEnd
+	tokLe
+	tokGe
+	tokNe
 )
 
 type token int
@@ -57,4 +60,7 @@ var reservedWords = [...]reservedWord{
 	{tokDef, "DEF"},
 	{tokStop, "STOP"},
 	{tokEnd, "END"},
+	{tokLe, "<="},
+	{tokGe, ">="},
+	{tokNe, "<>"},
 }
