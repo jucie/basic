@@ -9,31 +9,26 @@ const (
 	tokString
 	tokId
 
-	tokLet
-	tokRead
+	// commands
 	tokData
-	tokPrint
+	tokDef
+	tokDim
+	tokEnd
+	tokFor
+	tokGosub
 	tokGoto
 	tokIf
-	tokThen
-	tokFor
-	tokTo
-	tokNext
-	tokDim
-	tokGosub
-	tokReturn
 	tokInput
+	tokLet
+	tokNext
+	tokPrint
+	tokRead
 	tokRem
 	tokRestore
-	tokDef
+	tokReturn
 	tokStop
-	tokEnd
-	tokLe
-	tokGe
-	tokNe
-	tokOn
-	tokTab
-	tokFn
+
+	// predefined functions
 	tokSin
 	tokCos
 	tokAtn
@@ -50,6 +45,16 @@ const (
 	tokLeft
 	tokRight
 	tokAsc
+
+	// general
+	tokThen
+	tokTo
+	tokLe
+	tokGe
+	tokNe
+	tokOn
+	tokTab
+	tokFn
 )
 
 type token int

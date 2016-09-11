@@ -62,6 +62,13 @@ func (lex *lexer) next() {
 	l.s = string(lex.buf.Bytes())
 }
 
+func (lex *lexer) nextLine() {
+	lex.consumeLine()
+	if lex.peek().token == tokEol {
+		lex.walk()
+	}
+}
+
 func (lex *lexer) consumeLine() {
 	lex.buf.Reset()
 
