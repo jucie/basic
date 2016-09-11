@@ -52,7 +52,6 @@ func (lex *lexer) next() {
 		l.token = lex.walk()
 		if l.token == tokRem {
 			lex.consumeLine()
-			continue
 		}
 		lex.pos.col += lex.buf.Len()
 		if l.token != tokSpace {
