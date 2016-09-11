@@ -17,11 +17,11 @@ func newParser(rd *bufio.Reader) *parser {
 	return &parser{lex: lex}
 }
 
-func (p *parser) parseInstruction() *instruction {
+func (p *parser) parseCmd() cmd {
 	l := p.lex.peek()
 	switch l.token {
 	case tokId:
-		return p.parseAssignment()
+		return p.parseAssign()
 	case tokData:
 		return p.parseData()
 	case tokDef:
@@ -84,11 +84,11 @@ func (p *parser) parseLine() *progLine {
 	fmt.Printf("%d\n", id)
 	line := &progLine{id: id}
 	for {
-		inst := p.parseInstruction()
-		if inst == nil {
+		cmd := p.parseCmd()
+		if cmd == nil {
 			break
 		}
-		line.instructions = append(line.instructions, inst)
+		line.cmds = append(line.cmds, cmd)
 		l = p.lex.peek()
 		if l.token == ':' {
 			p.lex.next() // skip separator

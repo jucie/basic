@@ -20,3 +20,6 @@ I will begin by understanding the smallest program from the pool: test1.bas
 Saturday 2016-09-10 11:51
 Just to add to the fun, I shall not alter the BASIC programs, in any way.
 
+Sunday 2016-09-11 13:35
+As far as I can see, lexical analiser is working ok. Let's work on the parser.
+

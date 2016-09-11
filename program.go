@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-type instruction struct {
+type cmd interface {
 }
 
 type progLine struct {
-	id           int
-	instructions []*instruction
+	id   int
+	cmds []cmd
 }
 
 type program struct {
