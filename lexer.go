@@ -95,22 +95,6 @@ func (lex *lexer) handleSpace(b byte) token {
 	return tokSpace
 }
 
-func (lex *lexer) handleNumber(b byte) token {
-	for {
-		lex.buf.WriteByte(b)
-		var err error
-		b, err = lex.rd.ReadByte()
-		if err != nil {
-			break
-		}
-		if !unicode.IsDigit(rune(b)) {
-			lex.rd.UnreadByte()
-			break
-		}
-	}
-	return tokNumber
-}
-
 func (lex *lexer) handleString(b byte) token {
 	lex.buf.WriteByte(b)
 	for {
@@ -209,6 +193,38 @@ func (lex *lexer) handleDigraph(b byte) token {
 	return token(b)
 }
 
+func (lex *lexer) handleNumber(b byte) token {
+	lex.buf.WriteByte(b)
+	var err error
+	if b == '.' {
+		second, err := lex.rd.ReadByte()
+		if err != nil {
+			return token(b)
+		}
+		if !canBeNumber(second) {
+			lex.rd.UnreadByte()
+			return token(b)
+		}
+		lex.buf.WriteByte(second)
+	}
+	for {
+		b, err = lex.rd.ReadByte()
+		if err != nil {
+			break
+		}
+		if !canBeNumber(b) {
+			lex.rd.UnreadByte()
+			break
+		}
+		lex.buf.WriteByte(b)
+	}
+	return tokNumber
+}
+
+func canBeNumber(b byte) bool {
+	return b == '.' || unicode.IsDigit(rune(b))
+}
+
 func (lex *lexer) walk() token {
 	lex.buf.Reset()
 
@@ -227,7 +243,7 @@ func (lex *lexer) walk() token {
 		return lex.handleSpace(b)
 	}
 
-	if unicode.IsDigit(rune(b)) || b == '-' || b == '+' {
+	if canBeNumber(b) {
 		return lex.handleNumber(b)
 	}
 
