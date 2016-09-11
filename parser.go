@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 )
 
 type parser struct {
@@ -14,5 +15,15 @@ func newParser(rd *bufio.Reader) *parser {
 }
 
 func (p *parser) parseProgram(prog *program) {
-
+	fmt.Printf("Analising program %s\n", prog.srcPath)
+	for p.lex.peek().token != tokEof {
+		fmt.Printf("%v\n", p.lex.peek())
+		p.lex.next()
+	}
+	fmt.Println("")
+	/*
+		for p.lex.peek().token == tokInt {
+			pl := &progLine{id: strconv.Atoi(p.lex.peek().s)}
+		}
+	*/
 }

@@ -9,7 +9,7 @@ import (
 type instruction struct {
 }
 
-type programLine struct {
+type progLine struct {
 	id           int
 	instructions []*instruction
 }
@@ -17,11 +17,11 @@ type programLine struct {
 type program struct {
 	srcPath string
 	dstPath string
-	lines   map[int]*programLine
+	lines   map[int]*progLine
 }
 
 func newProgram() *program {
-	return &program{lines: make(map[int]*programLine, 0)}
+	return &program{lines: make(map[int]*progLine, 0)}
 }
 
 func loadProgram(path string) *program {
