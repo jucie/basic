@@ -44,6 +44,12 @@ const (
 	tokInt
 	tokRnd
 	tokSgn
+	tokVaL
+	tokChar
+	tokMid
+	tokLeft
+	tokRight
+	tokAsc
 )
 
 type token int
@@ -86,4 +92,10 @@ var reservedWords = [...]reservedWord{
 	{tokInt, "INT"},
 	{tokRnd, "RND"},
 	{tokSgn, "SGN"},
+	{tokVaL, "VAL"},
+	{tokChar, "CHAR"},
+	{tokMid, "MID"},
+	{tokLeft, "LEFT"},
+	{tokRight, "RIGHT"},
+	{tokAsc, "ASC"},
 }
