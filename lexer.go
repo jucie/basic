@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"strings"
 	"unicode"
 )
 
@@ -108,22 +109,55 @@ func (lex *lexer) handleString(b byte) token {
 }
 
 func (lex *lexer) handleId(b byte) token {
-	for {
-		lex.buf.WriteByte(b)
-		s := string(lex.buf.Bytes())
-		tok, ok := keywordMap[s]
-		if ok {
-			return tok
-		}
+	lex.buf.WriteByte(b)
 
+	second, err := lex.rd.ReadByte()
+	if err != nil {
+		return tokId
+	}
+
+	// for an id, the second character must be a letter or a digit.
+	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) {
+		lex.rd.UnreadByte()
+		return tokId // we have a single character id
+	}
+
+	lex.buf.WriteByte(second)
+	s := string(lex.buf.Bytes())
+
+	tok, ok := keywordMap[s]
+	if ok { // if it is a two letter keyword like IF or ON
+		return tok
+	}
+
+	// let's see it it can be the beginning of a keyword
+	found := false
+	for key, _ := range keywordMap {
+		if strings.HasPrefix(key, s) {
+			found = true
+			break
+		}
+	}
+	if !found { // if it can't possibly start a keyword
+		return tokId
+	}
+
+	// ok, it MUST be a keyword
+	for {
 		var err error
 		b, err = lex.rd.ReadByte()
 		if err != nil {
 			break
 		}
-		if !unicode.IsLetter(rune(b)) && !unicode.IsNumber(rune(b)) {
+		if !unicode.IsLetter(rune(b)) {
 			lex.rd.UnreadByte()
 			break
+		}
+		lex.buf.WriteByte(b)
+		s := string(lex.buf.Bytes())
+		tok, ok := keywordMap[s]
+		if ok {
+			return tok
 		}
 	}
 	return tokId
