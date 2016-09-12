@@ -89,12 +89,20 @@ func (p *parser) parseCmd() cmd {
 	return nil
 }
 
+func (p *parser) isEndOfCommand() bool {
+	switch p.lex.peek().token {
+	case ':':
+		fallthrough
+	case tokEol:
+		fallthrough
+	case tokEof:
+		return true
+	}
+	return false
+}
+
 func (p *parser) consumeCmd() {
-	for {
-		l := p.lex.peek()
-		if l.token == ':' || l.token == tokEol {
-			break
-		}
+	for !p.isEndOfCommand() {
 		p.lex.next()
 	}
 }
