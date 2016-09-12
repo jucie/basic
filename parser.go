@@ -20,47 +20,68 @@ func newParser(rd *bufio.Reader) *parser {
 func (p *parser) parseCmd() cmd {
 	l := p.lex.peek()
 	tok := l.token
-	p.lex.next()
 
 	switch tok {
 	case tokId:
+		p.lex.next()
 		return p.parseAssign()
 	case tokData:
+		p.lex.next()
 		return p.parseData()
 	case tokDef:
+		p.lex.next()
 		return p.parseDef()
 	case tokDim:
+		p.lex.next()
 		return p.parseDim()
 	case tokEnd:
+		p.lex.next()
 		return p.parseEnd()
 	case tokFor:
+		p.lex.next()
 		return p.parseFor()
 	case tokGosub:
+		p.lex.next()
 		return p.parseGosub()
 	case tokGoto:
+		p.lex.next()
 		return p.parseGoto()
 	case tokIf:
+		p.lex.next()
 		return p.parseIf()
 	case tokInput:
+		p.lex.next()
 		return p.parseInput()
 	case tokLet:
+		p.lex.next()
 		return p.parseLet()
 	case tokNext:
+		p.lex.next()
 		return p.parseNext()
 	case tokOn:
+		p.lex.next()
 		return p.parseOn()
 	case tokPrint:
+		p.lex.next()
 		return p.parsePrint()
 	case tokRead:
+		p.lex.next()
 		return p.parseRead()
 	case tokRem:
+		p.lex.next()
 		return p.parseRem()
 	case tokRestore:
+		p.lex.next()
 		return p.parseRestore()
 	case tokReturn:
+		p.lex.next()
 		return p.parseReturn()
 	case tokStop:
+		p.lex.next()
 		return p.parseStop()
+	case tokEol:
+	case tokEof:
+		return nil
 	default:
 		p.unexpected()
 		p.lex.consumeLine()
@@ -79,10 +100,10 @@ func (p *parser) consumeCmd() {
 }
 
 func (p *parser) unexpected() {
-	l := p.lex.previous
+	l := p.lex.lexeme
 
-	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected \"%s\"\n",
-		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.s)
+	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected token (%d) \"%s\"\n",
+		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.token, l.s)
 }
 
 func (p *parser) parseLine() *progLine {
