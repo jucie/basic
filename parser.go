@@ -19,7 +19,10 @@ func newParser(rd *bufio.Reader) *parser {
 
 func (p *parser) parseCmd() cmd {
 	l := p.lex.peek()
-	switch l.token {
+	tok := l.token
+	p.lex.next()
+
+	switch tok {
 	case tokId:
 		return p.parseAssign()
 	case tokData:
@@ -44,6 +47,8 @@ func (p *parser) parseCmd() cmd {
 		return p.parseLet()
 	case tokNext:
 		return p.parseNext()
+	case tokOn:
+		return p.parseOn()
 	case tokPrint:
 		return p.parsePrint()
 	case tokRead:
@@ -63,10 +68,20 @@ func (p *parser) parseCmd() cmd {
 	return nil
 }
 
-func (p *parser) unexpected() {
-	l := p.lex.peek()
+func (p *parser) consumeCmd() {
+	for {
+		l := p.lex.peek()
+		if l.token == ':' || l.token == tokEol {
+			break
+		}
+		p.lex.next()
+	}
+}
 
-	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected \"%s\".",
+func (p *parser) unexpected() {
+	l := p.lex.previous
+
+	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected \"%s\"\n",
 		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.s)
 }
 
@@ -81,7 +96,6 @@ func (p *parser) parseLine() *progLine {
 	}
 	p.lex.next() // line number
 
-	fmt.Printf("%d\n", id)
 	line := &progLine{id: id}
 	for {
 		cmd := p.parseCmd()

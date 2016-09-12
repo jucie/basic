@@ -19,11 +19,12 @@ type lexeme struct {
 }
 
 type lexer struct {
-	rd     *bufio.Reader
-	pos    coord
-	begin  coord
-	buf    bytes.Buffer
-	lexeme lexeme
+	rd    *bufio.Reader
+	pos   coord
+	begin coord
+	buf   bytes.Buffer
+	lexeme
+	previous lexeme
 }
 
 var keywordMap = make(map[string]token)
@@ -41,11 +42,18 @@ func newLexer(rd *bufio.Reader) *lexer {
 	return lex
 }
 
+func (lex *lexer) get() *lexeme {
+	l := lex.peek()
+	lex.next()
+	return l
+}
+
 func (lex *lexer) peek() *lexeme {
 	return &lex.lexeme
 }
 
 func (lex *lexer) next() {
+	lex.previous = lex.lexeme
 	l := &lex.lexeme
 	for {
 		l.pos = lex.pos
