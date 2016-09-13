@@ -23,3 +23,8 @@ Just to add to the fun, I shall not alter the BASIC programs, in any way.
 Sunday 2016-09-11 13:35
 As far as I can see, lexical analiser is working ok. Let's work on the parser.
 
+Monday 2016-09-12 09:33
+Oh no. Look at that
+pool/poker.bas (404:56): Unexpected ""
+That means ':' can terminate a line. We can have an empty command after ':'
+
