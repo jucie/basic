@@ -80,6 +80,7 @@ func (p *parser) parseCmd() cmd {
 		p.lex.next()
 		return p.parseStop()
 	case tokEol:
+		fallthrough
 	case tokEof:
 		return nil
 	default:
