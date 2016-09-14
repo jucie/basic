@@ -1,7 +1,7 @@
 package main
 
-type astArRef struct {
-	coord
+type astVarRef struct {
+	astTermImpl
 	id    string
 	index []*astExpr
 }
