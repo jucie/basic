@@ -22,9 +22,11 @@ func (p *parser) parseCmd() cmd {
 	tok := l.token
 
 	switch tok {
-	case tokId:
+	case tokLet:
 		p.lex.next()
-		return p.parseAssign()
+		fallthrough
+	case tokId:
+		return p.parseLet()
 	case tokData:
 		p.lex.next()
 		return p.parseData()
@@ -52,9 +54,6 @@ func (p *parser) parseCmd() cmd {
 	case tokInput:
 		p.lex.next()
 		return p.parseInput()
-	case tokLet:
-		p.lex.next()
-		return p.parseLet()
 	case tokNext:
 		p.lex.next()
 		return p.parseNext()
