@@ -1,5 +1,5 @@
 package main
 
 type astSum struct {
-	astOpImpl
+	astOp
 }

@@ -1,13 +1,6 @@
 package main
 
-type astOp interface {
-	astPart
-	Lhs() astPart
-	Rhs() astPart
-}
-
-type astOpImpl struct {
-	astPartImpl
+type astOp struct {
 	lsh astPart
 	rhs astPart
 }

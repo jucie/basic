@@ -1,7 +1,4 @@
 package main
 
-type astValue struct {
-	coord
-	lhs astTerm
-	rhs astTerm
+type astValue interface {
 }

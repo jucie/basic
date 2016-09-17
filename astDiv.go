@@ -1,5 +1,5 @@
 package main
 
 type astDiv struct {
-	astOpImpl
+	astOp
 }

@@ -1,10 +1,5 @@
 package main
 
-type astTerm interface {
+type astTerm struct {
 	astPart
-}
-
-type astTermImpl struct {
-	astPartImpl
-	coord
 }
