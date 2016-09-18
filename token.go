@@ -21,6 +21,7 @@ const (
 	tokInput
 	tokLet
 	tokNext
+	tokOn
 	tokPrint
 	tokRead
 	tokRem
@@ -53,9 +54,10 @@ const (
 	tokLe
 	tokGe
 	tokNe
-	tokOn
 	tokTab
 	tokFn
+	tokAnd
+	tokOr
 )
 
 type token int
@@ -67,6 +69,7 @@ type reservedWord struct {
 
 var reservedWords = [...]reservedWord{
 	{tokAbs, "ABS"},
+	{tokAnd, "AND"},
 	{tokAsc, "ASC"},
 	{tokAtn, "ATN"},
 	{tokChar, "CHAR"},
@@ -89,6 +92,7 @@ var reservedWords = [...]reservedWord{
 	{tokMid, "MID"},
 	{tokNext, "NEXT"},
 	{tokOn, "ON"},
+	{tokOr, "OR"},
 	{tokPrint, "PRINT"},
 	{tokRead, "READ"},
 	{tokRem, "REM"},
