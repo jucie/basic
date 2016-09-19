@@ -133,7 +133,7 @@ func (lex *lexer) handleString(b byte) token {
 }
 
 func (lex *lexer) handleId(b byte) token {
-	lex.buf.WriteByte(b)
+	lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 
 	second, err := lex.rd.ReadByte()
 	if err != nil {
@@ -146,7 +146,7 @@ func (lex *lexer) handleId(b byte) token {
 		return tokId // we have a single character id
 	}
 
-	lex.buf.WriteByte(second)
+	lex.buf.WriteByte(byte(unicode.ToUpper(rune(second))))
 	s := string(lex.buf.Bytes())
 
 	tok, ok := keywordMap[s]
@@ -177,7 +177,7 @@ func (lex *lexer) handleId(b byte) token {
 			lex.rd.UnreadByte()
 			break
 		}
-		lex.buf.WriteByte(b)
+		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 		s := string(lex.buf.Bytes())
 		tok, ok := keywordMap[s]
 		if ok {
