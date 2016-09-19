@@ -141,7 +141,8 @@ func (lex *lexer) handleId(b byte) token {
 	}
 
 	// for an id, the second character must be a letter, a digit or a dollar sign.
-	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) && second != '$' {
+	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) {
+
 		lex.rd.UnreadByte()
 		return tokId // we have a single character id
 	}
@@ -173,7 +174,7 @@ func (lex *lexer) handleId(b byte) token {
 		if err != nil {
 			break
 		}
-		if !unicode.IsLetter(rune(b)) && b != '$' {
+		if !unicode.IsLetter(rune(b)) {
 			lex.rd.UnreadByte()
 			break
 		}

@@ -2,6 +2,7 @@ package main
 
 type astPredef struct {
 	function token
+	type_    astType
 	args     []*astExpr
 }
 
@@ -9,7 +10,12 @@ func (p *parser) parsePredef() *astPredef {
 	l := p.lex.peek()
 	function := l.token
 	p.lex.next()
-	result := &astPredef{function: function}
+	result := &astPredef{function: function, type_: numType}
+
+	if l.token == '$' {
+		result.type_ = strType
+		p.lex.next()
+	}
 
 	if l.token != '(' {
 		p.unexpected()

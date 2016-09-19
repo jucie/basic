@@ -3,11 +3,12 @@ package main
 type astVarRef struct {
 	coord
 	id    string
+	type_ astType
 	index []*astExpr
 }
 
 func (p *parser) parseVarRef() *astVarRef {
-	result := &astVarRef{coord: p.lex.pos}
+	result := &astVarRef{coord: p.lex.pos, type_: numType}
 
 	l := p.lex.peek()
 	if l.token != tokId {
@@ -16,6 +17,11 @@ func (p *parser) parseVarRef() *astVarRef {
 	}
 	result.id = l.s
 	p.lex.next()
+
+	if l.token == '$' {
+		result.type_ = strType
+		p.lex.next()
+	}
 
 	if l.token == '(' {
 		p.lex.next()
