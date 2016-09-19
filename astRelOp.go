@@ -7,9 +7,6 @@ type astRelOp struct {
 }
 
 func (p *parser) parseRelOp() *astRelOp {
-	println(">parseRelOp")
-	defer println("<parseRelOp")
-
 	lhs := p.parseAddOp()
 
 	oper := p.lex.peek().token

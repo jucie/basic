@@ -6,9 +6,6 @@ type astExpOp struct {
 }
 
 func (p *parser) parseExpOp() *astExpOp {
-	println(">parseExpOp")
-	defer println("<parseExpOp")
-
 	head := p.parsePart()
 	result := &astExpOp{head: head}
 

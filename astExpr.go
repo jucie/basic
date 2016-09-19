@@ -5,9 +5,6 @@ type astExpr struct {
 }
 
 func (p *parser) parseExpr() *astExpr {
-	println(">parseExpr")
-	defer println("<parseExpr")
-
 	boolOp := p.parseBoolOp()
 	if boolOp == nil {
 		return nil

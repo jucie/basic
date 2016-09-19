@@ -11,9 +11,6 @@ type astAddOp struct {
 }
 
 func (p *parser) parseAddOp() *astAddOp {
-	println(">parseAddOp")
-	defer println("<parseAddOp")
-
 	head := p.parseMulOp()
 	result := &astAddOp{head: head}
 

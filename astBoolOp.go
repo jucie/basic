@@ -14,9 +14,6 @@ func isBoolOp(op token) bool {
 }
 
 func (p *parser) parseBoolOp() *astBoolOp {
-	println(">parseBoolOp")
-	defer println("<parseBoolOp")
-
 	head := p.parseRelOp()
 	result := &astBoolOp{head: head}
 

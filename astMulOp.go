@@ -11,9 +11,6 @@ type astMulOp struct {
 }
 
 func (p *parser) parseMulOp() *astMulOp {
-	println(">parseMulOp")
-	defer println("<parseMulOp")
-
 	head := p.parseExpOp()
 	result := &astMulOp{head: head}
 

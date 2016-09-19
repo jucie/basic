@@ -7,9 +7,6 @@ type astPart struct {
 }
 
 func (p *parser) parsePart() *astPart {
-	println(">parsePart")
-	defer println("<parsePart")
-
 	l := p.lex.peek()
 	result := &astPart{coord: l.pos}
 
