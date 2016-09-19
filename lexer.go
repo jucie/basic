@@ -212,29 +212,51 @@ func (lex *lexer) handleDigraph(b byte) token {
 }
 
 func (lex *lexer) handleNumber(b byte) token {
-	lex.buf.WriteByte(b)
 	var err error
-	if b == '.' {
-		second, err := lex.rd.ReadByte()
-		if err != nil {
-			return token(b)
-		}
-		if !canBeNumber(second) {
-			lex.rd.UnreadByte()
-			return token(b)
-		}
-		lex.buf.WriteByte(second)
-	}
+	hasPoint := false
+	hasE := false
+	hasExpSignal := false
+Loop:
 	for {
+		switch b {
+		case '.':
+			if hasPoint {
+				lex.rd.UnreadByte()
+				break Loop
+			}
+			hasPoint = true
+			lex.buf.WriteByte(b)
+		case 'E':
+			if hasE {
+				lex.rd.UnreadByte()
+				break Loop
+			}
+			hasE = true
+			lex.buf.WriteByte(b)
+		case '+':
+			fallthrough
+		case '-':
+			if !hasE {
+				lex.rd.UnreadByte()
+				break Loop
+			}
+			if hasExpSignal {
+				lex.rd.UnreadByte()
+				break Loop
+			}
+			hasExpSignal = true
+			lex.buf.WriteByte(b)
+		default:
+			if !unicode.IsDigit(rune(b)) {
+				lex.rd.UnreadByte()
+				break Loop
+			}
+			lex.buf.WriteByte(b)
+		}
 		b, err = lex.rd.ReadByte()
 		if err != nil {
-			break
+			break Loop
 		}
-		if !canBeNumber(b) {
-			lex.rd.UnreadByte()
-			break
-		}
-		lex.buf.WriteByte(b)
 	}
 	return tokNumber
 }
