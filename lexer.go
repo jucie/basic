@@ -32,6 +32,10 @@ var keywordMap = make(map[string]token)
 func init() {
 	for i, _ := range reservedWords {
 		word := &reservedWords[i]
+		_, ok := keywordMap[word.s]
+		if ok {
+			panic("Repeated keyword: " + word.s)
+		}
 		keywordMap[word.s] = word.token
 	}
 }
