@@ -1,9 +1,12 @@
 package main
 
-type astBoolOp struct {
-	lhs  *astRelOp
-	rhs  *astRelOp
+type astBoolOpTail struct {
 	oper token
+	val  *astRelOp
+}
+type astBoolOp struct {
+	head *astRelOp
+	tail []astBoolOpTail
 }
 
 func isBoolOp(op token) bool {
@@ -14,17 +17,21 @@ func (p *parser) parseBoolOp() *astBoolOp {
 	println(">parseBoolOp")
 	defer println("<parseBoolOp")
 
-	lhs := p.parseRelOp()
+	head := p.parseRelOp()
+	result := &astBoolOp{head: head}
 
-	oper := p.lex.peek().token
-	if !isBoolOp(oper) {
-		return &astBoolOp{lhs: lhs}
-	}
-	p.lex.next()
+	for {
+		oper := p.lex.peek().token
+		if !isBoolOp(oper) {
+			break
+		}
+		p.lex.next()
 
-	rhs := p.parseRelOp()
-	if rhs == nil {
-		return nil
+		val := p.parseRelOp()
+		if val == nil {
+			return nil
+		}
+		result.tail = append(result.tail, astBoolOpTail{oper: oper, val: val})
 	}
-	return &astBoolOp{lhs: lhs, rhs: rhs, oper: oper}
+	return result
 }

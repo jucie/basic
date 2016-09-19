@@ -1,28 +1,36 @@
 package main
 
-type astMulOp struct {
-	lhs  *astPart
-	rhs  *astPart
+type astMulOpTail struct {
 	oper token
+	val  *astExpOp
+}
+
+type astMulOp struct {
+	head *astExpOp
+	tail []astMulOpTail
 }
 
 func (p *parser) parseMulOp() *astMulOp {
 	println(">parseMulOp")
 	defer println("<parseMulOp")
 
-	lhs := p.parsePart()
+	head := p.parseExpOp()
+	result := &astMulOp{head: head}
 
-	oper := p.lex.peek().token
-	if !isMulOp(oper) {
-		return &astMulOp{lhs: lhs}
-	}
-	p.lex.next()
+	for {
+		oper := p.lex.peek().token
+		if !isMulOp(oper) {
+			break
+		}
+		p.lex.next()
 
-	rhs := p.parsePart()
-	if rhs == nil {
-		return nil
+		val := p.parseExpOp()
+		if val == nil {
+			return nil
+		}
+		result.tail = append(result.tail, astMulOpTail{oper: oper, val: val})
 	}
-	return &astMulOp{lhs: lhs, rhs: rhs, oper: oper}
+	return result
 }
 
 func isMulOp(b token) bool {

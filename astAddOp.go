@@ -1,28 +1,36 @@
 package main
 
-type astAddOp struct {
-	lhs  *astMulOp
-	rhs  *astMulOp
+type astAddOpTail struct {
 	oper token
+	val  *astMulOp
+}
+
+type astAddOp struct {
+	head *astMulOp
+	tail []astAddOpTail
 }
 
 func (p *parser) parseAddOp() *astAddOp {
 	println(">parseAddOp")
 	defer println("<parseAddOp")
 
-	lhs := p.parseMulOp()
+	head := p.parseMulOp()
+	result := &astAddOp{head: head}
 
-	oper := p.lex.peek().token
-	if !isAddOp(oper) {
-		return &astAddOp{lhs: lhs}
-	}
-	p.lex.next()
+	for {
+		oper := p.lex.peek().token
+		if !isAddOp(oper) {
+			break
+		}
+		p.lex.next()
 
-	rhs := p.parseMulOp()
-	if rhs == nil {
-		return nil
+		val := p.parseMulOp()
+		if val == nil {
+			return nil
+		}
+		result.tail = append(result.tail, astAddOpTail{oper: oper, val: val})
 	}
-	return &astAddOp{lhs: lhs, rhs: rhs, oper: oper}
+	return result
 }
 
 func isAddOp(b token) bool {
