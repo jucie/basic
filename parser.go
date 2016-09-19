@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 )
 
@@ -110,8 +109,9 @@ func (p *parser) consumeCmd() {
 func (p *parser) unexpected() {
 	l := p.lex.lexeme
 
-	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected token (%d) \"%s\"\n",
+	msg := fmt.Sprintf("%s (%d:%d): Unexpected token (%d) \"%s\"\n",
 		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.token, l.s)
+	println(msg)
 }
 
 func (p *parser) parseLine() *progLine {

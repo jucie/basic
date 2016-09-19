@@ -7,6 +7,14 @@ type cmdLet struct {
 
 func (p *parser) parseLet() *cmdLet {
 	dst := p.parseVarRef()
+
+	if p.lex.peek().token != '=' {
+		p.unexpected()
+		return nil
+	}
+	p.lex.next()
+
 	src := p.parseExpr()
+
 	return &cmdLet{dst: dst, src: src}
 }

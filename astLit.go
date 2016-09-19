@@ -1,32 +1,20 @@
 package main
 
-type astLit interface {
-	Val() string
+type astLit struct {
+	val   string
+	type_ astType
 }
 
-type astLitNumber struct {
-	val string
-}
-
-func (l *astLitNumber) Val() string {
-	return l.val
-}
-
-type astLitString struct {
-	val string
-}
-
-func (l *astLitString) Val() string {
-	return l.val
-}
-
-func (p *parser) parseLit() astLit {
+func (p *parser) parseLit() *astLit {
 	l := p.lex.peek()
+	val := l.s
 	switch l.token {
 	case tokNumber:
-		return &astLitNumber{l.s}
+		p.lex.next()
+		return &astLit{val: val, type_: numType}
 	case tokString:
-		return &astLitString{l.s}
+		p.lex.next()
+		return &astLit{val: val, type_: strType}
 	}
 	return nil
 }

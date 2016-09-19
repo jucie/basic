@@ -7,6 +7,9 @@ type astPart struct {
 }
 
 func (p *parser) parsePart() *astPart {
+	println(">parsePart")
+	defer println("<parsePart")
+
 	l := p.lex.peek()
 	result := &astPart{coord: l.pos}
 
@@ -36,8 +39,42 @@ func (p *parser) parsePart() *astPart {
 		fallthrough
 	case tokString:
 		result.val = p.parseLit()
+	case tokSin:
+		fallthrough
+	case tokCos:
+		fallthrough
+	case tokAtn:
+		fallthrough
+	case tokSqr:
+		fallthrough
+	case tokExp:
+		fallthrough
+	case tokLog:
+		fallthrough
+	case tokAbs:
+		fallthrough
+	case tokInt:
+		fallthrough
+	case tokRnd:
+		fallthrough
+	case tokSgn:
+		fallthrough
+	case tokVaL:
+		fallthrough
+	case tokChar:
+		fallthrough
+	case tokMid:
+		fallthrough
+	case tokLeft:
+		fallthrough
+	case tokRight:
+		fallthrough
+	case tokAsc:
+		result.val = p.parsePredef()
+
 	default:
 		p.unexpected()
+		return nil
 	}
 	return result
 }

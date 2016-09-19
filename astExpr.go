@@ -1,13 +1,16 @@
 package main
 
 type astExpr struct {
-	part *astPart
+	boolOp *astBoolOp
 }
 
 func (p *parser) parseExpr() *astExpr {
-	part := p.parsePart()
-	if part == nil {
+	println(">parseExpr")
+	defer println("<parseExpr")
+
+	boolOp := p.parseBoolOp()
+	if boolOp == nil {
 		return nil
 	}
-	return &astExpr{part: part}
+	return &astExpr{boolOp: boolOp}
 }

@@ -1,6 +1,7 @@
 package main
 
 type astOp struct {
-	lsh astPart
-	rhs astPart
+	lhs  *astPart
+	rhs  *astPart
+	oper token
 }
