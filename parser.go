@@ -75,6 +75,9 @@ func (p *parser) parseCmd() cmd {
 	case tokReturn:
 		p.lex.next()
 		return p.parseReturn()
+	case tokRun:
+		p.lex.next()
+		return p.parseRun()
 	case tokStop:
 		p.lex.next()
 		return p.parseStop()

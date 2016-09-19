@@ -27,6 +27,7 @@ const (
 	tokRem
 	tokRestore
 	tokReturn
+	tokRun
 	tokStop
 
 	// predefined functions
@@ -100,6 +101,7 @@ var reservedWords = [...]reservedWord{
 	{tokReturn, "RETURN"},
 	{tokRight, "RIGHT$"},
 	{tokRnd, "RND"},
+	{tokRun, "RUN"},
 	{tokSgn, "SGN"},
 	{tokSin, "SIN"},
 	{tokSqr, "SQR"},
