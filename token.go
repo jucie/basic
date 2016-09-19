@@ -41,7 +41,7 @@ const (
 	tokRnd
 	tokSgn
 	tokVaL
-	tokChar
+	tokChr
 	tokMid
 	tokLeft
 	tokRight
@@ -72,7 +72,7 @@ var reservedWords = [...]reservedWord{
 	{tokAnd, "AND"},
 	{tokAsc, "ASC"},
 	{tokAtn, "ATN"},
-	{tokChar, "CHAR"},
+	{tokChr, "CHR$"},
 	{tokCos, "COS"},
 	{tokData, "DATA"},
 	{tokDef, "DEF"},
@@ -86,10 +86,10 @@ var reservedWords = [...]reservedWord{
 	{tokIf, "IF"},
 	{tokInput, "INPUT"},
 	{tokInt, "INT"},
-	{tokLeft, "LEFT"},
+	{tokLeft, "LEFT$"},
 	{tokLet, "LET"},
 	{tokLog, "LOG"},
-	{tokMid, "MID"},
+	{tokMid, "MID$"},
 	{tokNext, "NEXT"},
 	{tokOn, "ON"},
 	{tokOr, "OR"},
@@ -98,7 +98,7 @@ var reservedWords = [...]reservedWord{
 	{tokRem, "REM"},
 	{tokRestore, "RESTORE"},
 	{tokReturn, "RETURN"},
-	{tokRight, "RIGHT"},
+	{tokRight, "RIGHT$"},
 	{tokRnd, "RND"},
 	{tokSgn, "SGN"},
 	{tokSin, "SIN"},

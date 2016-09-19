@@ -140,8 +140,8 @@ func (lex *lexer) handleId(b byte) token {
 		return tokId
 	}
 
-	// for an id, the second character must be a letter or a digit.
-	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) {
+	// for an id, the second character must be a letter, a digit or a dollar sign.
+	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) && second != '$' {
 		lex.rd.UnreadByte()
 		return tokId // we have a single character id
 	}
@@ -154,7 +154,7 @@ func (lex *lexer) handleId(b byte) token {
 		return tok
 	}
 
-	// let's see it it can be the beginning of a keyword
+	// let's see if it can be the beginning of a keyword
 	found := false
 	for key, _ := range keywordMap {
 		if strings.HasPrefix(key, s) {
@@ -173,7 +173,7 @@ func (lex *lexer) handleId(b byte) token {
 		if err != nil {
 			break
 		}
-		if !unicode.IsLetter(rune(b)) {
+		if !unicode.IsLetter(rune(b)) && b != '$' {
 			lex.rd.UnreadByte()
 			break
 		}

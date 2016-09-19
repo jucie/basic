@@ -61,7 +61,7 @@ func (p *parser) parsePart() *astPart {
 		fallthrough
 	case tokVaL:
 		fallthrough
-	case tokChar:
+	case tokChr:
 		fallthrough
 	case tokMid:
 		fallthrough
