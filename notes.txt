@@ -28,3 +28,6 @@ Oh no. Look at that
 pool/poker.bas (404:56): Unexpected ""
 That means ':' can terminate a line. We can have an empty command after ':'
 
+Tuesday 2016-09-20 11:17
+I am having a hard time getting ids right. BASIC rules are a little weird by today standards.
+
