@@ -34,6 +34,7 @@ const (
 	tokSin
 	tokCos
 	tokAtn
+	tokTan
 	tokSqr
 	tokExp
 	tokLog
@@ -108,6 +109,7 @@ var reservedWords = [...]reservedWord{
 	{tokStep, "STEP"},
 	{tokStop, "STOP"},
 	{tokTab, "TAB"},
+	{tokTan, "TAN"},
 	{tokThen, "THEN"},
 	{tokTo, "TO"},
 	{tokVaL, "VAL"},

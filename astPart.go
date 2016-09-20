@@ -42,6 +42,8 @@ func (p *parser) parsePart() *astPart {
 		fallthrough
 	case tokAtn:
 		fallthrough
+	case tokTan:
+		fallthrough
 	case tokSqr:
 		fallthrough
 	case tokExp:
