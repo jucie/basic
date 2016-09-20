@@ -70,6 +70,8 @@ func (p *parser) parsePart() *astPart {
 		fallthrough
 	case tokRight:
 		fallthrough
+	case tokLen:
+		fallthrough
 	case tokAsc:
 		result.val = p.parsePredef()
 

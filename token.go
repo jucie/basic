@@ -49,6 +49,7 @@ const (
 	tokRight
 	tokAsc
 	tokStr
+	tokLen
 
 	// general
 	tokThen
@@ -90,6 +91,7 @@ var reservedWords = [...]reservedWord{
 	{tokInput, "INPUT"},
 	{tokInt, "INT"},
 	{tokLeft, "LEFT"},
+	{tokLen, "LEN"},
 	{tokLet, "LET"},
 	{tokLog, "LOG"},
 	{tokMid, "MID"},
