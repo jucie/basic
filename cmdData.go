@@ -1,10 +1,19 @@
 package main
 
+import (
+	"strings"
+)
+
 type cmdData struct {
-	line string
+	values []string
 }
 
 func (p *parser) parseData() *cmdData {
+	result := &cmdData{}
 	line := p.lex.previous.s
-	return &cmdData{line: line}
+	v := strings.Split(line, ",")
+	for _, s := range v {
+		result.values = append(result.values, strings.Trim(s, " \"\t"))
+	}
+	return result
 }
