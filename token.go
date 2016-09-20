@@ -48,6 +48,7 @@ const (
 	tokLeft
 	tokRight
 	tokAsc
+	tokStr
 
 	// general
 	tokThen
@@ -108,6 +109,7 @@ var reservedWords = [...]reservedWord{
 	{tokSqr, "SQR"},
 	{tokStep, "STEP"},
 	{tokStop, "STOP"},
+	{tokStr, "STR"},
 	{tokTab, "TAB"},
 	{tokTan, "TAN"},
 	{tokThen, "THEN"},
