@@ -16,6 +16,7 @@ func (p *parser) parseVarRef() *astVarRef {
 		return nil
 	}
 	result.id = l.s
+	p.lex.addId(result.id)
 	p.lex.next()
 
 	if l.token == '$' {

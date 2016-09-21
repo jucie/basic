@@ -24,7 +24,9 @@ type lexer struct {
 	begin coord
 	buf   bytes.Buffer
 	lexeme
-	previous lexeme
+	previous  lexeme
+	ids       map[string]bool
+	unreadBuf bytes.Buffer
 }
 
 var keywordMap = make(map[string]token)
@@ -41,7 +43,7 @@ func init() {
 }
 
 func newLexer(rd *bufio.Reader) *lexer {
-	lex := &lexer{rd: rd}
+	lex := &lexer{rd: rd, ids: make(map[string]bool)}
 	lex.next()
 	return lex
 }
@@ -85,13 +87,13 @@ func (lex *lexer) consumeLine() {
 
 	for {
 
-		b, err := lex.rd.ReadByte()
+		b, err := lex.readByte()
 		if err != nil {
 			break
 		}
 
 		if b == '\n' || b == '\r' {
-			lex.rd.UnreadByte()
+			lex.unreadByte(b)
 			break
 		}
 		lex.buf.WriteByte(b)
@@ -101,12 +103,12 @@ func (lex *lexer) consumeLine() {
 func (lex *lexer) handleSpace(b byte) token {
 	for {
 		lex.buf.WriteByte(b)
-		b, err := lex.rd.ReadByte()
+		b, err := lex.readByte()
 		if err != nil {
 			break
 		}
 		if b == '\n' || !unicode.IsSpace(rune(b)) {
-			lex.rd.UnreadByte()
+			lex.unreadByte(b)
 			break
 		}
 	}
@@ -116,12 +118,12 @@ func (lex *lexer) handleSpace(b byte) token {
 func (lex *lexer) handleString(b byte) token {
 	lex.buf.WriteByte(b)
 	for {
-		b, err := lex.rd.ReadByte()
+		b, err := lex.readByte()
 		if err != nil {
 			break
 		}
 		if b == '\n' {
-			lex.rd.UnreadByte()
+			lex.unreadByte(b)
 			break
 		}
 		lex.buf.WriteByte(b)
@@ -135,55 +137,65 @@ func (lex *lexer) handleString(b byte) token {
 func (lex *lexer) handleId(b byte) token {
 	lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 
-	second, err := lex.rd.ReadByte()
+	var err error
+	b, err = lex.readByte()
 	if err != nil {
 		return tokId
 	}
 
-	// for an id, the second character must be a letter, a digit or a dollar sign.
-	if !unicode.IsLetter(rune(second)) && !unicode.IsNumber(rune(second)) {
-
-		lex.rd.UnreadByte()
+	// for an id, the second character must be a letter or a digit
+	if !unicode.IsLetter(rune(b)) && !unicode.IsNumber(rune(b)) {
+		lex.unreadByte(b)
 		return tokId // we have a single character id
 	}
 
-	lex.buf.WriteByte(byte(unicode.ToUpper(rune(second))))
-	s := string(lex.buf.Bytes())
-
-	tok, ok := keywordMap[s]
-	if ok { // if it is a two letter keyword like IF or ON
-		return tok
-	}
-
-	// let's see if it can be the beginning of a keyword
-	found := false
-	for key, _ := range keywordMap {
-		if strings.HasPrefix(key, s) {
-			found = true
-			break
-		}
-	}
-	if !found { // if it can't possibly start a keyword
-		return tokId
-	}
-
-	// ok, it MUST be a keyword
+	// read the longest letter string
 	for {
-		var err error
-		b, err = lex.rd.ReadByte()
+		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
+		b, err = lex.readByte()
 		if err != nil {
 			break
 		}
 		if !unicode.IsLetter(rune(b)) {
-			lex.rd.UnreadByte()
+			lex.unreadByte(b)
 			break
 		}
-		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
-		s := string(lex.buf.Bytes())
-		tok, ok := keywordMap[s]
-		if ok {
+	}
+
+	// search for keyword as prefix
+	s := string(lex.buf.Bytes())
+	for keyword, tok := range keywordMap {
+		if strings.HasPrefix(s, keyword) {
+			lex.unreadString(s[len(keyword):])
+			lex.buf.Reset()
+			lex.buf.WriteString(keyword)
 			return tok
 		}
+	}
+
+	// search for keyword as suffix
+	index := len(s)
+	var unread string
+	for {
+		found := false
+		for keyword, _ := range keywordMap {
+			if strings.HasSuffix(s, keyword) {
+				println(s, "has suffix", keyword)
+				index -= len(keyword)
+				unread = keyword + unread
+				s = s[:index]
+				found = true
+			}
+		}
+		if !found {
+			break
+		}
+	}
+
+	if len(unread) > 0 {
+		lex.unreadString(unread)
+		lex.buf.Reset()
+		lex.buf.WriteString(s[:index])
 	}
 	return tokId
 }
@@ -191,7 +203,7 @@ func (lex *lexer) handleId(b byte) token {
 func (lex *lexer) handleDigraph(b byte) token {
 	lex.buf.WriteByte(b)
 
-	second, err := lex.rd.ReadByte()
+	second, err := lex.readByte()
 	if err != nil {
 		return token(b)
 	}
@@ -206,7 +218,7 @@ func (lex *lexer) handleDigraph(b byte) token {
 		return tokNe
 	}
 
-	lex.rd.UnreadByte() // unread second
+	lex.unreadByte(second) // unread second
 	lex.buf.Reset()
 	lex.buf.WriteByte(b)
 	return token(b)
@@ -222,14 +234,14 @@ Loop:
 		switch b {
 		case '.':
 			if hasPoint {
-				lex.rd.UnreadByte()
+				lex.unreadByte(b)
 				break Loop
 			}
 			hasPoint = true
 			lex.buf.WriteByte(b)
 		case 'E':
 			if hasE {
-				lex.rd.UnreadByte()
+				lex.unreadByte(b)
 				break Loop
 			}
 			hasE = true
@@ -238,23 +250,23 @@ Loop:
 			fallthrough
 		case '-':
 			if !hasE {
-				lex.rd.UnreadByte()
+				lex.unreadByte(b)
 				break Loop
 			}
 			if hasExpSignal {
-				lex.rd.UnreadByte()
+				lex.unreadByte(b)
 				break Loop
 			}
 			hasExpSignal = true
 			lex.buf.WriteByte(b)
 		default:
 			if !unicode.IsDigit(rune(b)) {
-				lex.rd.UnreadByte()
+				lex.unreadByte(b)
 				break Loop
 			}
 			lex.buf.WriteByte(b)
 		}
-		b, err = lex.rd.ReadByte()
+		b, err = lex.readByte()
 		if err != nil {
 			break Loop
 		}
@@ -269,7 +281,7 @@ func canBeNumber(b byte) bool {
 func (lex *lexer) walk() token {
 	lex.buf.Reset()
 
-	b, err := lex.rd.ReadByte()
+	b, err := lex.readByte()
 	if err != nil {
 		return tokEof
 	}
@@ -302,4 +314,23 @@ func (lex *lexer) walk() token {
 
 	lex.buf.WriteByte(b)
 	return token(b)
+}
+
+func (lex *lexer) addId(id string) {
+	lex.ids[id] = true
+}
+
+func (lex *lexer) readByte() (byte, error) {
+	if lex.unreadBuf.Len() > 0 {
+		return lex.unreadBuf.ReadByte()
+	}
+	return lex.rd.ReadByte()
+}
+
+func (lex *lexer) unreadByte(b byte) {
+	lex.unreadBuf.WriteByte(b)
+}
+
+func (lex *lexer) unreadString(s string) {
+	lex.unreadBuf.WriteString(s)
 }
