@@ -143,8 +143,14 @@ func (lex *lexer) handleId(b byte) token {
 		return tokId
 	}
 
+	// for an id, if the second character is a digit, then we are done.
+	if unicode.IsNumber(rune(b)) {
+		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
+		return tokId // we have a single character id
+	}
+
 	// for an id, the second character must be a letter or a digit
-	if !unicode.IsLetter(rune(b)) && !unicode.IsNumber(rune(b)) {
+	if !unicode.IsLetter(rune(b)) {
 		lex.unreadByte(b)
 		return tokId // we have a single character id
 	}
