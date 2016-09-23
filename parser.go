@@ -117,25 +117,15 @@ func (p *parser) unexpected() {
 		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.token, l.s)
 }
 
-func (p *parser) parseLine() *progLine {
-	l := p.lex.peek()
-	if l.token != tokNumber {
-		return nil
-	}
-	id, err := strconv.Atoi(l.s)
-	if err != nil {
-		panic(err)
-	}
-	p.lex.next() // line number
-
-	line := &progLine{id: id}
+func (p *parser) parseLineTail() []cmd {
+	var result []cmd
 	for {
 		cmd := p.parseCmd()
 		if cmd == nil {
 			break
 		}
-		line.cmds = append(line.cmds, cmd)
-		l = p.lex.peek()
+		result = append(result, cmd)
+		l := p.lex.peek()
 		if l.token == ':' {
 			p.lex.next() // skip separator
 			continue
@@ -148,6 +138,22 @@ func (p *parser) parseLine() *progLine {
 			break
 		}
 	}
+	return result
+}
+
+func (p *parser) parseLine() *progLine {
+	l := p.lex.peek()
+	if l.token != tokNumber {
+		return nil
+	}
+	id, err := strconv.Atoi(l.s)
+	if err != nil {
+		panic(err)
+	}
+	p.lex.next() // line number
+
+	line := &progLine{id: id}
+	line.cmds = p.parseLineTail()
 	return line
 }
 
