@@ -149,6 +149,7 @@ func (lex *lexer) handleId(b byte) token {
 		return tokId // we have a single character id
 	}
 
+	var firstNonLetter byte
 	// read the longest letter string
 	for {
 		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
@@ -157,7 +158,7 @@ func (lex *lexer) handleId(b byte) token {
 			break
 		}
 		if !unicode.IsLetter(rune(b)) {
-			lex.unreadByte(b)
+			firstNonLetter = b
 			break
 		}
 	}
@@ -167,6 +168,7 @@ func (lex *lexer) handleId(b byte) token {
 	for keyword, tok := range keywordMap {
 		if strings.HasPrefix(s, keyword) {
 			lex.unreadString(s[len(keyword):])
+			lex.unreadByte(firstNonLetter)
 			lex.buf.Reset()
 			lex.buf.WriteString(keyword)
 			return tok
@@ -174,20 +176,23 @@ func (lex *lexer) handleId(b byte) token {
 	}
 
 	// search for keyword as suffix
-	index := len(s)
 	var unread string
 	for {
-		found := false
+		max := 0
+		index := len(s)
 		for keyword, _ := range keywordMap {
 			if strings.HasSuffix(s, keyword) {
-				println(s, "has suffix", keyword)
-				index -= len(keyword)
-				unread = keyword + unread
-				s = s[:index]
-				found = true
+				if max < len(keyword) {
+					max = len(keyword)
+				}
 			}
 		}
-		if !found {
+		if max > 0 {
+			index -= max
+			keyword := s[index:]
+			unread = keyword + unread
+			s = s[:index]
+		} else {
 			break
 		}
 	}
@@ -195,8 +200,9 @@ func (lex *lexer) handleId(b byte) token {
 	if len(unread) > 0 {
 		lex.unreadString(unread)
 		lex.buf.Reset()
-		lex.buf.WriteString(s[:index])
+		lex.buf.WriteString(s)
 	}
+	lex.unreadByte(firstNonLetter)
 	return tokId
 }
 
