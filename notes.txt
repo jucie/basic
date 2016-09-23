@@ -31,3 +31,5 @@ That means ':' can terminate a line. We can have an empty command after ':'
 Tuesday 2016-09-20 11:17
 I am having a hard time getting ids right. BASIC rules are a little weird by today standards.
 
+Friday 2016-09-23 11:59
+My parser is able to grasp all BASIC programs from the pool.
