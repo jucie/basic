@@ -5,6 +5,10 @@ type cmdRun struct {
 }
 
 func (p *parser) parseRun() *cmdRun {
-	p.consumeCmd()
-	return &cmdRun{}
+	l := p.lex.peek()
+
+	if l.token != tokString {
+		return nil
+	}
+	return &cmdRun{arg: l.s}
 }
