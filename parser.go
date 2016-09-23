@@ -133,9 +133,7 @@ func (p *parser) parseLineTail() []cmd {
 			p.lex.next() // skip terminator
 			break
 		} else {
-			p.unexpected()
-			p.lex.nextLine()
-			break
+			return nil
 		}
 	}
 	return result
@@ -150,7 +148,7 @@ func (p *parser) parseLine() *progLine {
 	if err != nil {
 		panic(err)
 	}
-	p.lex.next() // line number
+	p.lex.next()
 
 	line := &progLine{id: id}
 	line.cmds = p.parseLineTail()
