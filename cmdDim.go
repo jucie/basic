@@ -16,5 +16,8 @@ func (p *parser) parseDim() *cmdDim {
 		}
 		p.lex.next()
 	}
+	if len(result.vars) == 0 {
+		return nil
+	}
 	return result
 }
