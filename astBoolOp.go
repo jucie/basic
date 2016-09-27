@@ -32,3 +32,10 @@ func (p *parser) parseBoolOp() *astBoolOp {
 	}
 	return result
 }
+
+func (a astBoolOp) receive(g guest) {
+	g.visit(*a.head)
+	for _, t := range a.tail {
+		g.visit(*t.val)
+	}
+}

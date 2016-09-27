@@ -17,3 +17,6 @@ func (p *parser) parseData() *cmdData {
 	}
 	return result
 }
+
+func (c cmdData) receive(g guest) {
+}

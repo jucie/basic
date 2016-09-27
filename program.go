@@ -7,6 +7,7 @@ import (
 )
 
 type cmd interface {
+	host
 }
 
 type progLine struct {
@@ -19,6 +20,12 @@ type progLine struct {
 func (l *progLine) linkSucc(succ *progLine) {
 	l.succ = append(l.succ, succ)
 	succ.pred = append(succ.pred, l)
+}
+
+func (l *progLine) receive(g guest) {
+	for _, cmd := range l.cmds {
+		g.visit(cmd)
+	}
 }
 
 type program struct {
@@ -58,7 +65,10 @@ func (p *program) resolve() {
 	for _, l := range p.lines {
 		p.mapLines[l.id] = l
 	}
-	// TODO
+	solver := newSolver(p)
+	for _, l := range p.lines {
+		solver.visit(l)
+	}
 }
 
 func (p *program) generate() {

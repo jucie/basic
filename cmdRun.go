@@ -12,3 +12,6 @@ func (p *parser) parseRun() *cmdRun {
 	}
 	return &cmdRun{arg: l.s}
 }
+
+func (c cmdRun) receive(g guest) {
+}

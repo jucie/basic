@@ -46,3 +46,7 @@ func (p *parser) parseDef() *cmdDef {
 
 	return result
 }
+
+func (c cmdDef) receive(g guest) {
+	g.visit(*c.expr)
+}

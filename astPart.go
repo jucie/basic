@@ -83,3 +83,7 @@ func (p *parser) parsePart() *astPart {
 	}
 	return result
 }
+
+func (a astPart) receive(g guest) {
+	g.visit(a.val)
+}

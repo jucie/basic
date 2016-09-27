@@ -37,3 +37,7 @@ func (p *parser) parseOn() *cmdOn {
 	}
 	return result
 }
+
+func (c cmdOn) receive(g guest) {
+	g.visit(*c.expr)
+}

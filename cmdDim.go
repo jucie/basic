@@ -21,3 +21,9 @@ func (p *parser) parseDim() *cmdDim {
 	}
 	return result
 }
+
+func (c cmdDim) receive(g guest) {
+	for _, v := range c.vars {
+		g.visit(*v)
+	}
+}

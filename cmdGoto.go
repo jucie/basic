@@ -24,3 +24,6 @@ func (p *parser) parseGoto() *cmdGoto {
 
 	return result
 }
+
+func (c cmdGoto) receive(g guest) {
+}

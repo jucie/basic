@@ -66,6 +66,9 @@ const (
 
 type token int
 
+func (t token) receive(g guest) {
+}
+
 type reservedWord struct {
 	token token
 	s     string

@@ -36,3 +36,10 @@ func (p *parser) parseIf() *cmdIf {
 
 	return result
 }
+
+func (c *cmdIf) receive(g guest) {
+	g.visit(c.expr)
+	for _, cmd := range c.cmds {
+		g.visit(cmd)
+	}
+}

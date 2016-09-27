@@ -34,3 +34,7 @@ func (p *parser) parseFnCall() *astFnCall {
 
 	return &astFnCall{fn, arg}
 }
+
+func (a astFnCall) receive(g guest) {
+	g.visit(*a.arg)
+}

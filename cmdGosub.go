@@ -24,3 +24,6 @@ func (p *parser) parseGosub() *cmdGosub {
 
 	return result
 }
+
+func (c cmdGosub) receive(g guest) {
+}

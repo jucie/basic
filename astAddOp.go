@@ -33,3 +33,10 @@ func (p *parser) parseAddOp() *astAddOp {
 func isAddOp(b token) bool {
 	return b == '+' || b == '-'
 }
+
+func (a astAddOp) receive(g guest) {
+	g.visit(*a.head)
+	for _, t := range a.tail {
+		g.visit(*t.val)
+	}
+}

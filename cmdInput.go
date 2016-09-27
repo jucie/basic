@@ -34,3 +34,9 @@ Loop:
 	}
 	return result
 }
+
+func (c cmdInput) receive(g guest) {
+	for _, subCmd := range c.subCmds {
+		g.visit(subCmd)
+	}
+}

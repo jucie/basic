@@ -39,3 +39,8 @@ func isRelOp(b token) bool {
 	}
 	return false
 }
+
+func (a astRelOp) receive(g guest) {
+	g.visit(*a.lhs)
+	g.visit(*a.rhs)
+}

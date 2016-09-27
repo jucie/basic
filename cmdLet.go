@@ -18,3 +18,8 @@ func (p *parser) parseLet() *cmdLet {
 
 	return &cmdLet{dst: dst, src: src}
 }
+
+func (c cmdLet) receive(g guest) {
+	g.visit(*c.dst)
+	g.visit(*c.src)
+}

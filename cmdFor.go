@@ -39,3 +39,9 @@ func (p *parser) parseFor() *cmdFor {
 
 	return result
 }
+
+func (c cmdFor) receive(g guest) {
+	g.visit(*c.begin)
+	g.visit(*c.end)
+	g.visit(*c.step)
+}

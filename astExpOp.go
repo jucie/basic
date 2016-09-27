@@ -24,3 +24,10 @@ func (p *parser) parseExpOp() *astExpOp {
 	}
 	return result
 }
+
+func (a astExpOp) receive(g guest) {
+	g.visit(*a.head)
+	for _, t := range a.tail {
+		g.visit(*t)
+	}
+}

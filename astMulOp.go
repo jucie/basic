@@ -33,3 +33,10 @@ func (p *parser) parseMulOp() *astMulOp {
 func isMulOp(b token) bool {
 	return b == '*' || b == '/'
 }
+
+func (a astMulOp) receive(g guest) {
+	g.visit(*a.head)
+	for _, t := range a.tail {
+		g.visit(*t.val)
+	}
+}

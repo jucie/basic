@@ -1,6 +1,7 @@
 package main
 
 type subCmd interface {
+	host
 }
 
 type cmdPrint struct {
@@ -36,4 +37,10 @@ Loop:
 		result.subCmds = append(result.subCmds, subCmd)
 	}
 	return result
+}
+
+func (c cmdPrint) receive(g guest) {
+	for _, subCmd := range c.subCmds {
+		g.visit(subCmd)
+	}
 }

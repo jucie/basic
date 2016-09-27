@@ -18,3 +18,7 @@ func (p *parser) parseLit() *astLit {
 	}
 	return nil
 }
+
+func (a astLit) receive(g guest) {
+	g.visit(a.type_)
+}
