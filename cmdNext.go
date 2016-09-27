@@ -6,18 +6,21 @@ type cmdNext struct {
 
 func (p *parser) parseNext() *cmdNext {
 	result := &cmdNext{}
-	l := p.lex.peek()
+	if p.isEndOfCommand() {
+		return result
+	}
 
+	l := p.lex.peek()
 	for {
 		v := p.parseVarRef()
+		if v == nil {
+			break
+		}
 		result.vars = append(result.vars, v)
 		if l.token != ',' {
 			break
 		}
 		p.lex.next()
-	}
-	if len(result.vars) == 0 {
-		return nil
 	}
 	return result
 }

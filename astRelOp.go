@@ -42,5 +42,7 @@ func isRelOp(b token) bool {
 
 func (a astRelOp) receive(g guest) {
 	g.visit(*a.lhs)
-	g.visit(*a.rhs)
+	if a.rhs != nil {
+		g.visit(*a.rhs)
+	}
 }
