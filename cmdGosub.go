@@ -5,7 +5,7 @@ import (
 )
 
 type cmdGosub struct {
-	line int
+	dst int
 }
 
 func (p *parser) parseGosub() *cmdGosub {
@@ -16,7 +16,7 @@ func (p *parser) parseGosub() *cmdGosub {
 		return nil
 	}
 	var err error
-	result.line, err = strconv.Atoi(l.s)
+	result.dst, err = strconv.Atoi(l.s)
 	if err != nil {
 		return nil
 	}

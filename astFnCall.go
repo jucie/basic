@@ -1,7 +1,7 @@
 package main
 
 type astFnCall struct {
-	fn  string
+	id  string
 	arg *astExpr
 }
 
@@ -12,7 +12,7 @@ func (p *parser) parseFnCall() *astFnCall {
 		p.unexpected()
 		return nil
 	}
-	fn := l.s
+	id := l.s
 	p.lex.next()
 
 	if l.token != '(' {
@@ -32,7 +32,7 @@ func (p *parser) parseFnCall() *astFnCall {
 	}
 	p.lex.next()
 
-	return &astFnCall{fn, arg}
+	return &astFnCall{id, arg}
 }
 
 func (a astFnCall) receive(g guest) {

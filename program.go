@@ -66,11 +66,16 @@ func (p *program) resolve() {
 		p.mapLines[l.id] = l
 	}
 	solver := newSolver(p)
-	for _, l := range p.lines {
-		solver.visit(l)
-	}
+	solver.visit(p)
+	//solver.showStats()
 }
 
 func (p *program) generate() {
 	// TODO
+}
+
+func (p program) receive(g guest) {
+	for _, l := range p.lines {
+		g.visit(l)
+	}
 }

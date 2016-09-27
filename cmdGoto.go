@@ -5,7 +5,7 @@ import (
 )
 
 type cmdGoto struct {
-	line int
+	dst int
 }
 
 func (p *parser) parseGoto() *cmdGoto {
@@ -16,7 +16,7 @@ func (p *parser) parseGoto() *cmdGoto {
 		return nil
 	}
 	var err error
-	result.line, err = strconv.Atoi(l.s)
+	result.dst, err = strconv.Atoi(l.s)
 	if err != nil {
 		return nil
 	}
