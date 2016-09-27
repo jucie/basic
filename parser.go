@@ -158,11 +158,16 @@ func (p *parser) parseLine() *progLine {
 func (p *parser) parseProgram(prog *program) {
 	p.prog = prog
 	fmt.Printf("Parsing program %s\n", p.prog.srcPath)
+	var previous *progLine
 	for {
 		line := p.parseLine()
 		if line == nil {
 			break
 		}
-		p.prog.lines[line.id] = line
+		p.prog.lines = append(p.prog.lines, line)
+		if previous != nil && line.id <= previous.id {
+			fmt.Fprintf(os.Stderr, "%s:%d: out of sequence. Previous is %d\n", prog.srcPath, line.id, previous.id)
+		}
+		previous = line
 	}
 }

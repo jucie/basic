@@ -28,6 +28,7 @@ func compile(path string) {
 		return
 	}
 	prog := loadProgram(path)
+	prog.resolve()
 	prog.generate()
 }
 
