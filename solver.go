@@ -13,8 +13,9 @@ type host interface {
 }
 
 type variable struct {
-	def *astVarRef
-	ref []coord
+	def  *astVarRef
+	dims int
+	ref  []coord
 }
 
 type solver struct {
@@ -54,9 +55,16 @@ func (s *solver) visit(h host) {
 			s.vars[v.id] = vv
 		}
 		vv.ref = append(vv.ref, v.coord)
+		vv.dims = len(v.index)
 	case cmdDim:
 		for _, def := range v.vars {
-			s.vars[def.id].def = def
+			vv, ok := s.vars[def.id]
+			if !ok {
+				vv = &variable{}
+				s.vars[def.id] = vv
+			}
+			vv.def = def
+			vv.dims = len(def.index)
 		}
 	case cmdDef:
 		s.funcs[v.id]++
@@ -75,7 +83,7 @@ func (s *solver) showStats() {
 	if len(s.vars) > 0 {
 		println("\nVars")
 		for key, val := range s.vars {
-			println("\t", key, len(val.ref))
+			println("\t", key, val.dims, len(val.ref))
 		}
 	}
 
