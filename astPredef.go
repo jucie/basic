@@ -25,6 +25,9 @@ func (p *parser) parsePredef() *astPredef {
 
 	for {
 		arg := p.parseExpr()
+		if arg == nil {
+			return nil
+		}
 		result.args = append(result.args, arg)
 		if l.token == ',' {
 			p.lex.next()

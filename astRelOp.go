@@ -8,6 +8,9 @@ type astRelOp struct {
 
 func (p *parser) parseRelOp() *astRelOp {
 	lhs := p.parseAddOp()
+	if lhs == nil {
+		return nil
+	}
 
 	oper := p.lex.peek().token
 	if !isRelOp(oper) {

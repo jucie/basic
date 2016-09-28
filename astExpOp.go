@@ -7,6 +7,9 @@ type astExpOp struct {
 
 func (p *parser) parseExpOp() *astExpOp {
 	head := p.parsePart()
+	if head == nil {
+		return nil
+	}
 	result := &astExpOp{head: head}
 
 	for {

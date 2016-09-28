@@ -9,12 +9,14 @@ func (p *parser) parseLet() *cmdLet {
 	dst := p.parseVarRef()
 
 	if p.lex.peek().token != '=' {
-		p.unexpected()
 		return nil
 	}
 	p.lex.next()
 
 	src := p.parseExpr()
+	if src == nil {
+		return nil
+	}
 
 	return &cmdLet{dst: dst, src: src}
 }

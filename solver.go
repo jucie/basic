@@ -83,7 +83,7 @@ func (s *solver) showStats() {
 	if len(s.vars) > 0 {
 		println("\nVars")
 		for key, val := range s.vars {
-			println("\t", key, val.dims, len(val.ref))
+			fmt.Printf("\t%s dims %d refs %v\n", key, val.dims, val.ref)
 		}
 	}
 

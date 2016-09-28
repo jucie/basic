@@ -12,6 +12,9 @@ type astMulOp struct {
 
 func (p *parser) parseMulOp() *astMulOp {
 	head := p.parseExpOp()
+	if head == nil {
+		return nil
+	}
 	result := &astMulOp{head: head}
 
 	for {

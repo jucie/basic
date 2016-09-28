@@ -15,6 +15,9 @@ func isBoolOp(op token) bool {
 
 func (p *parser) parseBoolOp() *astBoolOp {
 	head := p.parseRelOp()
+	if head == nil {
+		return nil
+	}
 	result := &astBoolOp{head: head}
 
 	for {
