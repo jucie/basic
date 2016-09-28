@@ -22,6 +22,6 @@ func (p *parser) parseLet() *cmdLet {
 }
 
 func (c cmdLet) receive(g guest) {
-	g.visit(*c.dst)
-	g.visit(*c.src)
+	g.visit(c.dst)
+	g.visit(c.src)
 }

@@ -48,7 +48,7 @@ func (s *solver) visit(h host) {
 	case astType:
 		t := fmt.Stringer(v)
 		s.types[t.String()]++
-	case astVarRef:
+	case *astVarRef:
 		vv, ok := s.vars[v.id]
 		if !ok {
 			vv = &variable{}
@@ -76,6 +76,8 @@ func (s *solver) visit(h host) {
 		for _, dst := range v.dsts {
 			s.dsts[dst]++
 		}
+	default:
+		//fmt.Printf("solver.visit() is not ready for type %T\n", h)
 	}
 }
 
