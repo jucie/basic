@@ -15,20 +15,20 @@ type host interface {
 type solver struct {
 	p       *program
 	dsts    map[int]int
-	vars    map[string]int
 	types   map[string]int
 	funcs   map[string]int
 	predefs map[token]int
+	vars    map[string][]astVarRef
 }
 
 func newSolver(p *program) *solver {
 	return &solver{
 		p:       p,
 		dsts:    make(map[int]int),
-		vars:    make(map[string]int),
 		types:   make(map[string]int),
 		funcs:   make(map[string]int),
 		predefs: make(map[token]int),
+		vars:    make(map[string][]astVarRef),
 	}
 }
 
@@ -43,7 +43,7 @@ func (s *solver) visit(h host) {
 		t := fmt.Stringer(v)
 		s.types[t.String()]++
 	case astVarRef:
-		s.vars[v.id]++
+		s.vars[v.id] = append(s.vars[v.id], v)
 	case cmdDef:
 		s.funcs[v.id]++
 	case cmdGoto:

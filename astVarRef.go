@@ -21,6 +21,7 @@ func (p *parser) parseVarRef() *astVarRef {
 
 	if l.token == '$' {
 		result.type_ = strType
+		result.id += "$"
 		p.lex.next()
 	}
 

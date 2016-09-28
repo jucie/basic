@@ -44,6 +44,7 @@ func init() {
 
 func newLexer(rd *bufio.Reader) *lexer {
 	lex := &lexer{rd: rd, ids: make(map[string]bool)}
+	lex.pos.row = 1
 	lex.next()
 	return lex
 }
