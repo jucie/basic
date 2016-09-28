@@ -12,13 +12,18 @@ type host interface {
 	receive(g guest)
 }
 
+type variable struct {
+	def *astVarRef
+	ref []coord
+}
+
 type solver struct {
 	p       *program
 	dsts    map[int]int
 	types   map[string]int
 	funcs   map[string]int
 	predefs map[token]int
-	vars    map[string][]astVarRef
+	vars    map[string]*variable
 }
 
 func newSolver(p *program) *solver {
@@ -28,7 +33,7 @@ func newSolver(p *program) *solver {
 		types:   make(map[string]int),
 		funcs:   make(map[string]int),
 		predefs: make(map[token]int),
-		vars:    make(map[string][]astVarRef),
+		vars:    make(map[string]*variable),
 	}
 }
 
@@ -43,7 +48,16 @@ func (s *solver) visit(h host) {
 		t := fmt.Stringer(v)
 		s.types[t.String()]++
 	case astVarRef:
-		s.vars[v.id] = append(s.vars[v.id], v)
+		vv, ok := s.vars[v.id]
+		if !ok {
+			vv = &variable{}
+			s.vars[v.id] = vv
+		}
+		vv.ref = append(vv.ref, v.coord)
+	case cmdDim:
+		for _, def := range v.vars {
+			s.vars[def.id].def = def
+		}
 	case cmdDef:
 		s.funcs[v.id]++
 	case cmdGoto:
@@ -61,7 +75,7 @@ func (s *solver) showStats() {
 	if len(s.vars) > 0 {
 		println("\nVars")
 		for key, val := range s.vars {
-			println("\t", key, val)
+			println("\t", key, len(val.ref))
 		}
 	}
 
