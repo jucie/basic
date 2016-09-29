@@ -1,7 +1,7 @@
 package main
 
 type cmdFor struct {
-	id    string
+	index *astVarRef
 	begin *astExpr
 	end   *astExpr
 	step  *astExpr
@@ -14,9 +14,10 @@ func (p *parser) parseFor() *cmdFor {
 	if l.token != tokId {
 		return nil
 	}
-	result.id = l.s
-	p.lex.addId(result.id)
-	p.lex.next()
+	result.index = p.parseVarRef()
+	if result.index == nil {
+		return nil
+	}
 
 	if l.token != '=' {
 		return nil
@@ -41,6 +42,7 @@ func (p *parser) parseFor() *cmdFor {
 }
 
 func (c cmdFor) receive(g guest) {
+	g.visit(c.index)
 	g.visit(*c.begin)
 	g.visit(*c.end)
 	if c.step != nil {
