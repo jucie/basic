@@ -15,7 +15,7 @@ type host interface {
 type variable struct {
 	def  *astVarRef
 	dims int
-	ref  []coord
+	ref  []*astVarRef
 }
 
 type solver struct {
@@ -56,7 +56,7 @@ func (s *solver) visit(h host) {
 			vv = &variable{}
 			s.vars[v.id] = vv
 		}
-		vv.ref = append(vv.ref, v.coord)
+		vv.ref = append(vv.ref, v)
 		vv.dims = len(v.index)
 	case cmdDim:
 		for _, def := range v.vars {

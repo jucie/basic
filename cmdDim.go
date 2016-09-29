@@ -10,6 +10,9 @@ func (p *parser) parseDim() *cmdDim {
 
 	for {
 		v := p.parseVarRef()
+		if v == nil {
+			break
+		}
 		result.vars = append(result.vars, v)
 		if l.token != ',' {
 			break
