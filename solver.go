@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 type guest interface {
@@ -64,6 +65,9 @@ func (s *solver) visit(h host) {
 			if !ok {
 				vv = &variable{}
 				s.vars[def.id] = vv
+			}
+			if vv.def != nil {
+				fmt.Fprintf(os.Stderr, "Multiple definition for variable %s.", def.id)
 			}
 			vv.def = def
 			vv.dims = len(def.index)

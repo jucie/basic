@@ -31,25 +31,26 @@ const (
 	tokStop
 
 	// predefined functions
-	tokSin
-	tokCos
-	tokAtn
-	tokTan
-	tokSqr
-	tokExp
-	tokLog
 	tokAbs
+	tokAsc
+	tokAtn
+	tokChr
+	tokCos
+	tokExp
 	tokInt
+	tokLeft
+	tokLen
+	tokLog
+	tokMid
+	tokRight
 	tokRnd
 	tokSgn
-	tokVaL
-	tokChr
-	tokMid
-	tokLeft
-	tokRight
-	tokAsc
+	tokSin
+	tokSqr
 	tokStr
-	tokLen
+	tokTab
+	tokTan
+	tokVal
 
 	// general
 	tokThen
@@ -58,7 +59,6 @@ const (
 	tokLe
 	tokGe
 	tokNe
-	tokTab
 	tokFn
 	tokAnd
 	tokOr
@@ -119,5 +119,5 @@ var reservedWords = [...]reservedWord{
 	{tokTan, "TAN"},
 	{tokThen, "THEN"},
 	{tokTo, "TO"},
-	{tokVaL, "VAL"},
+	{tokVal, "VAL"},
 }

@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+type astType interface {
+	host
+	fmt.Stringer
+}
+
 type astNumType struct {
 }
 
@@ -24,10 +29,16 @@ func (a astStrType) String() string {
 func (a astStrType) receive(g guest) {
 }
 
-type astType interface {
-	host
-	fmt.Stringer
+type astVoidType struct {
+}
+
+func (a astVoidType) String() string {
+	return "void"
+}
+
+func (a astVoidType) receive(g guest) {
 }
 
 var numType astNumType
 var strType astStrType
+var voidType astVoidType

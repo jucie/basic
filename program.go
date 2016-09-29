@@ -67,8 +67,8 @@ func (p *program) resolve() {
 	}
 	solver := newSolver(p)
 	solver.visit(p)
-	solver.showStats()
-	solver.showNotReady()
+	//solver.showStats()
+	//solver.showNotReady()
 }
 
 func (p *program) generate() {

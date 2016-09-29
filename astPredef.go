@@ -47,3 +47,40 @@ func (a astPredef) receive(g guest) {
 		g.visit(*arg)
 	}
 }
+
+type predef struct {
+	token
+	name   string
+	type_  astType
+	params []astType
+}
+
+var predefs = make(map[token]predef)
+
+func init() {
+	var predefInfo = []predef{
+		{tokAbs, "ABS", numType, []astType{numType}},
+		{tokAsc, "ASC", numType, []astType{strType}},
+		{tokAtn, "ATN", numType, []astType{numType}},
+		{tokChr, "CHR", strType, []astType{numType}},
+		{tokCos, "COS", numType, []astType{numType}},
+		{tokExp, "EXP", numType, []astType{numType}},
+		{tokInt, "INT", numType, []astType{numType}},
+		{tokLeft, "LEFT", strType, []astType{strType, numType}},
+		{tokLen, "LEN", numType, []astType{strType}},
+		{tokLog, "LOG", numType, []astType{numType}},
+		{tokMid, "MID", strType, []astType{strType, numType, numType}},
+		{tokRight, "RIGHT", strType, []astType{strType, numType}},
+		{tokRnd, "RND", numType, []astType{numType}},
+		{tokSgn, "SGN", numType, []astType{numType}},
+		{tokSin, "SIN", numType, []astType{numType}},
+		{tokSqr, "SQR", numType, []astType{numType}},
+		{tokStr, "STR", strType, []astType{numType}},
+		{tokTab, "TAB", voidType, []astType{numType}},
+		{tokTan, "TAN", numType, []astType{numType}},
+		{tokVal, "VAL", numType, []astType{strType}},
+	}
+	for _, p := range predefInfo {
+		predefs[p.token] = p
+	}
+}
