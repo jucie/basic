@@ -5,14 +5,6 @@ import (
 	"os"
 )
 
-type guest interface {
-	visit(h host)
-}
-
-type host interface {
-	receive(g guest)
-}
-
 type variable struct {
 	def  *astVarRef
 	dims int
@@ -41,8 +33,7 @@ func newSolver(p *program) *solver {
 	}
 }
 
-func (s *solver) visit(h host) {
-	h.receive(s)
+func (s *solver) consider(h host) {
 	switch v := h.(type) {
 	case *astFnCall:
 		s.funcs[v.id]++

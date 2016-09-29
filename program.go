@@ -66,9 +66,11 @@ func (p *program) resolve() {
 		p.mapLines[l.id] = i
 	}
 	solver := newSolver(p)
-	solver.visit(p)
-	//solver.showStats()
-	//solver.showNotReady()
+	scan(p, func(h host) {
+		solver.consider(h)
+	})
+	solver.showStats()
+	solver.showNotReady()
 }
 
 func (p *program) generate() {
