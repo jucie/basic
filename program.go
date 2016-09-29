@@ -32,7 +32,7 @@ type program struct {
 	srcPath  string
 	dstPath  string
 	lines    []*progLine
-	mapLines map[int]int
+	mapLines map[int]*progLine
 }
 
 func newProgram() *program {
@@ -61,14 +61,16 @@ func loadProgram(path string) *program {
 }
 
 func (p *program) resolve() {
-	p.mapLines = make(map[int]int)
-	for i, l := range p.lines {
-		p.mapLines[l.id] = i
+	p.mapLines = make(map[int]*progLine)
+	for _, l := range p.lines {
+		p.mapLines[l.id] = l
+		println("Line ", l.id)
 	}
 	solver := newSolver(p)
 	scan(p, func(h host) {
 		solver.consider(h)
 	})
+	solver.linkLines(p.mapLines)
 	solver.showStats()
 	solver.showNotReady()
 }

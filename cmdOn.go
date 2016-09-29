@@ -6,7 +6,7 @@ import (
 
 type cmdOn struct {
 	expr *astExpr
-	dsts []int
+	dsts []targetLine
 }
 
 func (p *parser) parseOn() *cmdOn {
@@ -28,7 +28,9 @@ func (p *parser) parseOn() *cmdOn {
 		if err != nil {
 			return nil
 		}
-		result.dsts = append(result.dsts, dst)
+		t := targetLine{}
+		t.nbr = dst
+		result.dsts = append(result.dsts, t)
 		p.lex.next()
 		if l.token != ',' {
 			break

@@ -29,7 +29,9 @@ func (p *parser) parseIf() *cmdIf {
 			return nil
 		}
 		p.lex.next()
-		result.cmds = append(result.cmds, cmdGoto{line})
+		goto_ := cmdGoto{}
+		goto_.dst.nbr = line
+		result.cmds = append(result.cmds, goto_)
 	} else {
 		result.cmds = p.parseLineTail()
 	}

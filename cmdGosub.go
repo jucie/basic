@@ -4,8 +4,12 @@ import (
 	"strconv"
 )
 
+type targetLine struct {
+	nbr int
+	adr *progLine
+}
 type cmdGosub struct {
-	dst int
+	dst targetLine
 }
 
 func (p *parser) parseGosub() *cmdGosub {
@@ -16,7 +20,7 @@ func (p *parser) parseGosub() *cmdGosub {
 		return nil
 	}
 	var err error
-	result.dst, err = strconv.Atoi(l.s)
+	result.dst.nbr, err = strconv.Atoi(l.s)
 	if err != nil {
 		return nil
 	}

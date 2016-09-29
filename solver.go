@@ -13,7 +13,7 @@ type variable struct {
 
 type solver struct {
 	p        *program
-	dsts     map[int]int
+	dsts     []*targetLine
 	types    map[string]int
 	funcs    map[string]int
 	predefs  map[token]int
@@ -24,7 +24,6 @@ type solver struct {
 func newSolver(p *program) *solver {
 	return &solver{
 		p:        p,
-		dsts:     make(map[int]int),
 		types:    make(map[string]int),
 		funcs:    make(map[string]int),
 		predefs:  make(map[token]int),
@@ -66,12 +65,12 @@ func (s *solver) consider(h host) {
 	case cmdDef:
 		s.funcs[v.id]++
 	case cmdGoto:
-		s.dsts[v.dst]++
+		s.dsts = append(s.dsts, &v.dst)
 	case cmdGosub:
-		s.dsts[v.dst]++
+		s.dsts = append(s.dsts, &v.dst)
 	case cmdOn:
 		for _, dst := range v.dsts {
-			s.dsts[dst]++
+			s.dsts = append(s.dsts, &dst)
 		}
 	default:
 		s.notReady[fmt.Sprintf("%T", h)]++
@@ -83,13 +82,6 @@ func (s *solver) showStats() {
 		println("\nVars")
 		for key, val := range s.vars {
 			fmt.Printf("\t%s dims %d refs %v\n", key, val.dims, val.ref)
-		}
-	}
-
-	if len(s.dsts) > 0 {
-		println("\nDsts")
-		for key, val := range s.dsts {
-			println("\t", key, val)
 		}
 	}
 
@@ -110,7 +102,7 @@ func (s *solver) showStats() {
 	if len(s.predefs) > 0 {
 		println("\nPredefs")
 		for key, val := range s.predefs {
-			println("\t", key, val)
+			println("\t", predefs[key].name, val)
 		}
 	}
 }
@@ -118,5 +110,17 @@ func (s *solver) showStats() {
 func (s *solver) showNotReady() {
 	for key, _ := range s.notReady {
 		println("Solver not ready for type ", key)
+	}
+}
+
+func (s *solver) linkLines(mapLines map[int]*progLine) {
+	for i, _ := range s.dsts {
+		dst := s.dsts[i]
+		l, ok := mapLines[dst.nbr]
+		if !ok {
+			fmt.Fprintf(os.Stderr, "Target line not found: %d\n", dst.nbr)
+		} else {
+			dst.adr = l
+		}
 	}
 }

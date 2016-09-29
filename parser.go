@@ -149,6 +149,7 @@ func (p *parser) parseLine() *progLine {
 		panic(err)
 	}
 	p.lex.next()
+	println("Line id", id)
 
 	line := &progLine{id: id}
 	line.cmds = p.parseLineTail()
