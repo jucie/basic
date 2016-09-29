@@ -64,7 +64,6 @@ func (p *program) resolve() {
 	p.mapLines = make(map[int]*progLine)
 	for _, l := range p.lines {
 		p.mapLines[l.id] = l
-		println("Line ", l.id)
 	}
 	solver := newSolver(p)
 	scan(p, func(h host) {

@@ -119,13 +119,13 @@ func (p *parser) unexpected() {
 
 func (p *parser) parseLineTail() []cmd {
 	var result []cmd
+	l := p.lex.peek()
 	for {
 		cmd := p.parseCmd()
 		if cmd == nil {
 			break
 		}
 		result = append(result, cmd)
-		l := p.lex.peek()
 		if l.token == ':' {
 			p.lex.next() // skip separator
 			continue
@@ -135,6 +135,9 @@ func (p *parser) parseLineTail() []cmd {
 		} else {
 			return nil
 		}
+	}
+	if l.token == tokEol {
+		p.lex.next()
 	}
 	return result
 }
@@ -149,7 +152,6 @@ func (p *parser) parseLine() *progLine {
 		panic(err)
 	}
 	p.lex.next()
-	println("Line id", id)
 
 	line := &progLine{id: id}
 	line.cmds = p.parseLineTail()
