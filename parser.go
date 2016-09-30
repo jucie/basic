@@ -129,6 +129,7 @@ func (p *parser) parseLineTail() []cmd {
 			p.unexpected()
 			break
 		}
+		println(fmt.Sprintf("%T", cmd))
 		result = append(result, cmd)
 		if l.token == ':' {
 			p.lex.next() // skip separator
@@ -155,6 +156,7 @@ func (p *parser) parseLine() *progLine {
 	if err != nil {
 		panic(err)
 	}
+	println("Line number ", id)
 	p.lex.next()
 
 	line := &progLine{id: id}

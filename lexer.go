@@ -74,6 +74,7 @@ func (lex *lexer) next() {
 		}
 	}
 	l.s = string(lex.buf.Bytes())
+	println(l.token, l.s)
 }
 
 func (lex *lexer) nextLine() {
