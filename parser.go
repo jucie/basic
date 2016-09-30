@@ -121,8 +121,12 @@ func (p *parser) parseLineTail() []cmd {
 	var result []cmd
 	l := p.lex.peek()
 	for {
+		if l.token == tokEol {
+			break
+		}
 		cmd := p.parseCmd()
 		if cmd == nil {
+			p.unexpected()
 			break
 		}
 		result = append(result, cmd)

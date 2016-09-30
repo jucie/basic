@@ -16,6 +16,16 @@ type progLine struct {
 	succ []*progLine
 	pred []*progLine
 }
+type progLines []*progLine
+
+func (pl progLines) find(dst int) *progLine {
+	for _, l := range pl {
+		if l.id >= dst {
+			return l
+		}
+	}
+	return nil
+}
 
 func (l *progLine) linkSucc(succ *progLine) {
 	l.succ = append(l.succ, succ)
@@ -29,10 +39,9 @@ func (l *progLine) receive(g guest) {
 }
 
 type program struct {
-	srcPath  string
-	dstPath  string
-	lines    []*progLine
-	mapLines map[int]*progLine
+	srcPath string
+	dstPath string
+	lines   progLines
 }
 
 func newProgram() *program {
@@ -61,17 +70,13 @@ func loadProgram(path string) *program {
 }
 
 func (p *program) resolve() {
-	p.mapLines = make(map[int]*progLine)
-	for _, l := range p.lines {
-		p.mapLines[l.id] = l
-	}
 	solver := newSolver(p)
 	scan(p, func(h host) {
 		solver.consider(h)
 	})
-	solver.linkLines(p.mapLines)
-	solver.showStats()
-	solver.showNotReady()
+	solver.linkLines(p.lines)
+	//solver.showStats()
+	//solver.showNotReady()
 }
 
 func (p *program) generate() {

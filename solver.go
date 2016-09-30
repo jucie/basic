@@ -113,11 +113,18 @@ func (s *solver) showNotReady() {
 	}
 }
 
-func (s *solver) linkLines(mapLines map[int]*progLine) {
+func (s *solver) linkLines(lines progLines) {
+	m := make(map[int]*progLine)
+	for _, l := range lines {
+		m[l.id] = l
+	}
 	for i, _ := range s.dsts {
 		dst := s.dsts[i]
-		l, ok := mapLines[dst.nbr]
+		l, ok := m[dst.nbr]
 		if !ok {
+			l = lines.find(dst.nbr)
+		}
+		if l == nil {
 			fmt.Fprintf(os.Stderr, "Target line not found: %d\n", dst.nbr)
 		} else {
 			dst.adr = l
