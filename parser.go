@@ -17,7 +17,7 @@ func newParser(rd *bufio.Reader) *parser {
 	return &parser{lex: lex}
 }
 
-func (p *parser) parseCmd() cmd {
+func (p *parser) parseCmd() (cmd, bool) {
 	l := p.lex.peek()
 	tok := l.token
 
@@ -26,70 +26,127 @@ func (p *parser) parseCmd() cmd {
 		p.lex.next()
 		fallthrough
 	case tokId:
-		return p.parseLet()
+		{
+			c := p.parseLet()
+			return c, c != nil
+		}
 	case tokData:
-		p.lex.next()
-		return p.parseData()
+		{
+			p.lex.next()
+			c := p.parseData()
+			return c, c != nil
+		}
 	case tokDef:
-		p.lex.next()
-		return p.parseDef()
+		{
+			p.lex.next()
+			c := p.parseDef()
+			return c, c != nil
+		}
 	case tokDim:
-		p.lex.next()
-		return p.parseDim()
+		{
+			p.lex.next()
+			c := p.parseDim()
+			return c, c != nil
+		}
 	case tokEnd:
-		p.lex.next()
-		return p.parseEnd()
+		{
+			p.lex.next()
+			c := p.parseEnd()
+			return c, c != nil
+		}
 	case tokFor:
-		p.lex.next()
-		return p.parseFor()
+		{
+			p.lex.next()
+			c := p.parseFor()
+			return c, c != nil
+		}
 	case tokGosub:
-		p.lex.next()
-		return p.parseGosub()
+		{
+			p.lex.next()
+			c := p.parseGosub()
+			return c, c != nil
+		}
 	case tokGoto:
-		p.lex.next()
-		return p.parseGoto()
+		{
+			p.lex.next()
+			c := p.parseGoto()
+			return c, c != nil
+		}
 	case tokIf:
-		p.lex.next()
-		return p.parseIf()
+		{
+			p.lex.next()
+			c := p.parseIf()
+			return c, c != nil
+		}
 	case tokInput:
-		p.lex.next()
-		return p.parseInput()
+		{
+			p.lex.next()
+			c := p.parseInput()
+			return c, c != nil
+		}
 	case tokNext:
-		p.lex.next()
-		return p.parseNext()
+		{
+			p.lex.next()
+			c := p.parseNext()
+			return c, c != nil
+		}
 	case tokOn:
-		p.lex.next()
-		return p.parseOn()
+		{
+			p.lex.next()
+			c := p.parseOn()
+			return c, c != nil
+		}
 	case tokPrint:
-		p.lex.next()
-		return p.parsePrint()
+		{
+			p.lex.next()
+			c := p.parsePrint()
+			return c, c != nil
+		}
 	case tokRead:
-		p.lex.next()
-		return p.parseRead()
+		{
+			p.lex.next()
+			c := p.parseRead()
+			return c, c != nil
+		}
 	case tokRem:
-		p.lex.next()
-		return p.parseRem()
+		{
+			p.lex.next()
+			c := p.parseRem()
+			return c, c != nil
+		}
 	case tokRestore:
-		p.lex.next()
-		return p.parseRestore()
+		{
+			p.lex.next()
+			c := p.parseRestore()
+			return c, c != nil
+		}
 	case tokReturn:
-		p.lex.next()
-		return p.parseReturn()
+		{
+			p.lex.next()
+			c := p.parseReturn()
+			return c, c != nil
+		}
 	case tokRun:
-		p.lex.next()
-		return p.parseRun()
+		{
+			p.lex.next()
+			c := p.parseRun()
+			return c, c != nil
+		}
 	case tokStop:
-		p.lex.next()
-		return p.parseStop()
+		{
+			p.lex.next()
+			c := p.parseStop()
+			return c, c != nil
+		}
 	case tokEol:
 		fallthrough
 	case tokEof:
-		return nil
+		return nil, true
 	default:
 		p.unexpected()
 		p.lex.consumeLine()
 	}
-	return nil
+	return nil, false
 }
 
 func (p *parser) isEndOfCommand() bool {
@@ -124,12 +181,11 @@ func (p *parser) parseLineTail() []cmd {
 		if l.token == tokEol {
 			break
 		}
-		cmd := p.parseCmd()
-		if cmd == nil {
+		cmd, ok := p.parseCmd()
+		if !ok {
 			p.unexpected()
 			break
 		}
-		println(fmt.Sprintf("%T", cmd))
 		result = append(result, cmd)
 		if l.token == ':' {
 			p.lex.next() // skip separator
@@ -156,7 +212,6 @@ func (p *parser) parseLine() *progLine {
 	if err != nil {
 		panic(err)
 	}
-	println("Line number ", id)
 	p.lex.next()
 
 	line := &progLine{id: id}

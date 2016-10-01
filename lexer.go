@@ -29,19 +29,20 @@ type lexer struct {
 	unreadBuf bytes.Buffer
 }
 
-var keywordMap = make(map[string]token)
-
+/*
+var keywordMap = make(map[int]map[string]token)
 func init() {
 	for i, _ := range reservedWords {
 		word := &reservedWords[i]
-		_, ok := keywordMap[word.s]
-		if ok {
-			panic("Repeated keyword: " + word.s)
+		lenS := len(word.s)
+		_, ok := keywordMap[lenS]
+		if !ok {
+			keywordMap[lenS] = make(map[string]token)
 		}
-		keywordMap[word.s] = word.token
+		keywordMap[lenS][word.s] = word.token
 	}
 }
-
+*/
 func newLexer(rd *bufio.Reader) *lexer {
 	lex := &lexer{rd: rd, ids: make(map[string]bool)}
 	lex.pos.row = 1
@@ -136,6 +137,20 @@ func (lex *lexer) handleString(b byte) token {
 	return tokString
 }
 
+func findKeyword(s string) (string, token) {
+	lenS := len(s)
+	for _, rw := range reservedWords {
+		rws := rw.s
+		if len(rws) > lenS {
+			continue
+		}
+		if strings.HasSuffix(s, rws) {
+			return rws, rw.token
+		}
+	}
+	return "", token(0)
+}
+
 func (lex *lexer) handleId(b byte) token {
 	lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 
@@ -157,8 +172,8 @@ func (lex *lexer) handleId(b byte) token {
 		return tokId // we have a single character id
 	}
 
-	var firstNonLetter byte
-	// read the longest letter string
+	var lastByte byte
+	// read full word
 	for {
 		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 		b, err = lex.readByte()
@@ -166,52 +181,37 @@ func (lex *lexer) handleId(b byte) token {
 			break
 		}
 		if !unicode.IsLetter(rune(b)) {
-			firstNonLetter = b
+			lastByte = b
 			break
 		}
 	}
 
-	// search for keyword as prefix
+	// search for limit
 	s := string(lex.buf.Bytes())
-	for keyword, tok := range keywordMap {
-		if strings.HasPrefix(s, keyword) {
-			lex.unreadString(s[len(keyword):])
-			lex.unreadByte(firstNonLetter)
-			lex.buf.Reset()
-			lex.buf.WriteString(keyword)
-			return tok
-		}
-	}
-
-	// search for keyword as suffix
-	var unread string
-	for {
-		max := 0
-		index := len(s)
-		for keyword, _ := range keywordMap {
-			if strings.HasSuffix(s, keyword) {
-				if max < len(keyword) {
-					max = len(keyword)
-				}
-			}
-		}
-		if max > 0 {
-			index -= max
-			keyword := s[index:]
-			unread = keyword + unread
-			s = s[:index]
-		} else {
+	var token token
+	var kw string
+	var end int
+	var lenKw int
+	for end = len(s); end > 0; end -= len(kw) {
+		kw, tok := findKeyword(s[:end])
+		lenKw = len(kw)
+		if lenKw == 0 {
 			break
 		}
+		token = tok
 	}
 
-	if len(unread) > 0 {
-		lex.unreadString(unread)
-		lex.buf.Reset()
-		lex.buf.WriteString(s)
+	lex.buf.Reset()
+	if end == 0 { // we have a keyword right at the beginning
+		lex.buf.WriteString(kw)
+		lex.unreadString(s[lenKw:])
+	} else {
+		lex.buf.WriteString(s[:end])
+		lex.unreadString(s[end:])
+		token = tokId
 	}
-	lex.unreadByte(firstNonLetter)
-	return tokId
+	lex.unreadByte(lastByte)
+	return token
 }
 
 func (lex *lexer) handleDigraph(b byte) token {

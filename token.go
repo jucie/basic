@@ -1,5 +1,9 @@
 package main
 
+import (
+	"sort"
+)
+
 const (
 	tokEof = iota + 128
 	tokEol
@@ -74,7 +78,7 @@ type reservedWord struct {
 	s     string
 }
 
-var reservedWords = [...]reservedWord{
+var reservedWordList = [...]reservedWord{
 	{tokAbs, "ABS"},
 	{tokAnd, "AND"},
 	{tokAsc, "ASC"},
@@ -120,4 +124,27 @@ var reservedWords = [...]reservedWord{
 	{tokThen, "THEN"},
 	{tokTo, "TO"},
 	{tokVal, "VAL"},
+}
+
+type rws []reservedWord
+
+func (l rws) Len() int { return len(l) }
+func (l rws) Less(i, j int) bool {
+	lis := l[i].s
+	ljs := l[j].s
+	if len(lis) > len(ljs) {
+		return true
+	}
+	if len(lis) < len(ljs) {
+		return false
+	}
+	return lis > ljs
+}
+func (l rws) Swap(i, j int) { l[i], l[j] = l[j], l[i] }
+
+var reservedWords rws
+
+func init() {
+	reservedWords = reservedWordList[:]
+	sort.Sort(reservedWords)
 }
