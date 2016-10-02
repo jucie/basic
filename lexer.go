@@ -75,7 +75,6 @@ func (lex *lexer) next() {
 		}
 	}
 	l.s = string(lex.buf.Bytes())
-	println(l.token, l.s)
 }
 
 func (lex *lexer) nextLine() {
@@ -186,32 +185,40 @@ func (lex *lexer) handleId(b byte) token {
 		}
 	}
 
-	// search for limit
 	s := string(lex.buf.Bytes())
-	var token token
-	var kw string
-	var end int
-	var lenKw int
-	for end = len(s); end > 0; end -= len(kw) {
-		kw, tok := findKeyword(s[:end])
-		lenKw = len(kw)
-		if lenKw == 0 {
+	min := len(s)
+	var rwmin reservedWord
+	for _, rw := range reservedWords {
+		pos := strings.Index(s, rw.s)
+		if pos < 0 {
+			continue
+		} else if pos == 0 {
+			min = 0
+			rwmin = rw
 			break
+		} else {
+			if pos < min {
+				min = pos
+				rwmin = rw
+			}
 		}
-		token = tok
 	}
-
-	lex.buf.Reset()
-	if end == 0 { // we have a keyword right at the beginning
-		lex.buf.WriteString(kw)
-		lex.unreadString(s[lenKw:])
-	} else {
-		lex.buf.WriteString(s[:end])
-		lex.unreadString(s[end:])
-		token = tokId
+	if min == 0 {
+		lex.buf.Reset()
+		lex.buf.WriteString(rwmin.s)
+		lex.unreadString(s[len(rwmin.s):])
+		lex.unreadByte(lastByte)
+		return rwmin.token
+	} else if min > 0 && min < len(s) {
+		lex.buf.Reset()
+		lex.buf.WriteString(s[:min])
+		lex.unreadString(s[min:])
+		lex.unreadByte(lastByte)
+		return tokId
 	}
+	lex.unreadString(s)
 	lex.unreadByte(lastByte)
-	return token
+	return tokId
 }
 
 func (lex *lexer) handleDigraph(b byte) token {
