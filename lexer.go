@@ -216,7 +216,6 @@ func (lex *lexer) handleId(b byte) token {
 		lex.unreadByte(lastByte)
 		return tokId
 	}
-	lex.unreadString(s)
 	lex.unreadByte(lastByte)
 	return tokId
 }
