@@ -25,7 +25,6 @@ type lexer struct {
 	buf   bytes.Buffer
 	lexeme
 	previous  lexeme
-	ids       map[string]bool
 	unreadBuf bytes.Buffer
 	c         chan lexeme
 }
@@ -45,7 +44,7 @@ func init() {
 }
 */
 func newLexer(rd *bufio.Reader) *lexer {
-	lex := &lexer{rd: rd, ids: make(map[string]bool)}
+	lex := &lexer{rd: rd}
 	lex.c = make(chan lexeme)
 	go lex.next0()
 	return lex
@@ -191,6 +190,7 @@ func (lex *lexer) handleId(b byte) token {
 		}
 	}
 
+	// trying to find keywords in the string.
 	s := string(lex.buf.Bytes())
 	min := len(s)
 	var rwmin reservedWord
@@ -204,26 +204,24 @@ func (lex *lexer) handleId(b byte) token {
 			break
 		} else {
 			if pos < min {
-				min = pos
+				min = pos // the earlier find is what we want.
 				rwmin = rw
 			}
 		}
 	}
-	if min == 0 {
+	var tok token = tokId
+	if min == 0 { // the string begins with a keyword
 		lex.buf.Reset()
 		lex.buf.WriteString(rwmin.s)
 		lex.unreadString(s[len(rwmin.s):])
-		lex.unreadByte(lastByte)
-		return rwmin.token
-	} else if min > 0 && min < len(s) {
+		tok = rwmin.token
+	} else if min > 0 && min < len(s) { // we have an id before the keyword
 		lex.buf.Reset()
 		lex.buf.WriteString(s[:min])
 		lex.unreadString(s[min:])
-		lex.unreadByte(lastByte)
-		return tokId
 	}
-	lex.unreadByte(lastByte)
-	return tokId
+	lex.unreadByte(lastByte) // the non letter character after the string
+	return tok
 }
 
 func (lex *lexer) handleDigraph(b byte) token {
@@ -340,10 +338,6 @@ func (lex *lexer) walk() token {
 
 	lex.buf.WriteByte(b)
 	return token(b)
-}
-
-func (lex *lexer) addId(id string) {
-	lex.ids[id] = true
 }
 
 func (lex *lexer) readByte() (byte, error) {
