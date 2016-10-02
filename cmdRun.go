@@ -6,11 +6,15 @@ type cmdRun struct {
 
 func (p *parser) parseRun() *cmdRun {
 	l := p.lex.peek()
+	result := &cmdRun{}
 
 	if l.token != tokString {
 		return nil
 	}
-	return &cmdRun{arg: l.s}
+	result.arg = l.s
+	p.lex.next()
+
+	return result
 }
 
 func (c cmdRun) receive(g guest) {
