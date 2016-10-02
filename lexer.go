@@ -27,6 +27,7 @@ type lexer struct {
 	previous  lexeme
 	ids       map[string]bool
 	unreadBuf bytes.Buffer
+	c         chan lexeme
 }
 
 /*
@@ -45,8 +46,8 @@ func init() {
 */
 func newLexer(rd *bufio.Reader) *lexer {
 	lex := &lexer{rd: rd, ids: make(map[string]bool)}
-	lex.pos.row = 1
-	lex.next()
+	lex.c = make(chan lexeme)
+	go lex.next0()
 	return lex
 }
 
@@ -62,7 +63,11 @@ func (lex *lexer) peek() *lexeme {
 
 func (lex *lexer) next() {
 	lex.previous = lex.lexeme
-	l := &lex.lexeme
+	lex.lexeme = <-lex.c
+}
+
+func (lex *lexer) next0() {
+	l := lex.previous
 	for {
 		l.pos = lex.pos
 		l.token = lex.walk()
@@ -75,6 +80,7 @@ func (lex *lexer) next() {
 		}
 	}
 	l.s = string(lex.buf.Bytes())
+	lex.c <- l
 }
 
 func (lex *lexer) nextLine() {
