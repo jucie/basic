@@ -32,7 +32,6 @@ func (p *parser) parseCmd() (cmd, bool) {
 		}
 	case tokData:
 		{
-			p.lex.next()
 			c := p.parseData()
 			return c, c != nil
 		}
