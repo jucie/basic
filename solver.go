@@ -11,6 +11,13 @@ type variable struct {
 	ref  []*astVarRef
 }
 
+type block struct {
+	id int
+	cmds
+	pred []*block
+	succ []*block
+}
+
 type solver struct {
 	p        *program
 	dsts     []*targetLine
@@ -19,6 +26,7 @@ type solver struct {
 	predefs  map[token]int
 	vars     map[string]*variable
 	notReady map[string]int
+	blocks   map[int]*block
 }
 
 func newSolver(p *program) *solver {
@@ -29,6 +37,7 @@ func newSolver(p *program) *solver {
 		predefs:  make(map[token]int),
 		vars:     make(map[string]*variable),
 		notReady: make(map[string]int),
+		blocks:   make(map[int]*block),
 	}
 }
 

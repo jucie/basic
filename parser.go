@@ -215,7 +215,6 @@ func (p *parser) parseLine() *progLine {
 
 func (p *parser) parseProgram(prog *program) {
 	p.prog = prog
-	fmt.Printf("Parsing program %s\n", p.prog.srcPath)
 	var previous *progLine
 	for {
 		line := p.parseLine()
@@ -228,4 +227,5 @@ func (p *parser) parseProgram(prog *program) {
 		}
 		previous = line
 	}
+	fmt.Printf("Parsed program %s (%d lines)\n", p.prog.srcPath, len(p.prog.lines))
 }

@@ -9,10 +9,11 @@ import (
 type cmd interface {
 	host
 }
+type cmds []cmd
 
 type progLine struct {
-	id   int
-	cmds []cmd
+	id int
+	cmds
 }
 type progLines []*progLine
 
