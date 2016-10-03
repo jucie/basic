@@ -8,9 +8,9 @@ type astVarRef struct {
 }
 
 func (p *parser) parseVarRef() *astVarRef {
-	result := &astVarRef{coord: p.lex.pos, type_: numType}
-
 	l := p.lex.peek()
+	result := &astVarRef{coord: l.pos, type_: numType}
+
 	if l.token != tokId {
 		p.unexpected()
 		return nil

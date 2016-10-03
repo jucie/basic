@@ -24,7 +24,6 @@ type lexer struct {
 	begin coord
 	buf   bytes.Buffer
 	lexeme
-	previous  lexeme
 	unreadBuf bytes.Buffer
 	c         chan lexeme
 }
@@ -52,25 +51,22 @@ func (lex *lexer) peek() *lexeme {
 }
 
 func (lex *lexer) next() {
-	lex.previous = lex.lexeme
 	lex.lexeme = <-lex.c
 }
 
 func (lex *lexer) next0() {
-	l := lex.previous
+	var tok token
 	for {
-		l.pos = lex.pos
-		l.token = lex.walk()
-		if l.token == tokRem || l.token == tokData {
+		tok := lex.walk()
+		if tok == tokRem || tok == tokData {
 			lex.consumeLine()
 		}
 		lex.pos.col += lex.buf.Len()
-		if l.token != tokSpace {
+		if tok != tokSpace {
 			break
 		}
 	}
-	l.s = string(lex.buf.Bytes())
-	lex.c <- l
+	lex.c <- lexeme{token: tok, pos: lex.pos, s: string(lex.buf.Bytes())}
 }
 
 func (lex *lexer) nextLine() {
