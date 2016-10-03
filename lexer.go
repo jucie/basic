@@ -29,24 +29,15 @@ type lexer struct {
 	c         chan lexeme
 }
 
-/*
-var keywordMap = make(map[int]map[string]token)
-func init() {
-	for i, _ := range reservedWords {
-		word := &reservedWords[i]
-		lenS := len(word.s)
-		_, ok := keywordMap[lenS]
-		if !ok {
-			keywordMap[lenS] = make(map[string]token)
-		}
-		keywordMap[lenS][word.s] = word.token
-	}
-}
-*/
 func newLexer(rd *bufio.Reader) *lexer {
 	lex := &lexer{rd: rd}
 	lex.c = make(chan lexeme)
-	go lex.next0()
+	go func() {
+		for {
+			lex.next0()
+		}
+	}()
+	lex.next()
 	return lex
 }
 
@@ -139,20 +130,6 @@ func (lex *lexer) handleString(b byte) token {
 		}
 	}
 	return tokString
-}
-
-func findKeyword(s string) (string, token) {
-	lenS := len(s)
-	for _, rw := range reservedWords {
-		rws := rw.s
-		if len(rws) > lenS {
-			continue
-		}
-		if strings.HasSuffix(s, rws) {
-			return rws, rw.token
-		}
-	}
-	return "", token(0)
 }
 
 func (lex *lexer) handleId(b byte) token {

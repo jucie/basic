@@ -60,16 +60,11 @@ func (p *parser) parseCmd() (cmd, bool) {
 			c := p.parseFor()
 			return c, c != nil
 		}
+	case tokGoto:
+		fallthrough
 	case tokGosub:
 		{
-			p.lex.next()
-			c := p.parseGosub()
-			return c, c != nil
-		}
-	case tokGoto:
-		{
-			p.lex.next()
-			c := p.parseGoto()
+			c := p.parseGo()
 			return c, c != nil
 		}
 	case tokIf:

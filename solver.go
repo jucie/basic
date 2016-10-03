@@ -64,9 +64,7 @@ func (s *solver) consider(h host) {
 		}
 	case cmdDef:
 		s.funcs[v.id]++
-	case cmdGoto:
-		s.dsts = append(s.dsts, &v.dst)
-	case cmdGosub:
+	case cmdGo:
 		s.dsts = append(s.dsts, &v.dst)
 	case cmdOn:
 		for _, dst := range v.dsts {
