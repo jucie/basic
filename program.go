@@ -13,8 +13,6 @@ type cmd interface {
 type progLine struct {
 	id   int
 	cmds []cmd
-	succ []*progLine
-	pred []*progLine
 }
 type progLines []*progLine
 
@@ -25,11 +23,6 @@ func (pl progLines) find(dst int) *progLine {
 		}
 	}
 	return nil
-}
-
-func (l *progLine) linkSucc(succ *progLine) {
-	l.succ = append(l.succ, succ)
-	succ.pred = append(succ.pred, l)
 }
 
 func (l *progLine) receive(g guest) {
