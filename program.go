@@ -32,10 +32,18 @@ func (l *progLine) receive(g guest) {
 	}
 }
 
+type block struct {
+	cmds
+	pred []*block
+	succ []*block
+}
+type blocks []*block
+
 type program struct {
 	srcPath string
 	dstPath string
 	lines   progLines
+	blocks
 }
 
 func newProgram() *program {
@@ -69,6 +77,7 @@ func (p *program) resolve() {
 		solver.consider(h)
 	})
 	solver.linkLines(p.lines)
+	p.buildBlocks()
 	//solver.showStats()
 	//solver.showNotReady()
 }
@@ -81,4 +90,45 @@ func (p program) receive(g guest) {
 	for _, l := range p.lines {
 		g.visit(l)
 	}
+}
+
+func (p *program) appendCmds(bl *block, cmds cmds) *block {
+	for _, cmd := range cmds {
+		bl.cmds = append(bl.cmds, cmd)
+		switch c := cmd.(type) {
+		case *cmdIf:
+			p.blocks = append(p.blocks, bl)
+			innerBl := &block{cmds: c.cmds}
+			innerBl = p.appendCmds(innerBl, c.cmds)
+			p.blocks = append(p.blocks, innerBl)
+			bl = &block{}
+		case *cmdGo:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		case *cmdReturn:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		case *cmdNext:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		case *cmdEnd:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		case *cmdStop:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		case *cmdFor:
+			p.blocks = append(p.blocks, bl)
+			bl = &block{}
+		}
+	}
+	return bl
+}
+
+func (p *program) buildBlocks() {
+	bl := &block{}
+	for _, l := range p.lines {
+		bl = p.appendCmds(bl, l.cmds)
+	}
+	p.blocks = append(p.blocks, bl)
 }

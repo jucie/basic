@@ -227,5 +227,4 @@ func (p *parser) parseProgram(prog *program) {
 		}
 		previous = line
 	}
-	fmt.Printf("Parsed program %s (%d lines)\n", p.prog.srcPath, len(p.prog.lines))
 }
