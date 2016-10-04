@@ -103,8 +103,10 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 			p.blocks = append(p.blocks, innerBl)
 			bl = &block{}
 		case *cmdGo:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			if !c.sub {
+				p.blocks = append(p.blocks, bl)
+				bl = &block{}
+			}
 		case *cmdReturn:
 			p.blocks = append(p.blocks, bl)
 			bl = &block{}
