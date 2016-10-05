@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -11,10 +12,19 @@ type cmd interface {
 }
 type cmds []cmd
 
+type block struct {
+	cmds
+	pred []*block
+	succ []*block
+}
+type blocks []*block
+
 type progLine struct {
 	id int
 	cmds
-	isDst bool
+	pred       blocks
+	isDst      bool
+	firstBlock *block
 }
 type progLines []*progLine
 
@@ -32,13 +42,6 @@ func (l *progLine) receive(g guest) {
 		g.visit(cmd)
 	}
 }
-
-type block struct {
-	cmds
-	pred []*block
-	succ []*block
-}
-type blocks []*block
 
 type program struct {
 	srcPath string
@@ -115,9 +118,12 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 			outterBlock.succ = append(outterBlock.succ, bl)
 			bl.pred = append(bl.pred, outterBlock)
 		case *cmdGo:
-			if !c.sub {
-				bl = p.newBlock(bl, false)
+			l := p.lines.find(c.dst.nbr)
+			if l == nil {
+				panic("coudn't find GOTO destination line")
 			}
+			l.pred = append(l.pred, bl)
+			bl = p.newBlock(bl, c.sub)
 		case *cmdFor:
 			bl = p.newBlock(bl, true)
 		case *cmdNext:
@@ -138,7 +144,19 @@ func (p *program) buildBlocks() {
 	for _, l := range p.lines {
 		if l.isDst {
 			bl = p.newBlock(bl, false)
+			l.firstBlock = bl
 		}
 		bl = p.appendCmds(bl, l.cmds)
+	}
+	for _, l := range p.lines {
+		if l.isDst {
+			if len(l.pred) == 0 {
+				panic(fmt.Sprintf("%s: Destination %d has no predecessors", p.srcPath, l.id))
+			}
+			for _, prBlock := range l.pred {
+				prBlock.succ = append(prBlock.succ, l.firstBlock)
+				l.firstBlock.pred = append(l.firstBlock.pred, prBlock)
+			}
+		}
 	}
 }
