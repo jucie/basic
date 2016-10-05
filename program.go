@@ -14,6 +14,7 @@ type cmds []cmd
 type progLine struct {
 	id int
 	cmds
+	isDst bool
 }
 type progLines []*progLine
 
@@ -92,36 +93,41 @@ func (p program) receive(g guest) {
 	}
 }
 
+func (p *program) newBlock(bl *block, shouldLink bool) *block {
+	newBlock := &block{}
+	newBlock.pred = append(newBlock.pred, bl)
+	if shouldLink {
+		bl.succ = append(bl.succ, newBlock)
+		p.blocks = append(p.blocks, bl)
+	}
+	return newBlock
+}
+
 func (p *program) appendCmds(bl *block, cmds cmds) *block {
 	for _, cmd := range cmds {
 		bl.cmds = append(bl.cmds, cmd)
 		switch c := cmd.(type) {
 		case *cmdIf:
-			p.blocks = append(p.blocks, bl)
-			innerBl := &block{cmds: c.cmds}
+			outterBlock := bl
+			innerBl := p.newBlock(bl, true)
 			innerBl = p.appendCmds(innerBl, c.cmds)
-			p.blocks = append(p.blocks, innerBl)
-			bl = &block{}
+			bl = p.newBlock(innerBl, true)
+			outterBlock.succ = append(outterBlock.succ, bl)
+			bl.pred = append(bl.pred, outterBlock)
 		case *cmdGo:
 			if !c.sub {
-				p.blocks = append(p.blocks, bl)
-				bl = &block{}
+				bl = p.newBlock(bl, false)
 			}
 		case *cmdReturn:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			bl = p.newBlock(bl, true)
 		case *cmdNext:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			bl = p.newBlock(bl, true)
 		case *cmdEnd:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			bl = p.newBlock(bl, true)
 		case *cmdStop:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			bl = p.newBlock(bl, true)
 		case *cmdFor:
-			p.blocks = append(p.blocks, bl)
-			bl = &block{}
+			bl = p.newBlock(bl, true)
 		}
 	}
 	return bl
@@ -130,7 +136,9 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 func (p *program) buildBlocks() {
 	bl := &block{}
 	for _, l := range p.lines {
+		if l.isDst {
+			bl = p.newBlock(bl, false)
+		}
 		bl = p.appendCmds(bl, l.cmds)
 	}
-	p.blocks = append(p.blocks, bl)
 }

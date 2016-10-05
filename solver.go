@@ -126,6 +126,7 @@ func (s *solver) linkLines(lines progLines) {
 			fmt.Fprintf(os.Stderr, "Target line not found: %d\n", dst.nbr)
 		} else {
 			dst.adr = l
+			l.isDst = true
 		}
 	}
 }
