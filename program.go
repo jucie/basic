@@ -118,16 +118,16 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 			if !c.sub {
 				bl = p.newBlock(bl, false)
 			}
-		case *cmdReturn:
+		case *cmdFor:
 			bl = p.newBlock(bl, true)
 		case *cmdNext:
 			bl = p.newBlock(bl, true)
 		case *cmdEnd:
-			bl = p.newBlock(bl, true)
+			bl = p.newBlock(bl, false)
 		case *cmdStop:
-			bl = p.newBlock(bl, true)
-		case *cmdFor:
-			bl = p.newBlock(bl, true)
+			bl = p.newBlock(bl, false)
+		case *cmdReturn:
+			bl = p.newBlock(bl, false)
 		}
 	}
 	return bl
