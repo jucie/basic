@@ -124,6 +124,15 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 			}
 			l.pred = append(l.pred, bl)
 			bl = p.newBlock(bl, c.sub)
+		case *cmdOn:
+			for _, dst := range c.dsts {
+				l := p.lines.find(dst.nbr)
+				if l == nil {
+					panic("coudn't find ON GOTO destination line")
+				}
+				l.pred = append(l.pred, bl)
+			}
+			bl = p.newBlock(bl, true)
 		case *cmdFor:
 			bl = p.newBlock(bl, true)
 		case *cmdNext:
