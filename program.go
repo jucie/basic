@@ -14,8 +14,8 @@ type cmds []cmd
 
 type block struct {
 	cmds
-	pred []*block
-	succ []*block
+	pred blocks
+	succ blocks
 }
 type blocks []*block
 
@@ -97,13 +97,21 @@ func (p program) receive(g guest) {
 	}
 }
 
+func linkBlocks(pred, succ *block) {
+	for _, bl := range succ.pred {
+		if bl == pred {
+			return // nothing to do
+		}
+	}
+	succ.pred = append(succ.pred, pred)
+}
+
 func (p *program) newBlock(bl *block, shouldLink bool) *block {
 	p.blocks = append(p.blocks, bl)
 
 	newBlock := &block{}
 	if shouldLink {
-		newBlock.pred = append(newBlock.pred, bl)
-		bl.succ = append(bl.succ, newBlock)
+		linkBlocks(bl, newBlock)
 	}
 	return newBlock
 }
@@ -117,8 +125,7 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 			innerBl := p.newBlock(bl, true)
 			innerBl = p.appendCmds(innerBl, c.cmds)
 			bl = p.newBlock(innerBl, true)
-			outterBlock.succ = append(outterBlock.succ, bl)
-			bl.pred = append(bl.pred, outterBlock)
+			linkBlocks(outterBlock, bl)
 		case *cmdGo:
 			l := p.lines.find(c.dst.nbr)
 			if l == nil {
@@ -150,6 +157,17 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 	return bl
 }
 
+func linkBackwards(blocks blocks) {
+	for _, bl := range blocks {
+		bl.succ = nil
+	}
+	for _, bl := range blocks {
+		for _, pred := range bl.pred {
+			pred.succ = append(pred.succ, bl)
+		}
+	}
+}
+
 func (p *program) buildBlocks() {
 	bl := &block{}
 	for _, l := range p.lines {
@@ -159,17 +177,44 @@ func (p *program) buildBlocks() {
 		}
 		bl = p.appendCmds(bl, l.cmds)
 	}
+	p.blocks = append(p.blocks, bl)
+
 	for _, l := range p.lines {
 		if l.isDst {
 			if len(l.pred) == 0 {
 				panic(fmt.Sprintf("%s: Destination %d has no predecessors", p.srcPath, l.id))
 			}
 			for _, prBlock := range l.pred {
-				prBlock.succ = append(prBlock.succ, l.firstBlock)
-				l.firstBlock.pred = append(l.firstBlock.pred, prBlock)
+				linkBlocks(prBlock, l.firstBlock)
 			}
 		}
 	}
+
+	if len(p.blocks) == 0 {
+		return
+	}
+
+	linkBackwards(p.blocks)
+
+	var curr *block
+	var v blocks
+	for _, bl := range p.blocks {
+		if curr == nil {
+			curr = bl
+			continue
+		}
+		if len(bl.pred) == 1 && len(curr.succ) == 1 && curr.succ[0] == bl {
+			curr.cmds = append(curr.cmds, bl.cmds...)
+			curr.succ = bl.succ
+		} else {
+			v = append(v, curr)
+			curr = bl
+		}
+	}
+	v = append(v, curr)
+	p.blocks = v
+
+	linkBackwards(p.blocks)
 }
 
 func (p *program) generateDotFile() {
@@ -186,9 +231,6 @@ func (p *program) generateDotFile() {
 	for _, bl := range p.blocks {
 		for _, pred := range bl.pred {
 			fmt.Fprintf(wr, "\t\"%p\" -> \"%p\"\n", pred, bl)
-		}
-		for _, succ := range bl.succ {
-			fmt.Fprintf(wr, "\t\"%p\" -> \"%p\"\n", bl, succ)
 		}
 	}
 	fmt.Fprintf(wr, "}\n")
