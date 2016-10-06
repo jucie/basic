@@ -29,7 +29,7 @@ func (p *parser) parseIf() *cmdIf {
 			return nil
 		}
 		p.lex.next()
-		goto_ := cmdGo{}
+		goto_ := &cmdGo{}
 		goto_.dst.nbr = line
 		result.cmds = append(result.cmds, goto_)
 	} else {
