@@ -84,6 +84,7 @@ func (p *program) resolve() {
 	p.buildBlocks()
 	//solver.showStats()
 	//solver.showNotReady()
+	p.generateDotFile()
 }
 
 func (p *program) generate() {
@@ -97,11 +98,12 @@ func (p program) receive(g guest) {
 }
 
 func (p *program) newBlock(bl *block, shouldLink bool) *block {
+	p.blocks = append(p.blocks, bl)
+
 	newBlock := &block{}
-	newBlock.pred = append(newBlock.pred, bl)
 	if shouldLink {
+		newBlock.pred = append(newBlock.pred, bl)
 		bl.succ = append(bl.succ, newBlock)
-		p.blocks = append(p.blocks, bl)
 	}
 	return newBlock
 }
@@ -168,4 +170,26 @@ func (p *program) buildBlocks() {
 			}
 		}
 	}
+}
+
+func (p *program) generateDotFile() {
+	f, err := os.Create(p.srcPath + ".dot")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	wr := bufio.NewWriter(f)
+	fmt.Fprintf(wr, "digraph G {\n")
+	defer wr.Flush()
+
+	for _, bl := range p.blocks {
+		for _, pred := range bl.pred {
+			fmt.Fprintf(wr, "\t\"%p\" -> \"%p\"\n", pred, bl)
+		}
+		for _, succ := range bl.succ {
+			fmt.Fprintf(wr, "\t\"%p\" -> \"%p\"\n", bl, succ)
+		}
+	}
+	fmt.Fprintf(wr, "}\n")
 }
