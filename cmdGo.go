@@ -15,7 +15,15 @@ type cmdGo struct {
 
 func (p *parser) parseGo() *cmdGo {
 	l := p.lex.peek()
-	result := &cmdGo{sub: (l.token == tokGosub)}
+	result := &cmdGo{}
+	switch l.token {
+	case tokTo:
+		result.sub = false
+	case tokSub:
+		result.sub = true
+	default:
+		return nil
+	}
 	p.lex.next()
 
 	if l.token != tokNumber {

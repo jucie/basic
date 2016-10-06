@@ -18,7 +18,11 @@ func (p *parser) parseOn() *cmdOn {
 		return nil
 	}
 
-	if l.token != tokGoto {
+	if l.token != tokGo {
+		return nil
+	}
+	p.lex.next()
+	if l.token != tokTo {
 		return nil
 	}
 	p.lex.next()

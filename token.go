@@ -19,8 +19,7 @@ const (
 	tokDim
 	tokEnd
 	tokFor
-	tokGosub
-	tokGoto
+	tokGo
 	tokIf
 	tokInput
 	tokLet
@@ -59,6 +58,7 @@ const (
 	// general
 	tokThen
 	tokTo
+	tokSub
 	tokStep
 	tokLe
 	tokGe
@@ -92,8 +92,7 @@ var reservedWordList = [...]reservedWord{
 	{tokExp, "EXP"},
 	{tokFn, "FN"},
 	{tokFor, "FOR"},
-	{tokGosub, "GOSUB"},
-	{tokGoto, "GOTO"},
+	{tokGo, "GO"},
 	{tokIf, "IF"},
 	{tokInput, "INPUT"},
 	{tokInt, "INT"},
@@ -119,6 +118,7 @@ var reservedWordList = [...]reservedWord{
 	{tokStep, "STEP"},
 	{tokStop, "STOP"},
 	{tokStr, "STR"},
+	{tokSub, "SUB"},
 	{tokTab, "TAB"},
 	{tokTan, "TAN"},
 	{tokThen, "THEN"},
