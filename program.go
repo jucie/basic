@@ -13,6 +13,7 @@ type cmd interface {
 type cmds []cmd
 
 type block struct {
+	label string
 	cmds
 	pred blocks
 	succ blocks
@@ -47,11 +48,12 @@ type program struct {
 	srcPath string
 	dstPath string
 	lines   progLines
+	ids     map[int]int
 	blocks
 }
 
 func newProgram() *program {
-	return &program{}
+	return &program{ids: make(map[int]int)}
 }
 
 func loadProgram(path string) *program {
@@ -106,25 +108,28 @@ func linkBlocks(pred, succ *block) {
 	succ.pred = append(succ.pred, pred)
 }
 
-func (p *program) newBlock(bl *block, shouldLink bool) *block {
-	p.blocks = append(p.blocks, bl)
+func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
+	if bl != nil {
+		p.blocks = append(p.blocks, bl)
+	}
 
-	newBlock := &block{}
-	if shouldLink {
+	p.ids[id]++
+	newBlock := &block{label: fmt.Sprintf("%d:%d", id, p.ids[id])}
+	if shouldLink && bl != nil {
 		linkBlocks(bl, newBlock)
 	}
 	return newBlock
 }
 
-func (p *program) appendCmds(bl *block, cmds cmds) *block {
+func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 	for _, cmd := range cmds {
 		bl.cmds = append(bl.cmds, cmd)
 		switch c := cmd.(type) {
 		case *cmdIf:
 			outterBlock := bl
-			innerBl := p.newBlock(bl, true)
-			innerBl = p.appendCmds(innerBl, c.cmds)
-			bl = p.newBlock(innerBl, true)
+			innerBl := p.newBlock(id, bl, true)
+			innerBl = p.appendCmds(id, innerBl, c.cmds)
+			bl = p.newBlock(id, innerBl, true)
 			linkBlocks(outterBlock, bl)
 		case *cmdGo:
 			l := p.lines.find(c.dst.nbr)
@@ -132,7 +137,7 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 				panic("coudn't find GOTO destination line")
 			}
 			l.pred = append(l.pred, bl)
-			bl = p.newBlock(bl, c.sub)
+			bl = p.newBlock(id, bl, c.sub)
 		case *cmdOn:
 			for _, dst := range c.dsts {
 				l := p.lines.find(dst.nbr)
@@ -141,17 +146,17 @@ func (p *program) appendCmds(bl *block, cmds cmds) *block {
 				}
 				l.pred = append(l.pred, bl)
 			}
-			bl = p.newBlock(bl, true)
+			bl = p.newBlock(id, bl, true)
 		case *cmdFor:
-			bl = p.newBlock(bl, true)
+			bl = p.newBlock(id, bl, true)
 		case *cmdNext:
-			bl = p.newBlock(bl, true)
+			bl = p.newBlock(id, bl, true)
 		case *cmdEnd:
-			bl = p.newBlock(bl, false)
+			bl = p.newBlock(id, bl, false)
 		case *cmdStop:
-			bl = p.newBlock(bl, false)
+			bl = p.newBlock(id, bl, false)
 		case *cmdReturn:
-			bl = p.newBlock(bl, false)
+			bl = p.newBlock(id, bl, false)
 		}
 	}
 	return bl
@@ -169,13 +174,13 @@ func linkBackwards(blocks blocks) {
 }
 
 func (p *program) buildBlocks() {
-	bl := &block{}
+	var bl *block
 	for _, l := range p.lines {
-		if l.isDst {
-			bl = p.newBlock(bl, false)
+		if bl == nil || l.isDst {
+			bl = p.newBlock(l.id, bl, false)
 			l.firstBlock = bl
 		}
-		bl = p.appendCmds(bl, l.cmds)
+		bl = p.appendCmds(l.id, bl, l.cmds)
 	}
 	p.blocks = append(p.blocks, bl)
 
@@ -230,7 +235,7 @@ func (p *program) generateDotFile() {
 
 	for _, bl := range p.blocks {
 		for _, pred := range bl.pred {
-			fmt.Fprintf(wr, "\t\"%p\" -> \"%p\"\n", pred, bl)
+			fmt.Fprintf(wr, "\t\"%s\" -> \"%s\"\n", pred.label, bl.label)
 		}
 	}
 	fmt.Fprintf(wr, "}\n")
