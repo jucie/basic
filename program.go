@@ -84,6 +84,7 @@ func (p *program) resolve() {
 	})
 	solver.linkLines(p.lines)
 	p.buildBlocks()
+	p.coalesceBlocks()
 	//solver.showStats()
 	//solver.showNotReady()
 	p.generateDotFile()
@@ -195,11 +196,13 @@ func (p *program) buildBlocks() {
 		}
 	}
 
+	linkBackwards(p.blocks)
+}
+
+func (p *program) coalesceBlocks() {
 	if len(p.blocks) == 0 {
 		return
 	}
-
-	linkBackwards(p.blocks)
 
 	var curr *block
 	var v blocks
