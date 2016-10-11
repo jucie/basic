@@ -163,7 +163,7 @@ func (lex *lexer) handleId(b byte) token {
 		}
 	}
 
-	// trying to find keywords in the string.
+	// trying to find keywords inside the string.
 	s := string(lex.buf.Bytes())
 	min := len(s)
 	var rwmin reservedWord

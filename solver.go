@@ -6,9 +6,10 @@ import (
 )
 
 type variable struct {
-	def  *astVarRef
-	dims int
-	ref  []*astVarRef
+	def        *astVarRef
+	dims       int
+	ref        []*astVarRef
+	isForIndex bool
 }
 
 type solver struct {
@@ -49,7 +50,7 @@ func (s *solver) consider(h host) {
 		}
 		vv.ref = append(vv.ref, v)
 		vv.dims = len(v.index)
-	case cmdDim:
+	case *cmdDim:
 		for _, def := range v.vars {
 			vv, ok := s.vars[def.id]
 			if !ok {
@@ -62,11 +63,18 @@ func (s *solver) consider(h host) {
 			vv.def = def
 			vv.dims = len(def.index)
 		}
-	case cmdDef:
+	case *cmdFor:
+		vv, ok := s.vars[v.index.id]
+		if !ok {
+			vv = &variable{}
+			s.vars[v.index.id] = vv
+		}
+		vv.isForIndex = true
+	case *cmdDef:
 		s.funcs[v.id]++
-	case cmdGo:
+	case *cmdGo:
 		s.dsts = append(s.dsts, &v.dst)
-	case cmdOn:
+	case *cmdOn:
 		for _, dst := range v.dsts {
 			s.dsts = append(s.dsts, &dst)
 		}
@@ -106,7 +114,7 @@ func (s *solver) showStats() {
 }
 
 func (s *solver) showNotReady() {
-	for key, _ := range s.notReady {
+	for key := range s.notReady {
 		println("Solver not ready for type ", key)
 	}
 }
@@ -116,7 +124,7 @@ func (s *solver) linkLines(lines progLines) {
 	for _, l := range lines {
 		m[l.id] = l
 	}
-	for i, _ := range s.dsts {
+	for i := range s.dsts {
 		dst := s.dsts[i]
 		l, ok := m[dst.nbr]
 		if !ok {
