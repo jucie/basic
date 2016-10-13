@@ -184,14 +184,10 @@ func (p *parser) parseLineTail() []cmd {
 			p.lex.next() // skip separator
 			continue
 		} else if l.token == tokEol {
-			p.lex.next() // skip terminator
 			break
 		} else {
 			return nil
 		}
-	}
-	if l.token == tokEol {
-		p.lex.next()
 	}
 	return result
 }
@@ -209,6 +205,9 @@ func (p *parser) parseLine() *progLine {
 
 	line := &progLine{id: id}
 	line.cmds = p.parseLineTail()
+	if l.token == tokEol {
+		p.lex.next()
+	}
 	return line
 }
 
