@@ -31,7 +31,7 @@ func compile(path string) {
 	prog := loadProgram(path)
 	prog.resolve()
 	prog.generate()
-	fmt.Printf("Parsed program %s (%d lines, %d blocks)\n", prog.srcPath, len(prog.lines), len(prog.blocks))
+	fmt.Printf("Parsed program %s (%d lines, %d blocks, %d orphans)\n", prog.srcPath, len(prog.lines), len(prog.blocks), prog.orphans)
 }
 
 func main() {

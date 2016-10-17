@@ -50,6 +50,7 @@ type program struct {
 	lines   progLines
 	ids     map[int]int
 	blocks
+	orphans int
 }
 
 func newProgram() *program {
@@ -84,7 +85,7 @@ func (p *program) resolve() {
 	})
 	solver.linkLines(p.lines)
 	p.buildBlocks()
-	p.coalesceBlocks()
+	//p.coalesceBlocks()
 	//solver.showStats()
 	//solver.showNotReady()
 	p.generateDotFile()
@@ -101,22 +102,30 @@ func (p program) receive(g guest) {
 }
 
 func linkBlocks(pred, succ *block) {
+	if pred == nil || succ == nil {
+		println("Era nil")
+		return
+	}
 	for _, bl := range succ.pred {
 		if bl == pred {
+			println("Já está")
 			return // nothing to do
 		}
 	}
+	fmt.Println("Apendou", succ.label, " to ", pred.label)
 	succ.pred = append(succ.pred, pred)
 }
 
 func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
 	if bl != nil {
+		println("Não é nil")
 		p.blocks = append(p.blocks, bl)
 	}
 
 	p.ids[id]++
 	newBlock := &block{label: fmt.Sprintf("%d:%d", id, p.ids[id])}
-	if shouldLink && bl != nil {
+	if shouldLink {
+		println("Deve ligar")
 		linkBlocks(bl, newBlock)
 	}
 	return newBlock
@@ -151,6 +160,7 @@ func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 		case *cmdFor:
 			bl = p.newBlock(id, bl, true)
 		case *cmdNext:
+			println("cmdNext")
 			bl = p.newBlock(id, bl, true)
 		case *cmdEnd:
 			bl = p.newBlock(id, bl, false)
@@ -172,6 +182,16 @@ func linkBackwards(blocks blocks) {
 			pred.succ = append(pred.succ, bl)
 		}
 	}
+}
+
+func (blocks blocks) orphans() int {
+	var count int
+	for _, bl := range blocks {
+		if len(bl.pred) == 0 {
+			count++
+		}
+	}
+	return count
 }
 
 func (p *program) buildBlocks() {
@@ -197,6 +217,7 @@ func (p *program) buildBlocks() {
 	}
 
 	linkBackwards(p.blocks)
+	p.orphans = p.blocks.orphans()
 }
 
 func (p *program) coalesceBlocks() {
@@ -237,8 +258,12 @@ func (p *program) generateDotFile() {
 	defer wr.Flush()
 
 	for _, bl := range p.blocks {
-		for _, pred := range bl.pred {
-			fmt.Fprintf(wr, "\t\"%s\" -> \"%s\"\n", pred.label, bl.label)
+		if len(bl.pred) > 0 {
+			for _, pred := range bl.pred {
+				fmt.Fprintf(wr, "\t\"%s\" -> \"%s\"\n", pred.label, bl.label)
+			}
+		} else {
+			fmt.Fprintf(wr, "\t\"%s\"\n", bl.label)
 		}
 	}
 	fmt.Fprintf(wr, "}\n")
