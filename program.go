@@ -85,7 +85,8 @@ func (p *program) resolve() {
 	})
 	solver.linkLines(p.lines)
 	p.buildBlocks()
-	//p.coalesceBlocks()
+	p.removeEmptyBlocks()
+	p.coalesceBlocks()
 	//solver.showStats()
 	//solver.showNotReady()
 	p.generateDotFile()
@@ -112,18 +113,15 @@ func linkBlocks(pred, succ *block) {
 			return // nothing to do
 		}
 	}
-	fmt.Println("Apendou", succ.label, " to ", pred.label)
+	fmt.Println("Linked block", pred.label, " to ", succ.label)
 	succ.pred = append(succ.pred, pred)
 }
 
 func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
-	if bl != nil {
-		println("Não é nil")
-		p.blocks = append(p.blocks, bl)
-	}
-
+	p.addBlock(bl)
 	p.ids[id]++
 	newBlock := &block{label: fmt.Sprintf("%d:%d", id, p.ids[id])}
+	println("Created block", newBlock.label)
 	if shouldLink {
 		println("Deve ligar")
 		linkBlocks(bl, newBlock)
@@ -134,6 +132,7 @@ func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
 func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 	for _, cmd := range cmds {
 		bl.cmds = append(bl.cmds, cmd)
+		fmt.Printf("cmd %T\n", cmd)
 		switch c := cmd.(type) {
 		case *cmdIf:
 			outterBlock := bl
@@ -194,6 +193,13 @@ func (blocks blocks) orphans() int {
 	return count
 }
 
+func (p *program) addBlock(bl *block) {
+	if bl == nil {
+		return
+	}
+	p.blocks = append(p.blocks, bl)
+}
+
 func (p *program) buildBlocks() {
 	var bl *block
 	for _, l := range p.lines {
@@ -201,9 +207,12 @@ func (p *program) buildBlocks() {
 			bl = p.newBlock(l.id, bl, false)
 			l.firstBlock = bl
 		}
+		println("Linha: ", l.id, "block:", bl.label)
 		bl = p.appendCmds(l.id, bl, l.cmds)
+		println("appendCmds returned block:", bl.label)
 	}
-	p.blocks = append(p.blocks, bl)
+	println("last block:", bl.label)
+	p.addBlock(bl)
 
 	for _, l := range p.lines {
 		if l.isDst {
@@ -244,6 +253,52 @@ func (p *program) coalesceBlocks() {
 	p.blocks = v
 
 	linkBackwards(p.blocks)
+}
+
+func (bl *block) removeBlock(tbr *block) {
+	if tbr == bl {
+		return
+	}
+
+	var newPred blocks
+	for _, pred := range bl.pred {
+		if pred == tbr {
+			continue
+		}
+		newPred = append(newPred, pred)
+	}
+	bl.pred = newPred
+
+	var newSucc blocks
+	for _, succ := range bl.succ {
+		if succ == tbr {
+			continue
+		}
+		newSucc = append(newSucc, succ)
+	}
+	bl.succ = newSucc
+}
+
+func (p *program) removeBlock(tbr *block) {
+	for _, bl := range p.blocks {
+		bl.removeBlock(tbr)
+	}
+}
+
+func (p *program) removeEmptyBlocks() {
+	if len(p.blocks) == 0 {
+		return
+	}
+
+	var v blocks
+	for _, bl := range p.blocks {
+		if len(bl.cmds) == 0 && len(bl.pred) == 0 {
+			p.removeBlock(bl)
+		} else {
+			v = append(v, bl)
+		}
+	}
+	p.blocks = v
 }
 
 func (p *program) generateDotFile() {
