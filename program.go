@@ -90,9 +90,12 @@ func (p *program) resolve() {
 	//solver.showStats()
 	//solver.showNotReady()
 	p.generateDotFile()
+	p.generate()
 }
 
 func (p *program) generate() {
+	var g generator
+	g.generate(p)
 	// TODO
 }
 
