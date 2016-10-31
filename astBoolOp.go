@@ -37,8 +37,8 @@ func (p *parser) parseBoolOp() *astBoolOp {
 }
 
 func (a astBoolOp) receive(g guest) {
-	g.visit(*a.head)
+	g.visit(a.head)
 	for _, t := range a.tail {
-		g.visit(*t.val)
+		g.visit(t.val)
 	}
 }

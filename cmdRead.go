@@ -24,6 +24,6 @@ func (p *parser) parseRead() *cmdRead {
 
 func (c cmdRead) receive(g guest) {
 	for _, v := range c.vars {
-		g.visit(*v)
+		g.visit(v)
 	}
 }

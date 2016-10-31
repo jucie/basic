@@ -38,8 +38,8 @@ func isMulOp(b token) bool {
 }
 
 func (a astMulOp) receive(g guest) {
-	g.visit(*a.head)
+	g.visit(a.head)
 	for _, t := range a.tail {
-		g.visit(*t.val)
+		g.visit(t.val)
 	}
 }

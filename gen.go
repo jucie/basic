@@ -16,7 +16,11 @@ type code struct {
 }
 
 func (g *generator) consider(h host) {
-	//TODO
+	/*
+		switch v := h.(type) {
+		default:
+		}
+	*/
 }
 
 func (g *generator) generate(prog *program) code {

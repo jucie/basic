@@ -27,6 +27,6 @@ func (p *parser) parseDim() *cmdDim {
 
 func (c cmdDim) receive(g guest) {
 	for _, v := range c.vars {
-		g.visit(*v)
+		g.visit(v)
 	}
 }

@@ -44,7 +44,7 @@ func (p *parser) parsePredef() *astPredef {
 func (a astPredef) receive(g guest) {
 	g.visit(a.type_)
 	for _, arg := range a.args {
-		g.visit(*arg)
+		g.visit(arg)
 	}
 }
 

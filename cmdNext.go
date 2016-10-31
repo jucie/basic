@@ -27,6 +27,6 @@ func (p *parser) parseNext() *cmdNext {
 
 func (c cmdNext) receive(g guest) {
 	for _, v := range c.vars {
-		g.visit(*v)
+		g.visit(v)
 	}
 }

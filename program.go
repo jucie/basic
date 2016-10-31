@@ -88,7 +88,6 @@ func (p *program) resolve() {
 	p.removeEmptyBlocks()
 	p.coalesceBlocks()
 	//solver.showStats()
-	//solver.showNotReady()
 	p.generateDotFile()
 	p.generate()
 }
@@ -107,16 +106,13 @@ func (p program) receive(g guest) {
 
 func linkBlocks(pred, succ *block) {
 	if pred == nil || succ == nil {
-		println("Era nil")
 		return
 	}
 	for _, bl := range succ.pred {
 		if bl == pred {
-			println("Já está")
 			return // nothing to do
 		}
 	}
-	fmt.Println("Linked block", pred.label, " to ", succ.label)
 	succ.pred = append(succ.pred, pred)
 }
 
@@ -124,9 +120,7 @@ func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
 	p.addBlock(bl)
 	p.ids[id]++
 	newBlock := &block{label: fmt.Sprintf("%d:%d", id, p.ids[id])}
-	println("Created block", newBlock.label)
 	if shouldLink {
-		println("Deve ligar")
 		linkBlocks(bl, newBlock)
 	}
 	return newBlock
@@ -135,7 +129,6 @@ func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
 func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 	for _, cmd := range cmds {
 		bl.cmds = append(bl.cmds, cmd)
-		fmt.Printf("cmd %T\n", cmd)
 		switch c := cmd.(type) {
 		case *cmdIf:
 			outterBlock := bl
@@ -162,7 +155,6 @@ func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 		case *cmdFor:
 			bl = p.newBlock(id, bl, true)
 		case *cmdNext:
-			println("cmdNext")
 			bl = p.newBlock(id, bl, true)
 		case *cmdEnd:
 			bl = p.newBlock(id, bl, false)
@@ -210,11 +202,8 @@ func (p *program) buildBlocks() {
 			bl = p.newBlock(l.id, bl, false)
 			l.firstBlock = bl
 		}
-		println("Linha: ", l.id, "block:", bl.label)
 		bl = p.appendCmds(l.id, bl, l.cmds)
-		println("appendCmds returned block:", bl.label)
 	}
-	println("last block:", bl.label)
 	p.addBlock(bl)
 
 	for _, l := range p.lines {

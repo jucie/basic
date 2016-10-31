@@ -36,5 +36,5 @@ func (p *parser) parseFnCall() *astFnCall {
 }
 
 func (a astFnCall) receive(g guest) {
-	g.visit(*a.arg)
+	g.visit(a.arg)
 }

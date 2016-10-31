@@ -38,8 +38,8 @@ func isAddOp(b token) bool {
 }
 
 func (a astAddOp) receive(g guest) {
-	g.visit(*a.head)
+	g.visit(a.head)
 	for _, t := range a.tail {
-		g.visit(*t.val)
+		g.visit(t.val)
 	}
 }

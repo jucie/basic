@@ -43,9 +43,9 @@ func (p *parser) parseFor() *cmdFor {
 
 func (c cmdFor) receive(g guest) {
 	g.visit(c.index)
-	g.visit(*c.begin)
-	g.visit(*c.end)
+	g.visit(c.begin)
+	g.visit(c.end)
 	if c.step != nil {
-		g.visit(*c.step)
+		g.visit(c.step)
 	}
 }

@@ -13,5 +13,5 @@ func (p *parser) parseExpr() *astExpr {
 }
 
 func (a astExpr) receive(g guest) {
-	g.visit(*a.boolOp)
+	g.visit(a.boolOp)
 }

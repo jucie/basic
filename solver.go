@@ -13,25 +13,25 @@ type variable struct {
 }
 
 type solver struct {
-	p        *program
-	dsts     []*targetLine
-	types    map[string]int
-	funcs    map[string]int
-	predefs  map[token]int
-	vars     map[string]*variable
-	notReady map[string]int
+	p       *program
+	dsts    []*targetLine
+	types   map[string]int
+	funcs   map[string]int
+	predefs map[token]int
+	vars    map[string]*variable
 }
 
 func newSolver(p *program) *solver {
 	return &solver{
-		p:        p,
-		types:    make(map[string]int),
-		funcs:    make(map[string]int),
-		predefs:  make(map[token]int),
-		vars:     make(map[string]*variable),
-		notReady: make(map[string]int),
+		p:       p,
+		types:   make(map[string]int),
+		funcs:   make(map[string]int),
+		predefs: make(map[token]int),
+		vars:    make(map[string]*variable),
 	}
 }
+
+var mt = make(map[string]int)
 
 func (s *solver) consider(h host) {
 	switch v := h.(type) {
@@ -79,7 +79,7 @@ func (s *solver) consider(h host) {
 			s.dsts = append(s.dsts, &dst)
 		}
 	default:
-		s.notReady[fmt.Sprintf("%T", h)]++
+		mt[fmt.Sprintf("%T", h)]++
 	}
 }
 
@@ -110,12 +110,6 @@ func (s *solver) showStats() {
 		for key, val := range s.predefs {
 			println("\t", predefs[key].name, val)
 		}
-	}
-}
-
-func (s *solver) showNotReady() {
-	for key := range s.notReady {
-		println("Solver not ready for type ", key)
 	}
 }
 

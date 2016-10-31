@@ -45,5 +45,5 @@ func (p *parser) parseOn() *cmdOn {
 }
 
 func (c cmdOn) receive(g guest) {
-	g.visit(*c.expr)
+	g.visit(c.expr)
 }

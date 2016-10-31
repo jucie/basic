@@ -52,6 +52,6 @@ func (p *parser) parseVarRef() *astVarRef {
 func (a astVarRef) receive(g guest) {
 	g.visit(a.type_)
 	for _, i := range a.index {
-		g.visit(*i)
+		g.visit(i)
 	}
 }

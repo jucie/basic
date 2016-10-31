@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 )
 
 func compileFromList(path string) {
@@ -41,5 +42,13 @@ func main() {
 	for i := 1; i < len(os.Args); i++ {
 		path := os.Args[i]
 		compile(path)
+	}
+	var typenames []string
+	for key, _ := range mt {
+		typenames = append(typenames, key)
+	}
+	sort.Strings(typenames)
+	for _, typename := range typenames {
+		println(typename)
 	}
 }
