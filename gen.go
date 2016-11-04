@@ -17,13 +17,13 @@ type code struct {
 	fixups []int
 }
 
-func (g *generator) emitByte(val byte) {
+func (g *generator) emitByte(b byte) {
 	g.text.WriteByte(b)
 }
 
 func (g *generator) emitBytes(val ...byte) {
 	for _, b := range val {
-		emitByte(b)
+		g.emitByte(b)
 	}
 }
 
@@ -32,7 +32,7 @@ func (g *generator) consider(h host) {
 	case *cmdData:
 		g.data = append(g.data, v.values...)
 	case *cmdEnd:
-		fallthrough
+		g.emitBytes(0x5F, 0x5D, 0xC3) // pop rdi; pop rbp; ret
 	case *cmdStop:
 		g.emitBytes(0x5F, 0x5D, 0xC3) // pop rdi; pop rbp; ret
 	default:
@@ -43,5 +43,5 @@ func (g *generator) generate(prog *program) code {
 	scan(prog, func(h host) {
 		g.consider(h)
 	})
-	return code{text: g.text.Bytes(), data: g.data.Bytes(), fixups: g.fixups}
+	return code{text: g.text.Bytes(), data: g.data, fixups: g.fixups}
 }
