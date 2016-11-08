@@ -49,6 +49,6 @@ func main() {
 	}
 	sort.Strings(typenames)
 	for _, typename := range typenames {
-		println(typename)
+		fmt.Printf("%6d\t%s\n", mt[typename], typename)
 	}
 }

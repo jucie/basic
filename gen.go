@@ -14,6 +14,7 @@ type generator struct {
 type code struct {
 	text   []byte
 	data   []string
+	lit    []string
 	fixups []int
 }
 
