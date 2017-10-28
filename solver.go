@@ -12,11 +12,17 @@ type variable struct {
 	isForIndex bool
 }
 
+type function struct {
+	id  string
+	def *cmdFnDef
+	ref []*astFnCall
+}
+
 type solver struct {
 	p       *program
 	dsts    []*targetLine
 	types   map[string]int
-	funcs   map[string]int
+	funcs   map[string]*function
 	predefs map[token]int
 	vars    map[string]*variable
 }
@@ -25,7 +31,7 @@ func newSolver(p *program) *solver {
 	return &solver{
 		p:       p,
 		types:   make(map[string]int),
-		funcs:   make(map[string]int),
+		funcs:   make(map[string]*function),
 		predefs: make(map[token]int),
 		vars:    make(map[string]*variable),
 	}
@@ -36,8 +42,6 @@ var mt = make(map[string]int)
 func (s *solver) consider(h host) {
 	mt[fmt.Sprintf("%T", h)]++
 	switch v := h.(type) {
-	case *astFnCall:
-		s.funcs[v.id]++
 	case *astPredef:
 		s.predefs[v.function]++
 	case astType:
@@ -71,8 +75,23 @@ func (s *solver) consider(h host) {
 			s.vars[v.index.id] = vv
 		}
 		vv.isForIndex = true
-	case *cmdDef:
-		s.funcs[v.id]++
+	case *cmdFnDef:
+		vv, ok := s.funcs[v.id]
+		if !ok {
+			vv = &function{id: v.id}
+			s.funcs[v.id] = vv
+		}
+		if vv.def != nil {
+			fmt.Fprintf(os.Stderr, "Multiple definition for function %s.", v.id)
+		}
+		vv.def = v
+	case *astFnCall:
+		vv, ok := s.funcs[v.id]
+		if !ok {
+			vv = &function{id: v.id}
+			s.funcs[v.id] = vv
+		}
+		vv.ref = append(vv.ref, v)
 	case *cmdGo:
 		s.dsts = append(s.dsts, &v.dst)
 	case *cmdOn:
@@ -86,7 +105,7 @@ func (s *solver) showStats() {
 	if len(s.vars) > 0 {
 		println("\nVars:", len(s.vars))
 		for key, val := range s.vars {
-			fmt.Printf("\t%s dims %d refs %v\n", key, val.dims, val.ref)
+			fmt.Printf("\t%s dims %d refs %d\n", key, val.dims, len(val.ref))
 		}
 	}
 
@@ -100,7 +119,7 @@ func (s *solver) showStats() {
 	if len(s.funcs) > 0 {
 		println("\nFunctions")
 		for key, val := range s.funcs {
-			println("\t", key, val)
+			fmt.Printf("\t%s refs %d\n", key, len(val.ref))
 		}
 	}
 

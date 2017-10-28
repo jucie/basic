@@ -1,14 +1,14 @@
 package main
 
-type cmdDef struct {
+type cmdFnDef struct {
 	id   string
 	arg  string
 	expr *astExpr
 }
 
-func (p *parser) parseDef() *cmdDef {
+func (p *parser) parseDef() *cmdFnDef {
 	l := p.lex.peek()
-	result := &cmdDef{}
+	result := &cmdFnDef{}
 
 	if l.token != tokFn {
 		return nil
@@ -47,6 +47,6 @@ func (p *parser) parseDef() *cmdDef {
 	return result
 }
 
-func (c cmdDef) receive(g guest) {
+func (c cmdFnDef) receive(g guest) {
 	g.visit(c.expr)
 }
