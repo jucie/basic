@@ -34,6 +34,7 @@ func newSolver(p *program) *solver {
 var mt = make(map[string]int)
 
 func (s *solver) consider(h host) {
+	mt[fmt.Sprintf("%T", h)]++
 	switch v := h.(type) {
 	case *astFnCall:
 		s.funcs[v.id]++
@@ -78,14 +79,12 @@ func (s *solver) consider(h host) {
 		for _, dst := range v.dsts {
 			s.dsts = append(s.dsts, &dst)
 		}
-	default:
-		mt[fmt.Sprintf("%T", h)]++
 	}
 }
 
 func (s *solver) showStats() {
 	if len(s.vars) > 0 {
-		println("\nVars")
+		println("\nVars:", len(s.vars))
 		for key, val := range s.vars {
 			fmt.Printf("\t%s dims %d refs %v\n", key, val.dims, val.ref)
 		}

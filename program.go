@@ -87,8 +87,8 @@ func (p *program) resolve() {
 	p.buildBlocks()
 	p.removeEmptyBlocks()
 	p.coalesceBlocks()
-	//solver.showStats()
-	p.generateDotFile()
+	solver.showStats()
+	//p.generateDotFile()
 	p.generate()
 }
 

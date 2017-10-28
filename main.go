@@ -44,7 +44,7 @@ func main() {
 		compile(path)
 	}
 	var typenames []string
-	for key, _ := range mt {
+	for key := range mt {
 		typenames = append(typenames, key)
 	}
 	sort.Strings(typenames)
