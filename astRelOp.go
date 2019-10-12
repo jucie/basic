@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astRelOp struct {
 	lhs  *astAddOp
 	rhs  *astAddOp
@@ -48,4 +53,31 @@ func (a astRelOp) receive(g guest) {
 	if a.rhs != nil {
 		g.visit(a.rhs)
 	}
+}
+
+func (a astRelOp) generateC(wr *bufio.Writer) {
+	a.lhs.generateC(wr)
+	if a.rhs == nil {
+		return
+	}
+	switch a.oper {
+	case '=':
+		fmt.Fprintf(wr, "==")
+	case tokNe:
+		fmt.Fprintf(wr, "!=")
+	case tokLe:
+		fmt.Fprintf(wr, "<=")
+	case tokGe:
+		fmt.Fprintf(wr, ">=")
+	default:
+		fmt.Fprintf(wr, "%c", a.oper)
+	}
+	a.rhs.generateC(wr)
+}
+
+func (a astRelOp) finalType() astType {
+	if a.rhs != nil {
+		return numType
+	}
+	return a.lhs.finalType()
 }

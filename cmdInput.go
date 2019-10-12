@@ -1,42 +1,58 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type cmdInput struct {
-	subCmds []subCmd
+	label string // optional
+	vars  []*astVarRef
 }
 
 func (p *parser) parseInput() *cmdInput {
 	result := &cmdInput{}
 	l := p.lex.peek()
 
-Loop:
+	if l.token == tokString {
+		result.label = l.s
+		p.lex.next() // separador
+		p.lex.next() // pula o separador
+	}
 	for {
-		var subCmd subCmd
-		switch l.token {
-		case ';':
-			fallthrough
-		case ',':
-			subCmd = l.token
-			p.lex.next()
-		case tokEol:
-			fallthrough
-		case tokEof:
-			fallthrough
-		case ':':
-			break Loop
-		default:
-			expr := p.parseExpr()
-			if expr == nil {
-				break Loop
-			}
-			subCmd = expr
+		v := p.parseVarRef()
+		if v == nil {
+			break
 		}
-		result.subCmds = append(result.subCmds, subCmd)
+		result.vars = append(result.vars, v)
+		if l.token != ',' {
+			break
+		}
+		p.lex.next()
+	}
+	if len(result.vars) == 0 {
+		return nil
 	}
 	return result
 }
 
+func (c cmdInput) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\tfor(;;) {\n")
+	if c.label != "" {
+		fmt.Fprintf(wr, "\t\tprint_str(\"%s \");\n", c.label)
+	}
+	fmt.Fprintf(wr, "\t\tinput();\n")
+
+	for _, v := range c.vars {
+		fmt.Fprintf(wr, "\t\tif (!read_%s_from_input(&", v.finalType())
+		v.generateC(wr)
+		fmt.Fprintf(wr, ")){\t\t\tcontinue;\n\t\t}\n")
+	}
+	fmt.Fprintf(wr, "\t\tbreak;\n\t)\n")
+}
+
 func (c cmdInput) receive(g guest) {
-	for _, subCmd := range c.subCmds {
-		g.visit(subCmd)
+	for _, v := range c.vars {
+		g.visit(v)
 	}
 }

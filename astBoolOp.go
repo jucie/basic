@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astBoolOpTail struct {
 	oper token
 	val  *astRelOp
@@ -41,4 +46,28 @@ func (a astBoolOp) receive(g guest) {
 	for _, t := range a.tail {
 		g.visit(t.val)
 	}
+}
+
+func (a astBoolOp) generateC(wr *bufio.Writer) {
+	a.head.generateC(wr)
+	for _, tail := range a.tail {
+		tail.generateC(wr)
+	}
+}
+
+func (a astBoolOp) finalType() astType {
+	if len(a.tail) == 0 {
+		return a.head.finalType()
+	}
+	return numType
+}
+
+func (a astBoolOpTail) generateC(wr *bufio.Writer) {
+	switch a.oper {
+	case tokOr:
+		fmt.Fprintf(wr, "||")
+	case tokAnd:
+		fmt.Fprintf(wr, "&&")
+	}
+	a.val.generateC(wr)
 }

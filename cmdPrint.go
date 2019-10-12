@@ -1,11 +1,17 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type subCmd interface {
 	host
 }
+type printSubCmds []subCmd
 
 type cmdPrint struct {
-	subCmds []subCmd
+	printSubCmds
 }
 
 func (p *parser) parsePrint() *cmdPrint {
@@ -21,9 +27,9 @@ Loop:
 		case ',':
 			subCmd = l.token
 			p.lex.next()
-		case tokEol:
+		case tokEOL:
 			fallthrough
-		case tokEof:
+		case tokEOF:
 			fallthrough
 		case ':':
 			break Loop
@@ -34,13 +40,44 @@ Loop:
 			}
 			subCmd = expr
 		}
-		result.subCmds = append(result.subCmds, subCmd)
+		result.printSubCmds = append(result.printSubCmds, subCmd)
 	}
 	return result
 }
 
 func (c cmdPrint) receive(g guest) {
-	for _, subCmd := range c.subCmds {
+	for _, subCmd := range c.printSubCmds {
 		g.visit(subCmd)
+	}
+}
+
+func (scs printSubCmds) generateC(wr *bufio.Writer) {
+	var type_ astType
+	previousIsSemicolon := false
+	for _, subCmd := range scs {
+		switch cmd := subCmd.(type) {
+		case token:
+			if cmd == ';' {
+				previousIsSemicolon = true
+			} else {
+				previousIsSemicolon = false
+				fmt.Fprintf(wr, "\tputchar('\t');\n")
+			}
+		case *astExpr:
+			previousIsSemicolon = false
+			type_ = cmd.finalType()
+			if type_ == voidType {
+				fmt.Fprintf(wr, "\t")
+				cmd.generateC(wr)
+				fmt.Fprintf(wr, ";\n")
+			} else {
+				fmt.Fprintf(wr, "\tprint_%s(", type_)
+				cmd.generateC(wr)
+				fmt.Fprintf(wr, ");\n")
+			}
+		}
+	}
+	if !previousIsSemicolon {
+		fmt.Fprintf(wr, "\tputchar('\\n');\n")
 	}
 }

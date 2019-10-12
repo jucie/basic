@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"strconv"
 )
 
@@ -11,6 +13,13 @@ type targetLine struct {
 type cmdGo struct {
 	dst targetLine
 	sub bool
+}
+
+func (c cmdGo) cmdName() string {
+	if c.sub {
+		return "GOSUB"
+	}
+	return "GOTO"
 }
 
 func (p *parser) parseGo() *cmdGo {
@@ -39,4 +48,12 @@ func (p *parser) parseGo() *cmdGo {
 }
 
 func (c cmdGo) receive(g guest) {
+}
+
+func (c cmdGo) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\t")
+	if !c.sub {
+		fmt.Fprintf(wr, "return ")
+	}
+	fmt.Fprintf(wr, "block_%s;\n", c.dst.adr.firstBlock.label)
 }

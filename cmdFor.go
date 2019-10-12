@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type cmdFor struct {
 	index *astVarRef
 	begin *astExpr
@@ -11,7 +16,7 @@ func (p *parser) parseFor() *cmdFor {
 	result := &cmdFor{}
 	l := p.lex.peek()
 
-	if l.token != tokId {
+	if l.token != tokID {
 		return nil
 	}
 	result.index = p.parseVarRef()
@@ -48,4 +53,24 @@ func (c cmdFor) receive(g guest) {
 	if c.step != nil {
 		g.visit(c.step)
 	}
+}
+
+func (c cmdFor) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\tfor (")
+	c.index.generateC(wr)
+	fmt.Fprintf(wr, "=")
+	c.begin.generateC(wr)
+	fmt.Fprintf(wr, "; ")
+	c.index.generateC(wr)
+	fmt.Fprintf(wr, " != ")
+	c.end.generateC(wr)
+	fmt.Fprintf(wr, "; ")
+	c.index.generateC(wr)
+	fmt.Fprintf(wr, " += ")
+	if c.step != nil {
+		c.step.generateC(wr)
+	} else {
+		fmt.Fprintf(wr, "1")
+	}
+	fmt.Fprintf(wr, "){\n")
 }

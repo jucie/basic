@@ -5,13 +5,13 @@ import (
 )
 
 const (
-	tokEof = iota + 128
-	tokEol
+	tokEOF = iota + 128
+	tokEOL
 	tokSpace
 	tokComment
 	tokNumber
 	tokString
-	tokId
+	tokID
 
 	// commands
 	tokData

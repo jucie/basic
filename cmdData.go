@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"strings"
 )
 
@@ -20,4 +21,8 @@ func (p *parser) parseData() *cmdData {
 }
 
 func (c cmdData) receive(g guest) {
+}
+
+func (c cmdData) generateC(wr *bufio.Writer) {
+	//does nothing. Data is not generated here.
 }

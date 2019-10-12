@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type cmdNext struct {
 	vars []*astVarRef
 }
@@ -29,4 +34,8 @@ func (c cmdNext) receive(g guest) {
 	for _, v := range c.vars {
 		g.visit(v)
 	}
+}
+
+func (c cmdNext) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\n}\n")
 }

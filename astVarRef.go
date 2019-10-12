@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astVarRef struct {
 	coord
 	id    string
@@ -11,7 +16,7 @@ func (p *parser) parseVarRef() *astVarRef {
 	l := p.lex.peek()
 	result := &astVarRef{coord: l.pos, type_: numType}
 
-	if l.token != tokId {
+	if l.token != tokID {
 		p.unexpected()
 		return nil
 	}
@@ -20,7 +25,6 @@ func (p *parser) parseVarRef() *astVarRef {
 
 	if l.token == '$' {
 		result.type_ = strType
-		result.id += "$"
 		p.lex.next()
 	}
 
@@ -54,4 +58,12 @@ func (a astVarRef) receive(g guest) {
 	for _, i := range a.index {
 		g.visit(i)
 	}
+}
+
+func (a astVarRef) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "%s_%s", a.id, a.type_)
+}
+
+func (a astVarRef) finalType() astType {
+	return a.type_
 }

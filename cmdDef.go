@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type cmdFnDef struct {
 	id   string
 	arg  string
@@ -15,7 +20,7 @@ func (p *parser) parseDef() *cmdFnDef {
 	}
 	p.lex.next()
 
-	if l.token != tokId {
+	if l.token != tokID {
 		return nil
 	}
 	result.id = l.s
@@ -26,7 +31,7 @@ func (p *parser) parseDef() *cmdFnDef {
 	}
 	p.lex.next()
 
-	if l.token != tokId {
+	if l.token != tokID {
 		return nil
 	}
 	result.arg = l.s
@@ -49,4 +54,11 @@ func (p *parser) parseDef() *cmdFnDef {
 
 func (c cmdFnDef) receive(g guest) {
 	g.visit(c.expr)
+}
+
+func (c cmdFnDef) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "float fn_%s(float %s) {\n", c.id, c.arg)
+	fmt.Fprintf(wr, "\treturn ")
+	c.expr.generateC(wr)
+	fmt.Fprintf(wr, ";\n}\n\n")
 }

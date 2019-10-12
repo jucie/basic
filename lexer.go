@@ -71,7 +71,7 @@ func (lex *lexer) next0() {
 
 func (lex *lexer) nextLine() {
 	lex.consumeLine()
-	if lex.peek().token == tokEol {
+	if lex.peek().token == tokEOL {
 		lex.walk()
 	}
 }
@@ -110,7 +110,6 @@ func (lex *lexer) handleSpace(b byte) token {
 }
 
 func (lex *lexer) handleString(b byte) token {
-	lex.buf.WriteByte(b)
 	for {
 		b, err := lex.readByte()
 		if err != nil {
@@ -120,33 +119,33 @@ func (lex *lexer) handleString(b byte) token {
 			lex.unreadByte(b)
 			break
 		}
-		lex.buf.WriteByte(b)
 		if b == '"' {
 			break
 		}
+		lex.buf.WriteByte(b)
 	}
 	return tokString
 }
 
-func (lex *lexer) handleId(b byte) token {
+func (lex *lexer) handleID(b byte) token {
 	lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
 
 	var err error
 	b, err = lex.readByte()
 	if err != nil {
-		return tokId
+		return tokID
 	}
 
 	// for an id, if the second character is a digit, then we are done.
 	if unicode.IsNumber(rune(b)) {
 		lex.buf.WriteByte(byte(unicode.ToUpper(rune(b))))
-		return tokId // we have a single character id
+		return tokID // we have a single character id
 	}
 
 	// for an id, the second character must be a letter or a digit
 	if !unicode.IsLetter(rune(b)) {
 		lex.unreadByte(b)
-		return tokId // we have a single character id
+		return tokID // we have a single character id
 	}
 
 	var lastByte byte
@@ -182,7 +181,7 @@ func (lex *lexer) handleId(b byte) token {
 			}
 		}
 	}
-	var tok token = tokId
+	var tok token = tokID
 	if min == 0 { // the string begins with a keyword
 		lex.buf.Reset()
 		lex.buf.WriteString(rwmin.s)
@@ -280,13 +279,13 @@ func (lex *lexer) walk() token {
 
 	b, err := lex.readByte()
 	if err != nil {
-		return tokEof
+		return tokEOF
 	}
 
 	if b == '\n' {
 		lex.pos.row++
 		lex.pos.col = 0
-		return tokEol
+		return tokEOL
 	}
 
 	if unicode.IsSpace(rune(b)) {
@@ -298,7 +297,7 @@ func (lex *lexer) walk() token {
 	}
 
 	if unicode.IsLetter(rune(b)) {
-		return lex.handleId(b)
+		return lex.handleID(b)
 	}
 
 	if b == '"' {

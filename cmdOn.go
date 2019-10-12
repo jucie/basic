@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"strconv"
 )
 
@@ -46,4 +48,14 @@ func (p *parser) parseOn() *cmdOn {
 
 func (c cmdOn) receive(g guest) {
 	g.visit(c.expr)
+}
+
+func (c cmdOn) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\tswitch (")
+	c.expr.generateC(wr)
+	fmt.Fprintf(wr, "){\n")
+	for i, line := range c.dsts {
+		fmt.Fprintf(wr, "\t\tcase %d: return block_%d_1;\n", i, line.nbr)
+	}
+	fmt.Fprintf(wr, "\t}\n")
 }

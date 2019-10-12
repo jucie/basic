@@ -1,5 +1,7 @@
 package main
 
+import "bufio"
+
 type astExpOp struct {
 	head *astPart
 	tail []*astPart
@@ -33,4 +35,18 @@ func (a astExpOp) receive(g guest) {
 	for _, t := range a.tail {
 		g.visit(t)
 	}
+}
+
+func (a astExpOp) generateC(wr *bufio.Writer) {
+	a.head.generateC(wr)
+	for _, t := range a.tail {
+		t.generateC(wr)
+	}
+}
+
+func (a astExpOp) finalType() astType {
+	if len(a.tail) == 0 {
+		return a.head.finalType()
+	}
+	return numType
 }

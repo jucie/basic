@@ -1,8 +1,12 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astPredef struct {
 	function token
-	type_    astType
 	args     []*astExpr
 }
 
@@ -10,10 +14,9 @@ func (p *parser) parsePredef() *astPredef {
 	l := p.lex.peek()
 	function := l.token
 	p.lex.next()
-	result := &astPredef{function: function, type_: numType}
+	result := &astPredef{function: function}
 
 	if l.token == '$' {
-		result.type_ = strType
 		p.lex.next()
 	}
 
@@ -42,10 +45,25 @@ func (p *parser) parsePredef() *astPredef {
 }
 
 func (a astPredef) receive(g guest) {
-	g.visit(a.type_)
 	for _, arg := range a.args {
 		g.visit(arg)
 	}
+}
+
+func (a astPredef) generateC(wr *bufio.Writer) {
+	predef := predefs[a.function]
+	fmt.Fprintf(wr, "predef_%s_%s(", predef.name, predef.type_)
+	for i, arg := range a.args {
+		if i != 0 {
+			wr.WriteRune(',')
+		}
+		arg.generateC(wr)
+	}
+	wr.WriteRune(')')
+}
+
+func (a astPredef) finalType() astType {
+	return predefs[a.function].type_
 }
 
 type predef struct {

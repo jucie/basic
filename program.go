@@ -3,14 +3,19 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
-	"strings"
 )
 
 type cmd interface {
 	host
+	generateC(wr *bufio.Writer)
 }
 type cmds []cmd
+
+func (cms cmds) generateC(wr *bufio.Writer) {
+	for _, cmd := range cms {
+		cmd.generateC(wr)
+	}
+}
 
 type block struct {
 	label string
@@ -19,6 +24,18 @@ type block struct {
 	succ blocks
 }
 type blocks []*block
+
+func (bl block) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "block_type block_%s(void){\n", bl.label)
+	bl.cmds.generateC(wr)
+	fmt.Fprintf(wr, "}\n\n")
+}
+
+func (bls blocks) generateC(wr *bufio.Writer) {
+	for _, bl := range bls {
+		bl.generateC(wr)
+	}
+}
 
 type progLine struct {
 	id int
@@ -45,10 +62,8 @@ func (l *progLine) receive(g guest) {
 }
 
 type program struct {
-	srcPath string
-	dstPath string
-	lines   progLines
-	ids     map[int]int
+	lines progLines
+	ids   map[int]int
 	blocks
 	orphans int
 }
@@ -57,25 +72,10 @@ func newProgram() *program {
 	return &program{ids: make(map[int]int)}
 }
 
-func loadProgram(path string) *program {
-	prog := newProgram()
-
-	prog.srcPath = path
-	pos := strings.LastIndexByte(path, '.')
-	if pos < 0 {
-		pos = len(path)
-	}
-	prog.dstPath = path[:pos] + ".exe"
-
-	f, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	rd := bufio.NewReader(f)
-	newParser(rd).parseProgram(prog)
-	return prog
+func (p *program) loadFrom(src *bufio.Reader) {
+	parser := newParser(src)
+	parser.parseProgram(p)
+	p.resolve()
 }
 
 func (p *program) resolve() {
@@ -88,14 +88,6 @@ func (p *program) resolve() {
 	p.removeEmptyBlocks()
 	p.coalesceBlocks()
 	solver.showStats()
-	//p.generateDotFile()
-	p.generate()
-}
-
-func (p *program) generate() {
-	var g generator
-	g.generate(p)
-	// TODO
 }
 
 func (p program) receive(g guest) {
@@ -119,7 +111,7 @@ func linkBlocks(pred, succ *block) {
 func (p *program) newBlock(id int, bl *block, shouldLink bool) *block {
 	p.addBlock(bl)
 	p.ids[id]++
-	newBlock := &block{label: fmt.Sprintf("%d:%d", id, p.ids[id])}
+	newBlock := &block{label: fmt.Sprintf("%d_%d", id, p.ids[id])}
 	if shouldLink {
 		linkBlocks(bl, newBlock)
 	}
@@ -139,7 +131,7 @@ func (p *program) appendCmds(id int, bl *block, cmds cmds) *block {
 		case *cmdGo:
 			l := p.lines.find(c.dst.nbr)
 			if l == nil {
-				panic("coudn't find GOTO destination line")
+				panic(fmt.Sprintf("coudn't find %s destination line", c.cmdName()))
 			}
 			l.pred = append(l.pred, bl)
 			bl = p.newBlock(id, bl, c.sub)
@@ -178,9 +170,9 @@ func linkBackwards(blocks blocks) {
 	}
 }
 
-func (blocks blocks) orphans() int {
+func (bls blocks) orphans() int {
 	var count int
-	for _, bl := range blocks {
+	for _, bl := range bls {
 		if len(bl.pred) == 0 {
 			count++
 		}
@@ -209,7 +201,7 @@ func (p *program) buildBlocks() {
 	for _, l := range p.lines {
 		if l.isDst {
 			if len(l.pred) == 0 {
-				panic(fmt.Sprintf("%s: Destination %d has no predecessors", p.srcPath, l.id))
+				panic(fmt.Sprintf("Destination %d has no predecessors", l.id))
 			}
 			for _, prBlock := range l.pred {
 				linkBlocks(prBlock, l.firstBlock)
@@ -291,27 +283,4 @@ func (p *program) removeEmptyBlocks() {
 		}
 	}
 	p.blocks = v
-}
-
-func (p *program) generateDotFile() {
-	f, err := os.Create(p.srcPath + ".dot")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	wr := bufio.NewWriter(f)
-	fmt.Fprintf(wr, "digraph G {\n")
-	defer wr.Flush()
-
-	for _, bl := range p.blocks {
-		if len(bl.pred) > 0 {
-			for _, pred := range bl.pred {
-				fmt.Fprintf(wr, "\t\"%s\" -> \"%s\"\n", pred.label, bl.label)
-			}
-		} else {
-			fmt.Fprintf(wr, "\t\"%s\"\n", bl.label)
-		}
-	}
-	fmt.Fprintf(wr, "}\n")
 }

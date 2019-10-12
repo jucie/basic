@@ -25,7 +25,7 @@ func (p *parser) parseCmd() (cmd, bool) {
 	case tokLet:
 		p.lex.next()
 		fallthrough
-	case tokId:
+	case tokID:
 		{
 			c := p.parseLet()
 			return c, c != nil
@@ -131,9 +131,9 @@ func (p *parser) parseCmd() (cmd, bool) {
 			c := p.parseStop()
 			return c, c != nil
 		}
-	case tokEol:
+	case tokEOL:
 		fallthrough
-	case tokEof:
+	case tokEOF:
 		return nil, true
 	default:
 		p.unexpected()
@@ -146,9 +146,9 @@ func (p *parser) isEndOfCommand() bool {
 	switch p.lex.peek().token {
 	case ':':
 		fallthrough
-	case tokEol:
+	case tokEOL:
 		fallthrough
-	case tokEof:
+	case tokEOF:
 		return true
 	}
 	return false
@@ -163,15 +163,15 @@ func (p *parser) consumeCmd() {
 func (p *parser) unexpected() {
 	l := p.lex.lexeme
 
-	fmt.Fprintf(os.Stderr, "%s (%d:%d): Unexpected token (%d) \"%s\"\n",
-		p.prog.srcPath, l.pos.row+1, l.pos.col+1, l.token, l.s)
+	fmt.Fprintf(os.Stderr, "%d:%d: Unexpected token (%d) \"%s\"\n",
+		l.pos.row+1, l.pos.col+1, l.token, l.s)
 }
 
 func (p *parser) parseLineTail() []cmd {
 	var result []cmd
 	l := p.lex.peek()
 	for {
-		if l.token == tokEol {
+		if l.token == tokEOL {
 			break
 		}
 		cmd, ok := p.parseCmd()
@@ -183,7 +183,7 @@ func (p *parser) parseLineTail() []cmd {
 		if l.token == ':' {
 			p.lex.next() // skip separator
 			continue
-		} else if l.token == tokEol {
+		} else if l.token == tokEOL {
 			break
 		} else {
 			return nil
@@ -205,7 +205,7 @@ func (p *parser) parseLine() *progLine {
 
 	line := &progLine{id: id}
 	line.cmds = p.parseLineTail()
-	if l.token == tokEol {
+	if l.token == tokEOL {
 		p.lex.next()
 	}
 	return line
@@ -221,7 +221,7 @@ func (p *parser) parseProgram(prog *program) {
 		}
 		p.prog.lines = append(p.prog.lines, line)
 		if previous != nil && line.id <= previous.id {
-			fmt.Fprintf(os.Stderr, "%s:%d: out of sequence. Previous is %d\n", prog.srcPath, line.id, previous.id)
+			fmt.Fprintf(os.Stderr, "%d: out of sequence. Previous is %d\n", line.id, previous.id)
 		}
 		previous = line
 	}

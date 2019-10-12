@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astMulOpTail struct {
 	oper token
 	val  *astExpOp
@@ -42,4 +47,23 @@ func (a astMulOp) receive(g guest) {
 	for _, t := range a.tail {
 		g.visit(t.val)
 	}
+}
+
+func (a astMulOp) finalType() astType {
+	if len(a.tail) == 0 {
+		return a.head.finalType()
+	}
+	return numType
+}
+
+func (a astMulOp) generateC(wr *bufio.Writer) {
+	a.head.generateC(wr)
+	for _, t := range a.tail {
+		t.generateC(wr)
+	}
+}
+
+func (a astMulOpTail) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "%c", a.oper)
+	a.val.generateC(wr)
 }

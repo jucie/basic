@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type cmdLet struct {
 	dst *astVarRef
 	src *astExpr
@@ -24,4 +29,12 @@ func (p *parser) parseLet() *cmdLet {
 func (c cmdLet) receive(g guest) {
 	g.visit(c.dst)
 	g.visit(c.src)
+}
+
+func (c cmdLet) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\tlet_%s(&", c.dst.type_)
+	c.dst.generateC(wr)
+	fmt.Fprintf(wr, ", ")
+	c.src.generateC(wr)
+	fmt.Fprintf(wr, ");\n")
 }

@@ -1,8 +1,13 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astPart struct {
 	coord
-	signal bool
+	signal token
 	val    astValue
 }
 
@@ -12,15 +17,14 @@ func (p *parser) parsePart() *astPart {
 
 	switch l.token {
 	case '-':
-		result.signal = true // negative
-		p.lex.next()
+		fallthrough
 	case '+':
-		result.signal = false // positive
+		result.signal = l.token
 		p.lex.next()
 	}
 
 	switch l.token {
-	case tokId:
+	case tokID:
 		result.val = p.parseVarRef()
 	case '(':
 		p.lex.next()
@@ -86,4 +90,15 @@ func (p *parser) parsePart() *astPart {
 
 func (a astPart) receive(g guest) {
 	g.visit(a.val)
+}
+
+func (a astPart) finalType() astType {
+	return a.val.finalType()
+}
+
+func (a astPart) generateC(wr *bufio.Writer) {
+	if a.signal != 0 {
+		fmt.Fprintf(wr, "%c", a.signal)
+	}
+	a.val.generateC(wr)
 }

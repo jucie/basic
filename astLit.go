@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type astLit struct {
 	val   string
 	type_ astType
@@ -21,4 +26,17 @@ func (p *parser) parseLit() *astLit {
 
 func (a astLit) receive(g guest) {
 	g.visit(a.type_)
+}
+
+func (a astLit) generateC(wr *bufio.Writer) {
+	switch a.type_ {
+	case numType:
+		fmt.Fprintf(wr, "%s", a.val)
+	case strType:
+		fmt.Fprintf(wr, "\"%s\"", a.val)
+	}
+}
+
+func (a astLit) finalType() astType {
+	return a.type_
 }

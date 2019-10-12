@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"strconv"
 )
 
 type cmdIf struct {
 	expr *astExpr
-	cmds []cmd
+	cmds
 }
 
 func (p *parser) parseIf() *cmdIf {
@@ -44,4 +46,12 @@ func (c *cmdIf) receive(g guest) {
 	for _, cmd := range c.cmds {
 		g.visit(cmd)
 	}
+}
+
+func (c *cmdIf) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "\tif (")
+	c.expr.generateC(wr)
+	fmt.Fprintf(wr, "){\n")
+	c.cmds.generateC(wr)
+	fmt.Fprintf(wr, "\t}\n")
 }
