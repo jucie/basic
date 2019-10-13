@@ -60,7 +60,7 @@ func createLabel() int {
 func (c cmdGo) generateC(wr *bufio.Writer) {
 	if c.sub {
 		returnAddress := createLabel()
-		fmt.Fprintf(wr, "\tcall_stack[++sp] = %d;\n", returnAddress)
+		fmt.Fprintf(wr, "\tpush_address(%d);\n", returnAddress)
 		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.nbr)
 		fmt.Fprintf(wr, "case %d:\n", returnAddress)
 	} else {
