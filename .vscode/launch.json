@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "env": {},
-            "args": ["-in", "pool/superstartrek.bas", "-gen", "c" ]
+            "args": ["-in", "pool/qubit.bas", "-gen", "c" ]
         }
     ]
 }

@@ -37,8 +37,13 @@ func (c cmdNext) receive(g guest) {
 }
 
 func (c cmdNext) generateC(wr *bufio.Writer) {
+	if len(c.vars) == 0 {
+		// if no var ref is supplied, NEXT refers to most recently used var in FOR.
+		fmt.Fprintf(wr, "\tif (!end_loop(NULL,&target)) break;\n")
+		return
+	}
 	for _, v := range c.vars {
-		fmt.Fprintf(wr, "\tif (end_loop(&")
+		fmt.Fprintf(wr, "\tif (!end_loop(&")
 		v.generateC(wr)
 		fmt.Fprintf(wr, ",&target)) break;\n")
 	}
