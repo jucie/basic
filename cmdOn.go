@@ -55,7 +55,7 @@ func (c cmdOn) generateC(wr *bufio.Writer) {
 	c.expr.generateC(wr)
 	fmt.Fprintf(wr, "){\n")
 	for i, line := range c.dsts {
-		fmt.Fprintf(wr, "\t\tcase %d: goto_line = %d; break;\n", i, line.nbr)
+		fmt.Fprintf(wr, "\t\tcase %d: target = %d; break;\n", i, line.nbr)
 	}
 	fmt.Fprintf(wr, "\t}\n\tbreak;\n")
 }

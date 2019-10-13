@@ -1,52 +1,58 @@
 package main
 
-import "bufio"
+import (
+	"bufio"
+	"fmt"
+)
 
 type astExpOp struct {
-	head *astPart
-	tail []*astPart
+	lhs *astPart
+	rhs *astPart
 }
 
 func (p *parser) parseExpOp() *astExpOp {
-	head := p.parsePart()
-	if head == nil {
+	lhs := p.parsePart()
+	if lhs == nil {
 		return nil
 	}
-	result := &astExpOp{head: head}
+	result := &astExpOp{lhs: lhs}
 
-	for {
-		oper := p.lex.peek().token
-		if oper != '^' {
-			break
-		}
+	oper := p.lex.peek().token
+	if oper == '^' {
 		p.lex.next()
 
-		val := p.parsePart()
-		if val == nil {
+		rhs := p.parsePart()
+		if rhs == nil {
 			return nil
 		}
-		result.tail = append(result.tail, val)
+		result.rhs = rhs
 	}
+
 	return result
 }
 
 func (a astExpOp) receive(g guest) {
-	g.visit(a.head)
-	for _, t := range a.tail {
-		g.visit(t)
+	g.visit(a.lhs)
+	if a.rhs != nil {
+		g.visit(a.rhs)
 	}
 }
 
 func (a astExpOp) generateC(wr *bufio.Writer) {
-	a.head.generateC(wr)
-	for _, t := range a.tail {
-		t.generateC(wr)
+	if a.rhs == nil {
+		a.lhs.generateC(wr)
+		return
 	}
+	fmt.Fprintf(wr, "(float)pow(")
+	a.lhs.generateC(wr)
+	wr.WriteRune(',')
+	a.rhs.generateC(wr)
+	wr.WriteRune(')')
 }
 
 func (a astExpOp) finalType() astType {
-	if len(a.tail) == 0 {
-		return a.head.finalType()
+	if a.rhs == nil {
+		return a.lhs.finalType()
 	}
 	return numType
 }

@@ -61,9 +61,9 @@ func (c cmdGo) generateC(wr *bufio.Writer) {
 	if c.sub {
 		returnAddress := createLabel()
 		fmt.Fprintf(wr, "\tstack[++sp] = %d;\n", returnAddress)
-		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
-		fmt.Fprintf(wr, "case %d: /* gerado */\n", returnAddress)
+		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.nbr)
+		fmt.Fprintf(wr, "case %d:\n", returnAddress)
 	} else {
-		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
+		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.nbr)
 	}
 }
