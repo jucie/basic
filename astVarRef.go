@@ -62,6 +62,16 @@ func (a astVarRef) receive(g guest) {
 
 func (a astVarRef) generateC(wr *bufio.Writer) {
 	fmt.Fprintf(wr, "%s_%s", a.id, a.type_)
+	if len(a.index) != 0 {
+		wr.WriteRune('(')
+		for i, v := range a.index {
+			if i != 0 {
+				wr.WriteRune(',')
+			}
+			v.generateC(wr)
+		}
+		wr.WriteRune(')')
+	}
 }
 
 func (a astVarRef) finalType() astType {
