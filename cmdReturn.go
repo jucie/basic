@@ -16,5 +16,5 @@ func (c cmdReturn) receive(g guest) {
 }
 
 func (c cmdReturn) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\ttarget = stack[sp--]; break;\n")
+	fmt.Fprintf(wr, "\ttarget = call_stack[sp--]; break;\n")
 }

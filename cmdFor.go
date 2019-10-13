@@ -56,21 +56,19 @@ func (c cmdFor) receive(g guest) {
 }
 
 func (c cmdFor) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tfor (")
+	loopAddress := createLabel()
+	fmt.Fprintf(wr, "\tbegin_loop%s(&", c.index.type_)
 	c.index.generateC(wr)
-	fmt.Fprintf(wr, "=")
+	fmt.Fprintf(wr, ",")
 	c.begin.generateC(wr)
-	fmt.Fprintf(wr, "; ")
-	c.index.generateC(wr)
-	fmt.Fprintf(wr, " != ")
+	fmt.Fprintf(wr, ",")
 	c.end.generateC(wr)
-	fmt.Fprintf(wr, "; ")
-	c.index.generateC(wr)
-	fmt.Fprintf(wr, " += ")
-	if c.step != nil {
-		c.step.generateC(wr)
+	fmt.Fprintf(wr, ",")
+	if c.step == nil {
+		fmt.Fprintf(wr, "1.0f")
 	} else {
-		fmt.Fprintf(wr, "1")
+		c.step.generateC(wr)
 	}
-	fmt.Fprintf(wr, "){\n")
+	fmt.Fprintf(wr, ",%d);\n", loopAddress)
+	fmt.Fprintf(wr, "case %d:\n", loopAddress)
 }

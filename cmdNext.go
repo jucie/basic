@@ -37,5 +37,9 @@ func (c cmdNext) receive(g guest) {
 }
 
 func (c cmdNext) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\n}\n")
+	for _, v := range c.vars {
+		fmt.Fprintf(wr, "\tif (end_loop(&")
+		v.generateC(wr)
+		fmt.Fprintf(wr, ",&target)) break;\n")
+	}
 }
