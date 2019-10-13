@@ -50,9 +50,19 @@ func (p *parser) parseGo() *cmdGo {
 func (c cmdGo) receive(g guest) {
 }
 
+var nextLabel = 0
+
+func createLabel() int {
+	nextLabel--
+	return nextLabel
+}
+
 func (c cmdGo) generateC(wr *bufio.Writer) {
 	if c.sub {
-		fmt.Fprintf(wr, "\treturn_from_subroutine();\n")
+		returnAddress := createLabel()
+		fmt.Fprintf(wr, "\tstack[++sp] = %d;\n", returnAddress)
+		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
+		fmt.Fprintf(wr, "\tcase %d:\n", returnAddress)
 	} else {
 		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
 	}
