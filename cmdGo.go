@@ -51,9 +51,9 @@ func (c cmdGo) receive(g guest) {
 }
 
 func (c cmdGo) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\t")
-	if !c.sub {
-		fmt.Fprintf(wr, "return ")
+	if c.sub {
+		fmt.Fprintf(wr, "\treturn_from_subroutine();\n")
+	} else {
+		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
 	}
-	fmt.Fprintf(wr, "block_%s;\n", c.dst.adr.firstBlock.label)
 }

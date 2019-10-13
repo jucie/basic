@@ -95,8 +95,8 @@ func (s *solver) consider(h host) {
 	case *cmdGo:
 		s.dsts = append(s.dsts, &v.dst)
 	case *cmdOn:
-		for _, dst := range v.dsts {
-			s.dsts = append(s.dsts, &dst)
+		for i := 0; i < len(v.dsts); i++ {
+			s.dsts = append(s.dsts, &v.dsts[i])
 		}
 	}
 }

@@ -1,0 +1,2896 @@
+
+jucie@DESKTOP-0OUGGJV C:\pj\basic
+$ basic @list.txt
+
+Vars: 4
+        N dims 0 refs 14
+        Q dims 0 refs 2
+        K dims 0 refs 5
+        Z dims 0 refs 6
+
+Types
+         num 49
+         str 28
+
+Predefs
+         TAB 2
+         RND 1
+         INT 1
+Parsed program pool/23matches.bas (64 lines, 31 blocks, 18 orphans)
+
+Vars: 5
+        Z dims 0 refs 6
+        X dims 0 refs 6
+        L dims 0 refs 3
+        Y1 dims 0 refs 3
+        Y dims 0 refs 5
+
+Types
+         str 3
+         num 45
+
+Functions
+        A refs 1
+
+Predefs
+         TAB 3
+         EXP 1
+         SQR 2
+         INT 2
+Parsed program pool/3dplot.bas (17 lines, 4 blocks, 3 orphans)
+
+Vars: 7
+        A$ dims 0 refs 2
+        N dims 0 refs 1
+        Q dims 0 refs 9
+        M dims 0 refs 6
+        A dims 0 refs 11
+        B dims 0 refs 11
+        C dims 0 refs 11
+
+Types
+         num 92
+         str 36
+
+Predefs
+         INT 3
+         TAB 2
+         RND 3
+Parsed program pool/aceyducey.bas (100 lines, 86 blocks, 49 orphans)
+
+Vars: 11
+        H dims 0 refs 17
+        X dims 0 refs 24
+        I dims 0 refs 10
+        R dims 0 refs 46
+        S dims 0 refs 49
+        J dims 0 refs 5
+        V dims 2 refs 32
+        W dims 2 refs 21
+        Q dims 0 refs 13
+        Z dims 0 refs 9
+        C dims 0 refs 20
+
+Types
+         num 410
+         str 13
+
+Predefs
+         TAB 2
+         RND 11
+         INT 11
+Parsed program pool/amazing.bas (138 lines, 166 blocks, 81 orphans)
+
+Vars: 14
+        X$ dims 0 refs 2
+        X dims 0 refs 12
+        Y dims 0 refs 4
+        K dims 0 refs 11
+        V$ dims 0 refs 4
+        Q$ dims 0 refs 9
+        Z dims 0 refs 8
+        T$ dims 0 refs 2
+        I dims 0 refs 9
+        B$ dims 0 refs 3
+        Z1 dims 0 refs 6
+        C$ dims 0 refs 6
+        A$ dims 1 refs 35
+        N dims 0 refs 1
+
+Types
+         str 115
+         num 106
+
+Predefs
+         VAL 3
+         LEFT 7
+         LEN 7
+         RIGHT 2
+         STR 3
+         MID 7
+         TAB 3
+Parsed program pool/animal.bas (71 lines, 43 blocks, 17 orphans)
+
+Vars: 17
+        R dims 0 refs 6
+        B dims 1 refs 33
+        K dims 0 refs 10
+        P dims 0 refs 4
+        A dims 0 refs 2
+        F dims 1 refs 6
+        M dims 0 refs 28
+        H dims 0 refs 6
+        E dims 0 refs 7
+        C dims 0 refs 6
+        D dims 0 refs 8
+        J dims 0 refs 6
+        L dims 0 refs 8
+        Q dims 0 refs 8
+        G dims 1 refs 4
+        N dims 0 refs 9
+        I dims 0 refs 34
+
+Types
+         num 291
+         str 18
+
+Predefs
+         CHR 1
+         TAB 2
+         INT 1
+Parsed program pool/awari.bas (70 lines, 96 blocks, 27 orphans)
+
+Vars: 11
+        A1 dims 1 refs 5
+        A dims 1 refs 12
+        B dims 1 refs 13
+        T dims 0 refs 1
+        J dims 0 refs 23
+        Z dims 0 refs 4
+        C dims 0 refs 12
+        Y dims 0 refs 5
+        A$ dims 0 refs 7
+        I dims 0 refs 9
+        D dims 0 refs 7
+
+Types
+         num 161
+         str 36
+
+Predefs
+         LEFT 2
+         RND 1
+         INT 1
+         LEN 1
+         MID 1
+         ASC 1
+         TAB 2
+Parsed program pool/bagels.bas (81 lines, 60 blocks, 27 orphans)
+
+Vars: 23
+        G1 dims 0 refs 3
+        M$ dims 0 refs 3
+        A dims 0 refs 1
+        P$ dims 0 refs 3
+        X$ dims 0 refs 5
+        F dims 1 refs 2
+        H dims 0 refs 6
+        A$ dims 0 refs 4
+        O dims 0 refs 2
+        S dims 1 refs 11
+        K dims 0 refs 7
+        B dims 0 refs 3
+        I dims 0 refs 4
+        I1 dims 0 refs 2
+        X dims 0 refs 4
+        L$ dims 0 refs 2
+        O$ dims 0 refs 1
+        U dims 0 refs 8
+        J dims 1 refs 3
+        T1 dims 0 refs 2
+        Y dims 0 refs 4
+        T dims 0 refs 3
+        S$ dims 0 refs 3
+
+Types
+         num 112
+         str 33
+
+Predefs
+         LEFT 1
+         ASC 1
+         LEN 3
+         MID 1
+         TAB 1
+Parsed program pool/banner.bas (94 lines, 26 blocks, 13 orphans)
+
+Vars: 7
+        D dims 0 refs 20
+        O$ dims 0 refs 13
+        Z dims 0 refs 8
+        P dims 0 refs 6
+        T dims 0 refs 13
+        S dims 1 refs 18
+        Z1 dims 0 refs 3
+
+Types
+         num 216
+         str 91
+
+Predefs
+         TAB 2
+         RND 27
+         INT 1
+Parsed program pool/basketball.bas (196 lines, 165 blocks, 94 orphans)
+
+Vars: 10
+        P dims 0 refs 16
+        A dims 0 refs 10
+        B dims 0 refs 9
+        W dims 0 refs 9
+        S dims 0 refs 4
+        C dims 0 refs 3
+        Q dims 0 refs 5
+        I dims 0 refs 2
+        N dims 0 refs 20
+        M dims 0 refs 6
+
+Types
+         num 119
+         str 25
+
+Predefs
+         TAB 2
+         INT 5
+Parsed program pool/batnum.bas (90 lines, 85 blocks, 43 orphans)
+
+Vars: 19
+        S dims 0 refs 10
+        H dims 0 refs 12
+        C dims 0 refs 24
+        N dims 0 refs 8
+        D dims 0 refs 2
+        Z2 dims 0 refs 18
+        F dims 2 refs 43
+        L dims 1 refs 10
+        I dims 0 refs 19
+        K dims 0 refs 60
+        B dims 0 refs 92
+        M dims 0 refs 9
+        Z dims 0 refs 12
+        Z1 dims 0 refs 18
+        R dims 0 refs 13
+        A dims 0 refs 92
+        X dims 0 refs 9
+        Y dims 0 refs 9
+        J dims 0 refs 15
+
+Types
+         num 796
+         str 26
+
+Predefs
+         ABS 2
+         TAB 2
+         RND 3
+         INT 7
+Parsed program pool/battle.bas (196 lines, 132 blocks, 48 orphans)
+
+Vars: 32
+        N dims 0 refs 17
+        L2 dims 0 refs 7
+        Q dims 1 refs 36
+        X1 dims 0 refs 4
+        C1 dims 0 refs 5
+        Z$ dims 0 refs 2
+        AA dims 0 refs 14
+        D dims 0 refs 12
+        C2 dims 0 refs 3
+        H1 dims 0 refs 7
+        AB dims 0 refs 5
+        AC dims 0 refs 6
+        T dims 1 refs 8
+        Q2 dims 0 refs 3
+        Q1 dims 0 refs 5
+        P dims 2 refs 25
+        C dims 0 refs 22
+        H$ dims 0 refs 9
+        I$ dims 0 refs 4
+        J dims 0 refs 7
+        L1 dims 0 refs 7
+        I1 dims 0 refs 7
+        B dims 1 refs 13
+        H dims 0 refs 7
+        D$ dims 0 refs 5
+        S dims 1 refs 12
+        X dims 0 refs 11
+        I dims 0 refs 130
+        D1 dims 0 refs 33
+        Z dims 1 refs 9
+        R dims 1 refs 14
+        C3 dims 0 refs 2
+
+Types
+         num 631
+         str 96
+
+Functions
+        A refs 0
+
+Predefs
+         ABS 1
+         TAB 3
+         RND 1
+         INT 2
+         MID 8
+         LEFT 4
+         SGN 3
+Parsed program pool/blackjack.bas (321 lines, 169 blocks, 55 orphans)
+
+Vars: 18
+        X dims 0 refs 7
+        P dims 0 refs 4
+        T dims 0 refs 3
+        M dims 0 refs 8
+        E dims 0 refs 5
+        H dims 0 refs 2
+        L dims 0 refs 2
+        Y dims 0 refs 5
+        N dims 0 refs 2
+        R dims 0 refs 7
+        D dims 0 refs 5
+        K dims 0 refs 2
+        C dims 0 refs 5
+        G dims 0 refs 2
+        Q dims 0 refs 6
+        I dims 0 refs 6
+        F dims 0 refs 5
+        Z dims 0 refs 6
+
+Types
+         str 31
+         num 138
+
+Predefs
+         TAB 2
+         RND 5
+         INT 5
+Parsed program pool/bombardment.bas (93 lines, 67 blocks, 39 orphans)
+
+Vars: 10
+        F$ dims 0 refs 2
+        S dims 0 refs 4
+        A dims 0 refs 4
+        G dims 0 refs 4
+        M dims 0 refs 4
+        D dims 0 refs 5
+        R dims 0 refs 5
+        T dims 0 refs 3
+        U$ dims 0 refs 2
+        B dims 0 refs 4
+
+Types
+         str 51
+         num 70
+
+Predefs
+         RND 5
+         INT 2
+Parsed program pool/bombsaway.bas (65 lines, 66 blocks, 34 orphans)
+
+Vars: 8
+        L dims 0 refs 7
+        T dims 0 refs 11
+        S2 dims 0 refs 8
+        V dims 0 refs 7
+        C dims 0 refs 4
+        S1 dims 0 refs 3
+        I dims 0 refs 16
+        H dims 0 refs 7
+
+Types
+         num 115
+         str 16
+
+Predefs
+         INT 7
+         ABS 1
+         TAB 6
+Parsed program pool/bounce.bas (53 lines, 12 blocks, 6 orphans)
+
+Vars: 16
+        K dims 0 refs 4
+        D dims 0 refs 11
+        A$ dims 0 refs 2
+        R dims 0 refs 3
+        I dims 0 refs 22
+        F dims 0 refs 8
+        Q dims 0 refs 7
+        N$ dims 0 refs 1
+        P dims 0 refs 9
+        M dims 0 refs 5
+        B dims 0 refs 10
+        A dims 2 refs 6
+        C dims 1 refs 5
+        Z$ dims 0 refs 3
+        J dims 0 refs 12
+        X dims 0 refs 3
+
+Types
+         num 176
+         str 39
+
+Predefs
+         TAB 4
+         RND 1
+         INT 1
+         LEFT 1
+Parsed program pool/bowling.bas (101 lines, 43 blocks, 17 orphans)
+
+Vars: 22
+        R1 dims 0 refs 2
+        H1 dims 0 refs 2
+        D dims 0 refs 4
+        R dims 0 refs 5
+        Y dims 0 refs 16
+        X3 dims 0 refs 2
+        J7 dims 0 refs 5
+        B1 dims 0 refs 4
+        D1 dims 0 refs 6
+        I dims 0 refs 2
+        C dims 0 refs 2
+        R6 dims 0 refs 2
+        B dims 0 refs 2
+        L dims 0 refs 5
+        J$ dims 0 refs 13
+        L$ dims 0 refs 12
+        X dims 0 refs 16
+        P dims 0 refs 5
+        D5 dims 0 refs 2
+        Z4 dims 0 refs 2
+        J dims 0 refs 5
+        Q4 dims 0 refs 2
+
+Types
+         num 201
+         str 74
+
+Predefs
+         TAB 2
+         RND 11
+         INT 11
+Parsed program pool/boxing.bas (142 lines, 100 blocks, 56 orphans)
+
+Vars: 18
+        C dims 0 refs 14
+        DELAY dims 0 refs 2
+        A dims 0 refs 7
+        H dims 0 refs 5
+        V dims 0 refs 8
+        N dims 0 refs 5
+        R dims 0 refs 5
+        U dims 0 refs 4
+        X dims 0 refs 11
+        B dims 0 refs 7
+        L dims 0 refs 8
+        P dims 0 refs 8
+        Q dims 0 refs 5
+        S dims 0 refs 7
+        T dims 0 refs 6
+        Y dims 0 refs 7
+        Z$ dims 0 refs 4
+        Z dims 0 refs 19
+
+Types
+         num 255
+         str 118
+
+Predefs
+         RND 2
+         INT 2
+         TAB 6
+Parsed program pool/bug.bas (256 lines, 141 blocks, 80 orphans)
+
+Vars: 20
+        A dims 0 refs 8
+        B$ dims 0 refs 8
+        Z dims 0 refs 2
+        M dims 0 refs 5
+        K dims 0 refs 7
+        J dims 0 refs 1
+        Q dims 0 refs 4
+        Z$ dims 0 refs 2
+        L$ dims 1 refs 4
+        I dims 0 refs 3
+        A$ dims 0 refs 13
+        E dims 0 refs 6
+        F dims 0 refs 2
+        H dims 0 refs 3
+        B dims 0 refs 5
+        L dims 0 refs 4
+        D dims 1 refs 26
+        C dims 0 refs 8
+        Z1 dims 0 refs 5
+        T dims 0 refs 4
+
+Types
+         num 213
+         str 102
+
+Functions
+        A refs 6
+        D refs 1
+        C refs 3
+
+Predefs
+         ABS 1
+         TAB 2
+         RND 6
+         INT 4
+Parsed program pool/bullfight.bas (193 lines, 125 blocks, 65 orphans)
+
+Vars: 14
+        W dims 1 refs 4
+        P2 dims 0 refs 4
+        P3 dims 0 refs 4
+        P4 dims 0 refs 4
+        B dims 0 refs 6
+        S dims 1 refs 7
+        M dims 0 refs 6
+        U dims 0 refs 5
+        A$ dims 1 refs 4
+        R dims 0 refs 4
+        I dims 0 refs 21
+        N dims 0 refs 4
+        T dims 0 refs 4
+        P1 dims 0 refs 4
+
+Types
+         num 134
+         str 37
+
+Predefs
+         TAB 10
+         RND 1
+Parsed program pool/bullseye.bas (37 lines, 23 blocks, 10 orphans)
+
+Vars: 6
+        I dims 0 refs 9
+        B dims 1 refs 2
+        L dims 0 refs 2
+        X dims 0 refs 5
+        Y dims 0 refs 2
+        J dims 0 refs 2
+
+Types
+         num 38
+         str 4
+
+Predefs
+         INT 1
+         CHR 2
+         TAB 3
+Parsed program pool/bunny.bas (40 lines, 15 blocks, 7 orphans)
+
+Vars: 3
+        A$ dims 1 refs 5
+        I dims 0 refs 3
+        Y$ dims 0 refs 2
+
+Types
+         num 25
+         str 18
+
+Predefs
+         TAB 2
+         RND 3
+         INT 3
+Parsed program pool/buzzword.bas (26 lines, 6 blocks, 4 orphans)
+
+Vars: 8
+        D dims 0 refs 6
+        S dims 0 refs 6
+        N dims 0 refs 9
+        W dims 0 refs 2
+        G dims 0 refs 4
+        D2 dims 0 refs 5
+        M dims 1 refs 5
+        I dims 0 refs 10
+
+Types
+         num 87
+         str 25
+
+Predefs
+         TAB 5
+         CHR 4
+Parsed program pool/calendar.bas (58 lines, 22 blocks, 15 orphans)
+
+Vars: 13
+        D dims 0 refs 6
+        G dims 0 refs 7
+        I dims 0 refs 5
+        J dims 0 refs 4
+        A dims 0 refs 3
+        P dims 0 refs 3
+        C dims 0 refs 23
+        N dims 0 refs 5
+        H dims 0 refs 6
+        K dims 0 refs 3
+        M dims 0 refs 4
+        E dims 0 refs 5
+        F dims 0 refs 4
+
+Types
+         num 123
+         str 18
+
+Predefs
+         INT 8
+         TAB 2
+Parsed program pool/change.bas (51 lines, 34 blocks, 15 orphans)
+
+Vars: 21
+        E dims 0 refs 9
+        H dims 0 refs 7
+        A1 dims 0 refs 5
+        L dims 0 refs 6
+        Z dims 0 refs 3
+        U dims 0 refs 25
+        C dims 0 refs 10
+        M dims 0 refs 6
+        T dims 0 refs 3
+        R dims 1 refs 35
+        Y dims 0 refs 31
+        B1 dims 0 refs 4
+        G dims 0 refs 8
+        A dims 0 refs 22
+        J dims 0 refs 3
+        B dims 0 refs 20
+        V dims 0 refs 23
+        Q dims 0 refs 15
+        I dims 0 refs 5
+        S dims 2 refs 39
+        X dims 0 refs 30
+
+Types
+         num 493
+         str 28
+
+Predefs
+         ABS 8
+         CHR 3
+         TAB 3
+Parsed program pool/checkers.bas (82 lines, 111 blocks, 33 orphans)
+
+Vars: 5
+        R dims 0 refs 2
+        D dims 0 refs 2
+        T dims 0 refs 3
+        A dims 0 refs 3
+        W dims 0 refs 3
+
+Types
+         num 27
+         str 15
+
+Predefs
+         TAB 2
+         RND 1
+         INT 1
+         ABS 1
+Parsed program pool/chemist.bas (27 lines, 8 blocks, 6 orphans)
+
+Vars: 13
+        H dims 0 refs 3
+        X dims 0 refs 3
+        A$ dims 0 refs 2
+        B dims 0 refs 2
+        C dims 0 refs 2
+        D$ dims 0 refs 2
+        F dims 0 refs 3
+        G dims 0 refs 3
+        K dims 0 refs 3
+        I dims 0 refs 3
+        J dims 0 refs 2
+        Z$ dims 0 refs 2
+        Y dims 0 refs 3
+
+Types
+         num 63
+         str 44
+
+Predefs
+         TAB 10
+Parsed program pool/chief.bas (51 lines, 10 blocks, 6 orphans)
+
+Vars: 12
+        A dims 2 refs 9
+        C dims 0 refs 7
+        R1 dims 0 refs 6
+        C1 dims 0 refs 6
+        R$ dims 0 refs 1
+        R dims 0 refs 10
+        F dims 0 refs 3
+        I dims 0 refs 14
+        J dims 0 refs 13
+        P dims 0 refs 4
+        I1 dims 0 refs 5
+        P1 dims 0 refs 5
+
+Types
+         num 125
+         str 30
+
+Predefs
+         TAB 4
+         INT 1
+Parsed program pool/chomp.bas (104 lines, 45 blocks, 23 orphans)
+
+Vars: 49
+        T1 dims 0 refs 8
+        R2 dims 0 refs 5
+        I2 dims 0 refs 5
+        O2 dims 0 refs 3
+        E2 dims 0 refs 8
+        B$ dims 0 refs 13
+        H dims 1 refs 7
+        Y dims 0 refs 14
+        U dims 0 refs 7
+        U2 dims 0 refs 5
+        R dims 0 refs 3
+        N dims 0 refs 3
+        S0 dims 0 refs 8
+        M dims 0 refs 6
+        C2 dims 0 refs 9
+        L dims 0 refs 8
+        C6 dims 0 refs 15
+        Y2 dims 0 refs 11
+        A dims 0 refs 17
+        I dims 0 refs 27
+        Z dims 0 refs 6
+        S dims 1 refs 17
+        O dims 0 refs 13
+        E dims 0 refs 7
+        S2 dims 1 refs 1
+        M4 dims 0 refs 4
+        C1 dims 0 refs 10
+        F1 dims 0 refs 3
+        M1 dims 0 refs 11
+        D dims 0 refs 21
+        X$ dims 0 refs 7
+        R1 dims 0 refs 7
+        M3 dims 0 refs 6
+        P1 dims 0 refs 8
+        T2 dims 0 refs 6
+        I1 dims 0 refs 4
+        M2 dims 0 refs 10
+        Y1 dims 0 refs 2
+        W dims 0 refs 8
+        Q1 dims 0 refs 4
+        P2 dims 0 refs 6
+        F dims 1 refs 10
+        B dims 1 refs 8
+        Q2 dims 0 refs 4
+        W0 dims 0 refs 4
+        C$ dims 0 refs 12
+        C5 dims 0 refs 15
+        M6 dims 0 refs 4
+        M5 dims 0 refs 2
+
+Types
+         str 196
+         num 621
+
+Predefs
+         TAB 2
+         RND 2
+         INT 22
+         ABS 3
+Parsed program pool/civilwar.bas (395 lines, 215 blocks, 101 orphans)
+
+Vars: 10
+        F dims 0 refs 9
+        X dims 0 refs 17
+        G dims 0 refs 2
+        T dims 0 refs 9
+        A dims 0 refs 23
+        C dims 0 refs 15
+        E dims 0 refs 16
+        Y dims 0 refs 2
+        B dims 0 refs 15
+        D dims 0 refs 12
+
+Types
+         num 195
+         str 50
+
+Predefs
+         TAB 2
+         INT 17
+Parsed program pool/combat.bas (124 lines, 68 blocks, 42 orphans)
+
+Vars: 11
+        F dims 0 refs 15
+        E dims 0 refs 2
+        S dims 0 refs 2
+        O dims 0 refs 7
+        R dims 0 refs 11
+        T dims 0 refs 4
+        H dims 0 refs 2
+        Q dims 0 refs 2
+        M dims 0 refs 2
+        Z dims 0 refs 2
+        X dims 0 refs 24
+
+Types
+         num 127
+         str 29
+
+Predefs
+         TAB 2
+         RND 5
+         INT 4
+Parsed program pool/craps.bas (82 lines, 74 blocks, 39 orphans)
+
+Vars: 27
+        E dims 0 refs 4
+        H dims 0 refs 4
+        B7 dims 0 refs 2
+        A1 dims 0 refs 6
+        D dims 0 refs 4
+        Y dims 0 refs 4
+        O dims 0 refs 4
+        Z1 dims 0 refs 4
+        Z2 dims 0 refs 7
+        F dims 0 refs 4
+        M dims 0 refs 4
+        P dims 0 refs 10
+        R dims 0 refs 10
+        B dims 0 refs 4
+        Z dims 0 refs 4
+        S dims 0 refs 2
+        N dims 0 refs 4
+        W dims 0 refs 4
+        X dims 0 refs 20
+        G dims 0 refs 4
+        I dims 0 refs 4
+        J dims 0 refs 4
+        K dims 0 refs 4
+        Q dims 0 refs 11
+        A dims 0 refs 4
+        C dims 0 refs 4
+        L dims 0 refs 4
+
+Types
+         num 243
+         str 40
+
+Predefs
+         TAB 2
+         RND 15
+         INT 15
+Parsed program pool/cube.bas (161 lines, 144 blocks, 68 orphans)
+
+Vars: 10
+        N dims 0 refs 3
+        A dims 0 refs 6
+        C dims 0 refs 6
+        D dims 0 refs 4
+        Y dims 0 refs 5
+        A$ dims 0 refs 2
+        G dims 0 refs 5
+        B dims 0 refs 6
+        X dims 0 refs 5
+        Z dims 0 refs 5
+
+Types
+         num 68
+         str 32
+
+Predefs
+         RND 3
+         ABS 3
+         TAB 2
+         LOG 2
+         INT 4
+Parsed program pool/depthcharge.bas (33 lines, 27 blocks, 7 orphans)
+
+Vars: 11
+        N dims 0 refs 5
+        M dims 0 refs 4
+        A$ dims 0 refs 3
+        Y dims 0 refs 3
+        Z dims 0 refs 3
+        X dims 0 refs 4
+        C dims 0 refs 5
+        A dims 0 refs 2
+        R dims 0 refs 7
+        Q dims 0 refs 4
+        L dims 0 refs 2
+
+Types
+         num 62
+         str 10
+
+Predefs
+         TAB 4
+         INT 1
+         LEN 1
+         MID 1
+Parsed program pool/diamond.bas (27 lines, 11 blocks, 6 orphans)
+
+Vars: 9
+        F dims 1 refs 5
+        Q dims 0 refs 3
+        X dims 0 refs 2
+        A dims 0 refs 2
+        V dims 0 refs 4
+        Z$ dims 0 refs 2
+        S dims 0 refs 2
+        B dims 0 refs 2
+        R dims 0 refs 3
+
+Types
+         num 45
+         str 14
+
+Predefs
+         INT 2
+         TAB 2
+         RND 2
+Parsed program pool/dice.bas (31 lines, 4 blocks, 3 orphans)
+
+Vars: 21
+        Z dims 0 refs 11
+        N dims 1 refs 23
+        U dims 0 refs 7
+        E dims 0 refs 2
+        I dims 0 refs 12
+        M dims 2 refs 5
+        Z1 dims 0 refs 5
+        A dims 0 refs 2
+        K dims 2 refs 5
+        L dims 2 refs 8
+        J dims 0 refs 15
+        Z2 dims 0 refs 5
+        X dims 0 refs 9
+        T dims 0 refs 2
+        B dims 0 refs 2
+        C dims 0 refs 2
+        S1 dims 0 refs 4
+        G dims 0 refs 3
+        Q dims 0 refs 2
+        W dims 0 refs 3
+        S dims 0 refs 4
+
+Types
+         num 211
+         str 32
+
+Predefs
+         TAB 2
+         SGN 1
+         RND 1
+         INT 2
+         CHR 1
+Parsed program pool/digits.bas (78 lines, 30 blocks, 15 orphans)
+
+Vars: 8
+        C dims 0 refs 2
+        T dims 0 refs 27
+        R dims 0 refs 8
+        A1 dims 0 refs 2
+        Y1 dims 0 refs 8
+        M1 dims 0 refs 16
+        M dims 0 refs 20
+        Y dims 0 refs 8
+
+Types
+         num 131
+         str 40
+
+Predefs
+         TAB 2
+         INT 3
+Parsed program pool/evenwins.bas (128 lines, 58 blocks, 33 orphans)
+
+Vars: 9
+        A$ dims 1 refs 14
+        Q dims 0 refs 7
+        X dims 0 refs 3
+        N dims 0 refs 33
+        R dims 0 refs 6
+        Z dims 0 refs 6
+        X$ dims 0 refs 2
+        C dims 0 refs 6
+        M dims 0 refs 4
+
+Types
+         num 103
+         str 53
+
+Predefs
+         COS 1
+         LEFT 1
+         TAB 2
+         RND 1
+         INT 5
+         TAN 2
+         SIN 3
+Parsed program pool/flipflop.bas (79 lines, 42 blocks, 22 orphans)
+
+Vars: 27
+        F dims 0 refs 3
+        A$ dims 0 refs 14
+        E dims 0 refs 2
+        P2 dims 0 refs 8
+        Q dims 0 refs 4
+        R dims 0 refs 3
+        Z dims 1 refs 11
+        P dims 0 refs 30
+        A dims 1 refs 4
+        C dims 0 refs 6
+        P$ dims 1 refs 3
+        U dims 0 refs 2
+        G dims 0 refs 14
+        Y dims 1 refs 23
+        B dims 1 refs 4
+        D dims 1 refs 12
+        N dims 0 refs 4
+        P1 dims 0 refs 11
+        W dims 1 refs 12
+        M$ dims 1 refs 4
+        I dims 0 refs 15
+        K dims 0 refs 6
+        H dims 1 refs 10
+        T dims 0 refs 94
+        X dims 0 refs 16
+        L dims 0 refs 5
+        S dims 0 refs 3
+
+Types
+         num 479
+         str 116
+
+Predefs
+         TAB 6
+         RND 15
+         INT 10
+         ABS 1
+Parsed program pool/football.bas (181 lines, 156 blocks, 73 orphans)
+
+Vars: 20
+        A$ dims 0 refs 5
+        Y dims 0 refs 30
+        F dims 0 refs 8
+        X3 dims 0 refs 5
+        A dims 0 refs 4
+        L$ dims 1 refs 19
+        P dims 0 refs 43
+        X dims 0 refs 45
+        R dims 0 refs 11
+        O$ dims 1 refs 14
+        E dims 0 refs 7
+        T dims 0 refs 4
+        Y1 dims 0 refs 3
+        I dims 0 refs 3
+        D dims 0 refs 15
+        R1 dims 0 refs 8
+        P3 dims 0 refs 4
+        S dims 1 refs 14
+        X1 dims 0 refs 7
+        Z dims 0 refs 14
+
+Types
+         num 523
+         str 99
+
+Functions
+        F refs 12
+        G refs 4
+
+Predefs
+         SGN 1
+         TAB 2
+         RND 18
+         INT 18
+         ABS 11
+Parsed program pool/ftball.bas (298 lines, 218 blocks, 117 orphans)
+
+Vars: 10
+        B1 dims 0 refs 7
+        J dims 0 refs 6
+        B dims 0 refs 4
+        D1 dims 0 refs 4
+        F dims 1 refs 20
+        B$ dims 0 refs 8
+        M1 dims 0 refs 7
+        P dims 0 refs 10
+        I dims 0 refs 11
+        E1 dims 0 refs 5
+
+Types
+         num 242
+         str 85
+
+Predefs
+         TAB 2
+         RND 13
+         INT 13
+Parsed program pool/furtrader.bas (170 lines, 83 blocks, 43 orphans)
+
+Vars: 11
+        A$ dims 0 refs 2
+        R dims 2 refs 12
+        I dims 0 refs 4
+        P dims 0 refs 18
+        E1 dims 0 refs 4
+        L1 dims 0 refs 4
+        L dims 0 refs 9
+        B dims 0 refs 8
+        A dims 0 refs 5
+        E dims 0 refs 8
+        M dims 0 refs 17
+
+Types
+         num 138
+         str 31
+
+Predefs
+         TAB 2
+         RND 1
+         INT 6
+Parsed program pool/gameofevenwins.bas (70 lines, 47 blocks, 24 orphans)
+
+Vars: 25
+        Q dims 0 refs 4
+        K dims 0 refs 4
+        P dims 0 refs 9
+        X dims 0 refs 9
+        D1 dims 0 refs 10
+        G2 dims 0 refs 4
+        G3 dims 0 refs 4
+        F dims 0 refs 13
+        C dims 0 refs 15
+        T dims 0 refs 6
+        D2 dims 0 refs 21
+        B dims 0 refs 2
+        L dims 1 refs 25
+        A dims 0 refs 3
+        N dims 0 refs 5
+        S9 dims 0 refs 6
+        G1 dims 0 refs 2
+        S1 dims 0 refs 21
+        O dims 0 refs 5
+        W dims 0 refs 6
+        D dims 0 refs 12
+        I dims 0 refs 3
+        S2 dims 0 refs 6
+        H dims 0 refs 9
+        J dims 0 refs 4
+
+Types
+         num 398
+         str 65
+
+Predefs
+         ABS 2
+         SQR 1
+         TAB 2
+         INT 12
+         RND 6
+         TAN 1
+Parsed program pool/golf.bas (244 lines, 193 blocks, 108 orphans)
+
+Vars: 10
+        Y dims 0 refs 9
+        A dims 2 refs 8
+        N dims 0 refs 11
+        I dims 0 refs 13
+        E dims 0 refs 5
+        F dims 0 refs 7
+        Q dims 0 refs 2
+        J dims 0 refs 12
+        X dims 0 refs 9
+        L dims 0 refs 6
+
+Types
+         str 19
+         num 123
+
+Predefs
+         TAB 2
+         RND 2
+         INT 2
+Parsed program pool/gomoko.bas (54 lines, 54 blocks, 27 orphans)
+
+Vars: 6
+        G dims 0 refs 6
+        M dims 0 refs 3
+        N dims 0 refs 4
+        H dims 0 refs 2
+        L dims 0 refs 4
+        L1 dims 0 refs 4
+
+Types
+         num 41
+         str 15
+
+Predefs
+         TAB 2
+         LOG 2
+         INT 2
+         RND 1
+Parsed program pool/guess.bas (40 lines, 23 blocks, 12 orphans)
+
+Vars: 11
+        B dims 0 refs 4
+        Z$ dims 0 refs 2
+        S dims 0 refs 6
+        Z dims 0 refs 4
+        S1 dims 0 refs 5
+        T dims 0 refs 3
+        E dims 0 refs 5
+        B2 dims 0 refs 2
+        I dims 0 refs 2
+        X dims 0 refs 2
+        R dims 0 refs 4
+
+Types
+         num 70
+         str 30
+
+Predefs
+         TAB 2
+         RND 2
+         INT 3
+         ABS 3
+         SIN 1
+Parsed program pool/gunner.bas (52 lines, 30 blocks, 19 orphans)
+
+Vars: 15
+        P1 dims 0 refs 7
+        P dims 0 refs 16
+        Y dims 0 refs 10
+        D dims 0 refs 15
+        D1 dims 0 refs 4
+        E dims 0 refs 5
+        I dims 0 refs 4
+        Q dims 0 refs 19
+        L dims 0 refs 5
+        N dims 0 refs 2
+        Z dims 0 refs 7
+        H dims 0 refs 5
+        A dims 0 refs 11
+        C dims 0 refs 15
+        S dims 0 refs 19
+
+Types
+         num 220
+         str 56
+
+Predefs
+         CHR 1
+         TAB 2
+         INT 11
+         RND 4
+Parsed program pool/hammurabi.bas (119 lines, 83 blocks, 40 orphans)
+
+Vars: 19
+        M dims 0 refs 6
+        N dims 0 refs 3
+        I dims 0 refs 52
+        B$ dims 0 refs 2
+        W$ dims 0 refs 2
+        L$ dims 1 refs 3
+        D$ dims 1 refs 6
+        C dims 0 refs 4
+        Q dims 0 refs 4
+        A$ dims 0 refs 6
+        L dims 0 refs 5
+        G$ dims 0 refs 5
+        R dims 0 refs 4
+        P$ dims 2 refs 32
+        Y$ dims 0 refs 2
+        U dims 1 refs 3
+        J dims 0 refs 6
+        T1 dims 0 refs 4
+        N$ dims 1 refs 7
+
+Types
+         num 207
+         str 134
+
+Predefs
+         LEN 2
+         MID 1
+         LEFT 1
+         TAB 2
+         RND 1
+         INT 1
+Parsed program pool/hangman.bas (81 lines, 63 blocks, 42 orphans)
+
+Vars: 7
+        N$ dims 0 refs 23
+        B$ dims 0 refs 4
+        C$ dims 0 refs 6
+        D$ dims 0 refs 4
+        E$ dims 0 refs 3
+        I dims 0 refs 2
+        G$ dims 0 refs 4
+
+Types
+         num 8
+         str 128
+
+Predefs
+         TAB 2
+Parsed program pool/hello.bas (83 lines, 47 blocks, 27 orphans)
+
+Vars: 16
+        J dims 0 refs 21
+        A$ dims 0 refs 5
+        R dims 0 refs 3
+        M dims 2 refs 13
+        W dims 0 refs 5
+        X dims 0 refs 24
+        Y dims 0 refs 14
+        I dims 0 refs 41
+        P$ dims 0 refs 3
+        T dims 1 refs 2
+        K dims 0 refs 4
+        B dims 2 refs 4
+        S dims 1 refs 43
+        L dims 0 refs 5
+        M1 dims 0 refs 12
+        M2 dims 0 refs 14
+
+Types
+         num 385
+         str 61
+
+Functions
+        S refs 1
+        R refs 6
+        M refs 4
+
+Predefs
+         MID 1
+         TAB 6
+         INT 8
+         LEFT 1
+         RND 1
+         STR 4
+Parsed program pool/hexapawn.bas (174 lines, 98 blocks, 54 orphans)
+
+Vars: 5
+        Y dims 0 refs 6
+        A dims 0 refs 3
+        A$ dims 0 refs 2
+        R dims 0 refs 5
+        B dims 0 refs 4
+
+Types
+         num 31
+         str 21
+
+Predefs
+         INT 1
+         TAB 2
+         RND 1
+Parsed program pool/hi-lo.bas (29 lines, 15 blocks, 8 orphans)
+
+Vars: 13
+        M dims 0 refs 2
+        P dims 0 refs 13
+        X dims 0 refs 27
+        Y dims 0 refs 28
+        A dims 0 refs 4
+        A$ dims 0 refs 2
+        B dims 0 refs 15
+        T dims 2 refs 31
+        R dims 0 refs 17
+        C dims 0 refs 29
+        W dims 0 refs 2
+        Z dims 0 refs 9
+        F dims 0 refs 5
+
+Types
+         num 316
+         str 35
+
+Predefs
+         TAB 4
+         INT 1
+         ABS 2
+Parsed program pool/highiq.bas (135 lines, 91 blocks, 46 orphans)
+
+Vars: 30
+        G dims 0 refs 18
+        A$ dims 1 refs 48
+        T2 dims 1 refs 4
+        S dims 0 refs 9
+        Z dims 0 refs 17
+        S1 dims 0 refs 3
+        X dims 0 refs 7
+        G2 dims 0 refs 16
+        Z1 dims 0 refs 10
+        B$ dims 1 refs 46
+        R$ dims 0 refs 2
+        P dims 0 refs 8
+        S3 dims 0 refs 3
+        B1 dims 0 refs 2
+        C$ dims 0 refs 3
+        C dims 0 refs 10
+        A dims 0 refs 4
+        T dims 0 refs 19
+        S2 dims 0 refs 3
+        T1 dims 1 refs 6
+        T3 dims 1 refs 6
+        T6 dims 0 refs 3
+        I dims 0 refs 9
+        J dims 0 refs 53
+        H dims 1 refs 70
+        L dims 0 refs 3
+        N dims 0 refs 5
+        G1 dims 0 refs 18
+        A1 dims 0 refs 2
+        A2 dims 0 refs 3
+
+Types
+         num 586
+         str 256
+
+Predefs
+         TAB 26
+         RND 6
+         INT 8
+         CHR 2
+Parsed program pool/hockey.bas (210 lines, 129 blocks, 74 orphans)
+
+Vars: 22
+        X$ dims 0 refs 2
+        A dims 0 refs 13
+        N dims 0 refs 7
+        Q dims 1 refs 3
+        L dims 0 refs 3
+        T dims 0 refs 3
+        F dims 0 refs 3
+        O$ dims 0 refs 2
+        D dims 1 refs 6
+        P dims 1 refs 4
+        Y dims 1 refs 15
+        B dims 0 refs 3
+        S dims 1 refs 16
+        C dims 0 refs 4
+        W$ dims 1 refs 3
+        R dims 0 refs 7
+        J dims 0 refs 13
+        I dims 0 refs 46
+        V$ dims 1 refs 9
+        M dims 1 refs 34
+        H dims 0 refs 2
+        Z9 dims 0 refs 4
+
+Types
+         num 267
+         str 55
+
+Predefs
+         TAB 2
+         RND 2
+         INT 3
+Parsed program pool/horserace.bas (130 lines, 48 blocks, 24 orphans)
+
+Vars: 7
+        A dims 0 refs 5
+        B dims 0 refs 5
+        K dims 0 refs 4
+        X dims 0 refs 4
+        Y dims 0 refs 4
+        N dims 0 refs 4
+        G dims 0 refs 5
+
+Types
+         num 47
+         str 27
+
+Predefs
+         INT 2
+         ABS 2
+         TAB 2
+         RND 2
+Parsed program pool/hurkle.bas (51 lines, 21 blocks, 12 orphans)
+
+Vars: 5
+        Q dims 0 refs 5
+        V dims 0 refs 6
+        A dims 0 refs 6
+        T dims 0 refs 3
+        G dims 0 refs 2
+
+Types
+         str 13
+         num 46
+
+Predefs
+         TAB 2
+         RND 2
+         INT 2
+         ABS 1
+Parsed program pool/kinema.bas (34 lines, 13 blocks, 7 orphans)
+
+Vars: 28
+        C dims 0 refs 9
+        I dims 0 refs 14
+        P1 dims 0 refs 5
+        V9 dims 0 refs 3
+        T1 dims 0 refs 2
+        A dims 0 refs 35
+        V2 dims 0 refs 4
+        D dims 0 refs 18
+        X dims 0 refs 2
+        M6 dims 0 refs 4
+        N5 dims 0 refs 5
+        Q dims 0 refs 3
+        K dims 0 refs 10
+        A4 dims 0 refs 2
+        F1 dims 0 refs 14
+        U2 dims 0 refs 6
+        W dims 0 refs 5
+        H dims 0 refs 8
+        J dims 0 refs 12
+        C1 dims 0 refs 5
+        V3 dims 0 refs 4
+        G1 dims 0 refs 6
+        B dims 0 refs 19
+        U1 dims 0 refs 4
+        B5 dims 0 refs 7
+        V1 dims 0 refs 3
+        X5 dims 0 refs 6
+        Z$ dims 0 refs 3
+
+Types
+         num 397
+         str 124
+
+Predefs
+         TAB 2
+         LEFT 1
+         RND 14
+         INT 40
+         ABS 2
+Parsed program pool/king.bas (268 lines, 179 blocks, 93 orphans)
+
+Vars: 43
+        F1 dims 0 refs 3
+        V0 dims 0 refs 3
+        M1 dims 0 refs 11
+        D dims 0 refs 4
+        R0 dims 0 refs 6
+        T dims 0 refs 4
+        A3 dims 0 refs 5
+        M2 dims 0 refs 9
+        G5 dims 0 refs 3
+        A4 dims 0 refs 2
+        H1 dims 0 refs 4
+        X1 dims 0 refs 2
+        H0 dims 0 refs 8
+        A1 dims 0 refs 12
+        X dims 0 refs 3
+        B1 dims 0 refs 6
+        A dims 0 refs 5
+        R3 dims 0 refs 5
+        K dims 0 refs 3
+        T2 dims 0 refs 2
+        A2 dims 0 refs 3
+        N dims 0 refs 6
+        F dims 0 refs 15
+        P dims 0 refs 8
+        S dims 0 refs 3
+        Z dims 0 refs 8
+        M$ dims 0 refs 7
+        R2 dims 0 refs 3
+        B dims 0 refs 3
+        C dims 0 refs 3
+        Q$ dims 0 refs 7
+        G3 dims 0 refs 3
+        R4 dims 0 refs 2
+        M dims 0 refs 7
+        R1 dims 0 refs 8
+        T1 dims 0 refs 19
+        I dims 0 refs 2
+        D1 dims 0 refs 4
+        Z$ dims 0 refs 5
+        R dims 0 refs 12
+        M0 dims 0 refs 3
+        N$ dims 0 refs 4
+        H dims 0 refs 3
+
+Types
+         num 336
+         str 117
+
+Predefs
+         TAB 14
+         ABS 7
+         SIN 1
+         COS 1
+         SQR 1
+Parsed program pool/lem.bas (246 lines, 99 blocks, 53 orphans)
+
+Vars: 5
+        A dims 0 refs 3
+        N dims 0 refs 2
+        L dims 0 refs 3
+        G dims 0 refs 5
+        A$ dims 0 refs 2
+
+Types
+         num 29
+         str 18
+
+Predefs
+         TAB 2
+         RND 1
+         INT 1
+         ASC 1
+         CHR 1
+Parsed program pool/letter.bas (26 lines, 14 blocks, 9 orphans)
+
+Vars: 19
+        Y4 dims 0 refs 4
+        I dims 0 refs 4
+        Y1 dims 0 refs 10
+        B$ dims 1 refs 12
+        P dims 0 refs 9
+        X4 dims 0 refs 4
+        J dims 0 refs 4
+        L dims 0 refs 4
+        Y dims 0 refs 23
+        G dims 0 refs 3
+        Y3 dims 0 refs 4
+        X1 dims 0 refs 11
+        X2 dims 0 refs 9
+        Y2 dims 0 refs 8
+        A dims 2 refs 12
+        C dims 0 refs 21
+        X dims 0 refs 31
+        I9 dims 0 refs 5
+        X3 dims 0 refs 4
+
+Types
+         str 27
+         num 255
+
+Predefs
+         LEN 4
+         RIGHT 1
+         MID 1
+         TAB 3
+         LEFT 1
+Parsed program pool/life.bas (66 lines, 50 blocks, 11 orphans)
+
+Vars: 13
+        N dims 2 refs 16
+        K dims 0 refs 24
+        A dims 1 refs 6
+        X dims 1 refs 11
+        M dims 0 refs 3
+        J dims 0 refs 20
+        B dims 0 refs 28
+        Y dims 1 refs 11
+        O1 dims 0 refs 13
+        M2 dims 0 refs 6
+        M3 dims 0 refs 6
+        P1 dims 0 refs 3
+        K1 dims 0 refs 2
+
+Types
+         num 248
+         str 21
+
+Predefs
+         CHR 3
+         TAB 3
+Parsed program pool/lifefortwo.bas (83 lines, 80 blocks, 36 orphans)
+
+Vars: 2
+        R dims 0 refs 11
+        A dims 0 refs 8
+
+Types
+         num 34
+         str 29
+
+Predefs
+         TAB 2
+Parsed program pool/litquiz.bas (49 lines, 23 blocks, 14 orphans)
+
+Vars: 9
+        L dims 0 refs 4
+        T$ dims 1 refs 3
+        I dims 0 refs 13
+        P dims 0 refs 4
+        A dims 0 refs 4
+        A$ dims 0 refs 3
+        J dims 0 refs 3
+        C dims 0 refs 4
+        A1 dims 0 refs 6
+
+Types
+         num 64
+         str 15
+
+Predefs
+         LEN 1
+         INT 1
+         MID 1
+         TAB 2
+Parsed program pool/love.bas (34 lines, 13 blocks, 7 orphans)
+
+Vars: 17
+        Z dims 0 refs 7
+        K dims 0 refs 8
+        T dims 0 refs 5
+        I dims 0 refs 4
+        W dims 0 refs 10
+        Q dims 0 refs 12
+        L dims 0 refs 8
+        M dims 0 refs 11
+        G dims 0 refs 8
+        D dims 0 refs 2
+        L5 dims 0 refs 1
+        A dims 0 refs 9
+        N dims 0 refs 5
+        S dims 0 refs 18
+        V dims 0 refs 18
+        O dims 0 refs 1
+        J dims 0 refs 4
+
+Types
+         num 186
+         str 29
+
+Predefs
+         TAB 2
+         INT 3
+         SQR 3
+Parsed program pool/lunar.bas (48 lines, 46 blocks, 22 orphans)
+
+Vars: 28
+        P9 dims 0 refs 21
+        H dims 0 refs 4
+        A dims 0 refs 2
+        T dims 0 refs 6
+        S$ dims 1 refs 3
+        B1 dims 0 refs 3
+        Z dims 0 refs 6
+        F dims 0 refs 9
+        C9 dims 0 refs 6
+        Q dims 1 refs 18
+        A$ dims 1 refs 9
+        G$ dims 1 refs 9
+        X$ dims 0 refs 11
+        R dims 0 refs 3
+        X dims 0 refs 36
+        W1 dims 0 refs 2
+        R9 dims 0 refs 2
+        P dims 0 refs 8
+        H$ dims 1 refs 4
+        W dims 0 refs 6
+        C dims 0 refs 4
+        S dims 0 refs 35
+        I dims 1 refs 7
+        M dims 0 refs 13
+        Y dims 0 refs 3
+        G dims 0 refs 6
+        L$ dims 0 refs 6
+        B dims 0 refs 7
+
+Types
+         num 295
+         str 100
+
+Predefs
+         INT 2
+         LEN 1
+         CHR 4
+         TAB 6
+         MID 8
+         RND 2
+Parsed program pool/mastermind.bas (232 lines, 81 blocks, 36 orphans)
+
+Vars: 6
+        T2 dims 0 refs 2
+        N dims 0 refs 4
+        D dims 0 refs 12
+        A dims 0 refs 2
+        T dims 0 refs 4
+        T1 dims 0 refs 2
+
+Types
+         str 24
+         num 47
+
+Predefs
+         RND 1
+         INT 1
+         TAB 2
+Parsed program pool/mathdice.bas (60 lines, 39 blocks, 23 orphans)
+
+Vars: 7
+        D dims 0 refs 2
+        J dims 0 refs 6
+        P dims 2 refs 12
+        T dims 0 refs 6
+        M dims 0 refs 3
+        N dims 0 refs 3
+        I dims 0 refs 19
+
+Types
+         str 24
+         num 94
+
+Predefs
+         TAB 2
+         SQR 1
+         INT 2
+         RND 1
+Parsed program pool/mugwump.bas (56 lines, 23 blocks, 12 orphans)
+
+Vars: 7
+        A$ dims 0 refs 4
+        L dims 0 refs 5
+        I dims 0 refs 18
+        J dims 0 refs 4
+        T$ dims 0 refs 3
+        D$ dims 0 refs 2
+        B$ dims 1 refs 9
+
+Types
+         num 44
+         str 37
+
+Predefs
+         TAB 2
+         LEN 1
+         MID 1
+Parsed program pool/name.bas (25 lines, 11 blocks, 6 orphans)
+
+Vars: 6
+        A dims 0 refs 2
+        B dims 0 refs 2
+        C dims 0 refs 2
+        I dims 0 refs 2
+        D dims 0 refs 5
+        A$ dims 0 refs 4
+
+Types
+         num 24
+         str 21
+
+Predefs
+         TAB 2
+Parsed program pool/nicomachus.bas (34 lines, 15 blocks, 9 orphans)
+
+Vars: 17
+        Y dims 0 refs 6
+        A dims 1 refs 31
+        Z$ dims 0 refs 5
+        W dims 0 refs 6
+        Q9$ dims 0 refs 10
+        H dims 0 refs 3
+        F dims 0 refs 6
+        G dims 0 refs 7
+        Z dims 0 refs 4
+        D dims 1 refs 5
+        I dims 0 refs 40
+        C dims 0 refs 26
+        E dims 0 refs 8
+        J dims 0 refs 11
+        X dims 0 refs 8
+        B dims 2 refs 5
+        N dims 0 refs 16
+
+Types
+         num 282
+         str 56
+
+Predefs
+         TAB 2
+         INT 12
+         RND 2
+Parsed program pool/nim.bas (156 lines, 129 blocks, 62 orphans)
+
+Vars: 7
+        V dims 0 refs 2
+        P dims 0 refs 16
+        G dims 0 refs 7
+        R dims 0 refs 2
+        S dims 0 refs 2
+        T dims 0 refs 2
+        U dims 0 refs 2
+
+Types
+         num 54
+         str 13
+
+Functions
+        R refs 5
+
+Predefs
+         INT 1
+         TAB 2
+         RND 1
+Parsed program pool/number.bas (37 lines, 23 blocks, 14 orphans)
+
+Vars: 12
+        A dims 1 refs 11
+        T dims 0 refs 7
+        T1 dims 0 refs 4
+        T2 dims 0 refs 3
+        S dims 0 refs 4
+        A$ dims 0 refs 3
+        J dims 0 refs 21
+        I dims 0 refs 9
+        M dims 0 refs 4
+        F dims 0 refs 8
+        F1 dims 0 refs 4
+        F2 dims 0 refs 3
+
+Types
+         num 149
+         str 29
+
+Predefs
+         TAB 9
+         INT 2
+         ABS 2
+Parsed program pool/onecheck.bas (86 lines, 35 blocks, 19 orphans)
+
+Vars: 9
+        A dims 0 refs 7
+        R dims 0 refs 2
+        H dims 0 refs 5
+        A1 dims 0 refs 2
+        D dims 0 refs 4
+        D1 dims 0 refs 4
+        T dims 0 refs 5
+        C dims 0 refs 3
+        C$ dims 0 refs 2
+
+Types
+         num 64
+         str 64
+
+Predefs
+         SQR 1
+         TAB 2
+         RND 3
+         INT 3
+         ABS 1
+         COS 1
+Parsed program pool/orbit.bas (96 lines, 18 blocks, 9 orphans)
+
+Vars: 10
+        M$ dims 1 refs 4
+        N$ dims 0 refs 7
+        I dims 0 refs 11
+        S1 dims 0 refs 5
+        A$ dims 0 refs 7
+        S$ dims 1 refs 10
+        S dims 0 refs 5
+        A dims 1 refs 6
+        T dims 0 refs 3
+        K dims 0 refs 5
+
+Types
+         str 92
+         num 70
+
+Predefs
+         TAB 2
+         RND 1
+         INT 1
+Parsed program pool/pizza.bas (68 lines, 18 blocks, 10 orphans)
+
+Vars: 4
+        I dims 0 refs 5
+        U dims 0 refs 10
+        J dims 0 refs 6
+        K dims 0 refs 4
+
+Types
+         str 25
+         num 59
+
+Predefs
+         TAB 2
+         RND 3
+         INT 3
+Parsed program pool/poetry.bas (42 lines, 43 blocks, 29 orphans)
+
+Vars: 22
+        U dims 0 refs 36
+        O dims 0 refs 17
+        C dims 0 refs 16
+        P dims 0 refs 8
+        Z dims 0 refs 68
+        V dims 0 refs 15
+        K$ dims 0 refs 2
+        G dims 0 refs 17
+        X dims 0 refs 18
+        S dims 0 refs 18
+        N dims 0 refs 26
+        K dims 0 refs 42
+        I dims 0 refs 13
+        H$ dims 0 refs 19
+        D dims 0 refs 11
+        M dims 0 refs 6
+        J$ dims 0 refs 10
+        I$ dims 0 refs 12
+        A dims 1 refs 26
+        B dims 1 refs 20
+        T dims 0 refs 17
+        Q dims 0 refs 2
+
+Types
+         num 618
+         str 136
+
+Functions
+        B refs 12
+        A refs 12
+
+Predefs
+         RND 3
+         INT 19
+         LEFT 4
+         TAB 2
+Parsed program pool/poker.bas (416 lines, 334 blocks, 154 orphans)
+
+Vars: 25
+        X dims 1 refs 41
+        J4 dims 0 refs 2
+        P dims 0 refs 7
+        A dims 0 refs 5
+        L dims 1 refs 22
+        S$ dims 0 refs 3
+        J2 dims 0 refs 6
+        S dims 0 refs 11
+        I1 dims 0 refs 2
+        Y dims 1 refs 4
+        I dims 0 refs 82
+        Z dims 0 refs 7
+        X$ dims 0 refs 3
+        K1 dims 0 refs 8
+        K2 dims 0 refs 6
+        K3 dims 0 refs 4
+        J3 dims 0 refs 2
+        C$ dims 0 refs 3
+        M dims 2 refs 50
+        J dims 0 refs 47
+        J1 dims 0 refs 10
+        K dims 0 refs 9
+        XX dims 0 refs 1
+        Q dims 0 refs 5
+        O dims 0 refs 1
+
+Types
+         str 62
+         num 531
+
+Predefs
+         INT 5
+         CHR 1
+         TAB 2
+         LEFT 6
+Parsed program pool/qubit.bas (281 lines, 184 blocks, 86 orphans)
+
+Vars: 17
+        A dims 0 refs 3
+        B dims 0 refs 3
+        M1 dims 0 refs 16
+        T1 dims 0 refs 12
+        M dims 0 refs 12
+        Q$ dims 0 refs 3
+        I dims 0 refs 5
+        W$ dims 0 refs 3
+        P dims 0 refs 4
+        C dims 0 refs 6
+        K dims 0 refs 5
+        S dims 1 refs 3
+        L dims 0 refs 2
+        T dims 0 refs 13
+        U1 dims 0 refs 9
+        U dims 0 refs 11
+        Z dims 0 refs 3
+
+Types
+         num 166
+         str 42
+
+Predefs
+         TAB 2
+         INT 2
+         RND 1
+Parsed program pool/queen.bas (168 lines, 105 blocks, 54 orphans)
+
+Vars: 8
+        N dims 0 refs 9
+        A$ dims 0 refs 4
+        K dims 0 refs 18
+        J dims 0 refs 3
+        T dims 0 refs 4
+        R dims 0 refs 6
+        Z dims 0 refs 2
+        A dims 1 refs 11
+
+Types
+         num 82
+         str 30
+
+Predefs
+         TAB 2
+         RND 2
+         INT 3
+Parsed program pool/reverse.bas (62 lines, 26 blocks, 12 orphans)
+
+Vars: 8
+        B dims 0 refs 14
+        V1 dims 0 refs 8
+        D dims 0 refs 4
+        A$ dims 0 refs 4
+        T dims 0 refs 6
+        H dims 0 refs 12
+        V dims 0 refs 12
+        F dims 0 refs 9
+
+Types
+         num 114
+         str 49
+
+Predefs
+         TAB 12
+         SQR 1
+         ABS 1
+Parsed program pool/rocket.bas (71 lines, 33 blocks, 13 orphans)
+
+Vars: 6
+        H dims 0 refs 4
+        C dims 0 refs 4
+        Q dims 0 refs 4
+        G dims 0 refs 3
+        X dims 0 refs 6
+        K dims 0 refs 8
+
+Types
+         num 50
+         str 23
+
+Predefs
+         TAB 2
+         RND 1
+         INT 1
+Parsed program pool/rockscissors.bas (33 lines, 28 blocks, 15 orphans)
+
+Vars: 19
+        B dims 1 refs 14
+        T dims 1 refs 9
+        A$ dims 0 refs 3
+        A dims 1 refs 4
+        I dims 0 refs 23
+        D dims 0 refs 11
+        Y dims 0 refs 6
+        Z dims 0 refs 7
+        E$ dims 0 refs 2
+        Y$ dims 0 refs 4
+        C dims 0 refs 31
+        S dims 0 refs 32
+        X dims 1 refs 12
+        P dims 0 refs 14
+        M$ dims 0 refs 2
+        B$ dims 0 refs 2
+        D$ dims 0 refs 2
+        I1 dims 0 refs 2
+        R dims 0 refs 6
+
+Types
+         str 98
+         num 280
+
+Predefs
+         TAB 7
+         LEFT 2
+         INT 7
+         RND 2
+Parsed program pool/roulette.bas (239 lines, 106 blocks, 62 orphans)
+
+Vars: 2
+        N dims 0 refs 4
+        I dims 0 refs 2
+
+Types
+         num 17
+         str 14
+
+Predefs
+         RND 1
+         TAB 2
+Parsed program pool/russianroulette.bas (26 lines, 15 blocks, 9 orphans)
+
+Vars: 37
+        U6 dims 0 refs 4
+        Y1 dims 0 refs 2
+        U dims 0 refs 6
+        D dims 1 refs 8
+        Z dims 0 refs 22
+        R2 dims 0 refs 4
+        X1 dims 0 refs 2
+        M dims 0 refs 14
+        A dims 0 refs 35
+        H dims 1 refs 13
+        X dims 0 refs 53
+        U8 dims 0 refs 9
+        Z2 dims 0 refs 4
+        Q9 dims 0 refs 12
+        Y dims 0 refs 49
+        K$ dims 0 refs 2
+        S dims 0 refs 19
+        M3 dims 0 refs 4
+        C dims 0 refs 18
+        E dims 1 refs 9
+        G dims 1 refs 30
+        Z8 dims 0 refs 1
+        V2 dims 0 refs 6
+        Z3 dims 0 refs 4
+        Q dims 0 refs 15
+        M2 dims 0 refs 8
+        F dims 1 refs 30
+        R3 dims 0 refs 4
+        R dims 0 refs 25
+        V dims 0 refs 6
+        B dims 2 refs 16
+        K dims 2 refs 30
+        W dims 0 refs 58
+        J$ dims 0 refs 5
+        P3 dims 0 refs 8
+        Z5 dims 0 refs 4
+        N dims 0 refs 5
+
+Types
+         num 819
+         str 50
+
+Functions
+        A refs 3
+        B refs 8
+
+Predefs
+         SGN 7
+         SQR 1
+         RND 8
+         TAB 2
+         INT 18
+Parsed program pool/salvo.bas (329 lines, 198 blocks, 96 orphans)
+
+Vars: 3
+        B dims 0 refs 4
+        T dims 0 refs 3
+        A dims 0 refs 2
+
+Types
+         num 25
+         str 4
+
+Predefs
+         TAB 3
+         SIN 1
+         INT 1
+Parsed program pool/sinewave.bas (17 lines, 5 blocks, 4 orphans)
+
+Vars: 13
+        B dims 1 refs 7
+        T dims 0 refs 12
+        S dims 1 refs 29
+        B$ dims 0 refs 3
+        Q dims 0 refs 8
+        S1 dims 0 refs 2
+        O1 dims 0 refs 5
+        M dims 0 refs 6
+        A$ dims 0 refs 5
+        V dims 0 refs 7
+        A dims 0 refs 6
+        O dims 0 refs 3
+        G dims 1 refs 4
+
+Types
+         str 94
+         num 201
+
+Predefs
+         TAB 2
+         RND 14
+         INT 7
+         STR 1
+         CHR 8
+Parsed program pool/slalom.bas (165 lines, 98 blocks, 58 orphans)
+
+Vars: 8
+        Z dims 0 refs 13
+        A$ dims 0 refs 2
+        Q4 dims 0 refs 2
+        T8 dims 0 refs 2
+        P dims 0 refs 15
+        M dims 0 refs 14
+        X dims 0 refs 9
+        Y dims 0 refs 11
+
+Types
+         num 124
+         str 45
+
+Predefs
+         CHR 2
+         TAB 2
+         INT 4
+         RND 3
+Parsed program pool/slots.bas (134 lines, 120 blocks, 69 orphans)
+
+Vars: 16
+        D1 dims 0 refs 7
+        V dims 0 refs 11
+        N dims 0 refs 1
+        J dims 0 refs 9
+        Z$ dims 0 refs 6
+        B1$ dims 0 refs 4
+        I dims 0 refs 10
+        M dims 0 refs 1
+        V1 dims 0 refs 14
+        T dims 0 refs 5
+        K dims 0 refs 24
+        A dims 0 refs 14
+        A1$ dims 0 refs 4
+        A2 dims 0 refs 15
+        D dims 0 refs 8
+        K1 dims 0 refs 14
+
+Types
+         str 108
+         num 223
+
+Predefs
+         TAB 2
+         RND 10
+         INT 4
+         SQR 1
+Parsed program pool/splat.bas (128 lines, 102 blocks, 67 orphans)
+
+Vars: 8
+        K dims 0 refs 3
+        G dims 0 refs 3
+        D dims 0 refs 7
+        N dims 0 refs 2
+        A dims 0 refs 3
+        M dims 0 refs 4
+        A$ dims 0 refs 2
+        X dims 0 refs 4
+
+Types
+         num 47
+         str 28
+
+Predefs
+         TAB 2
+         LEFT 1
+         RND 1
+         INT 1
+         ABS 1
+Parsed program pool/stars.bas (54 lines, 28 blocks, 12 orphans)
+
+Vars: 30
+        X dims 0 refs 13
+        Z9 dims 0 refs 2
+        I2 dims 0 refs 2
+        N1 dims 0 refs 5
+        T dims 0 refs 7
+        B5 dims 0 refs 2
+        W3 dims 0 refs 5
+        P dims 1 refs 16
+        Z dims 1 refs 14
+        T8 dims 0 refs 5
+        I dims 0 refs 41
+        C5 dims 0 refs 4
+        X1 dims 0 refs 9
+        A dims 0 refs 7
+        E2 dims 0 refs 4
+        D dims 0 refs 4
+        C dims 1 refs 18
+        N2 dims 0 refs 5
+        E1 dims 0 refs 4
+        Z4 dims 0 refs 2
+        P5 dims 0 refs 5
+        S5 dims 0 refs 5
+        I1 dims 0 refs 2
+        Z6 dims 0 refs 2
+        S dims 1 refs 32
+        T5 dims 0 refs 3
+        X9 dims 0 refs 5
+        Z5 dims 0 refs 9
+        Q9 dims 0 refs 2
+        S4 dims 0 refs 2
+
+Types
+         num 437
+         str 61
+
+Predefs
+         INT 23
+         TAB 2
+         RND 12
+Parsed program pool/stockmarket.bas (232 lines, 71 blocks, 34 orphans)
+
+Vars: 71
+        J0 dims 0 refs 4
+        S dims 0 refs 24
+        K7 dims 0 refs 2
+        D1 dims 0 refs 3
+        W1 dims 0 refs 16
+        H dims 0 refs 10
+        K dims 2 refs 39
+        S9 dims 0 refs 2
+        R2 dims 0 refs 7
+        T8 dims 0 refs 3
+        H1 dims 0 refs 2
+        D0 dims 0 refs 7
+        Q5 dims 0 refs 2
+        S8 dims 0 refs 9
+        Z5 dims 0 refs 5
+        D4 dims 0 refs 2
+        B5 dims 0 refs 2
+        Z3 dims 0 refs 8
+        Q2 dims 0 refs 41
+        K3 dims 0 refs 24
+        S3 dims 0 refs 4
+        P dims 0 refs 7
+        C1 dims 0 refs 42
+        O1$ dims 0 refs 9
+        T9 dims 0 refs 9
+        Q1 dims 0 refs 40
+        G2$ dims 0 refs 44
+        X2 dims 0 refs 6
+        E0 dims 0 refs 3
+        Z4 dims 0 refs 4
+        D3 dims 0 refs 10
+        T dims 0 refs 16
+        A1$ dims 0 refs 2
+        X5 dims 0 refs 6
+        G5 dims 0 refs 3
+        Q$ dims 0 refs 11
+        Z2 dims 0 refs 20
+        D6 dims 0 refs 3
+        H8 dims 0 refs 5
+        N dims 1 refs 14
+        D dims 1 refs 32
+        X$ dims 0 refs 15
+        I dims 0 refs 115
+        Z1 dims 0 refs 20
+        Y3 dims 0 refs 6
+        Z$ dims 0 refs 10
+        Z dims 2 refs 8
+        E dims 0 refs 24
+        Q4 dims 0 refs 2
+        L dims 0 refs 4
+        C dims 2 refs 28
+        R dims 0 refs 1
+        B4 dims 0 refs 2
+        J dims 0 refs 24
+        A$ dims 0 refs 27
+        T0 dims 0 refs 8
+        B9 dims 0 refs 14
+        S1 dims 0 refs 28
+        Y dims 0 refs 14
+        G dims 2 refs 18
+        K9 dims 0 refs 24
+        X0$ dims 0 refs 3
+        B3 dims 0 refs 11
+        X1 dims 0 refs 6
+        X dims 0 refs 44
+        X3 dims 0 refs 6
+        C$ dims 0 refs 5
+        P0 dims 0 refs 2
+        S2 dims 0 refs 28
+        R1 dims 0 refs 24
+        A dims 0 refs 19
+
+Types
+         num 1543
+         str 413
+
+Functions
+        D refs 2
+        R refs 11
+
+Predefs
+         TAB 3
+         STR 2
+         ABS 16
+         SQR 2
+         INT 49
+         LEFT 5
+         MID 4
+         RIGHT 4
+         LEN 4
+         RND 18
+Parsed program pool/superstartrek.bas (425 lines, 435 blocks, 179 orphans)
+
+Vars: 2
+        I dims 0 refs 4
+        K$ dims 0 refs 2
+
+Types
+         num 22
+         str 100
+
+Predefs
+         TAB 7
+Parsed program pool/superstartrekins.bas (127 lines, 4 blocks, 2 orphans)
+
+Vars: 14
+        R$ dims 1 refs 7
+        R dims 1 refs 3
+        J dims 0 refs 7
+        N2 dims 0 refs 6
+        G1 dims 0 refs 3
+        L dims 1 refs 14
+        N dims 0 refs 3
+        G dims 0 refs 5
+        A$ dims 0 refs 3
+        K dims 0 refs 4
+        W$ dims 1 refs 6
+        C dims 0 refs 4
+        N1 dims 0 refs 4
+        I dims 0 refs 2
+
+Types
+         num 99
+         str 36
+
+Predefs
+         TAB 2
+         RND 3
+         INT 3
+Parsed program pool/synonym.bas (53 lines, 20 blocks, 11 orphans)
+
+Vars: 23
+        X dims 0 refs 4
+        A1 dims 0 refs 6
+        Y2 dims 0 refs 4
+        Z2 dims 0 refs 4
+        Q dims 0 refs 1
+        W dims 0 refs 1
+        Y dims 0 refs 4
+        B1 dims 0 refs 7
+        X1 dims 0 refs 4
+        A dims 0 refs 5
+        B dims 0 refs 6
+        P2 dims 0 refs 5
+        Y1 dims 0 refs 4
+        X2 dims 0 refs 4
+        P dims 0 refs 3
+        P3 dims 0 refs 6
+        P1 dims 0 refs 9
+        Z dims 0 refs 4
+        Z1 dims 0 refs 4
+        D dims 0 refs 4
+        I dims 0 refs 2
+        R dims 0 refs 7
+        R1 dims 0 refs 5
+
+Types
+         num 158
+         str 45
+
+Predefs
+         TAB 2
+         RND 4
+         INT 6
+         SIN 6
+         COS 4
+Parsed program pool/target.bas (51 lines, 30 blocks, 17 orphans)
+
+Vars: 25
+        XX dims 0 refs 1
+        M dims 2 refs 50
+        I dims 0 refs 82
+        J dims 0 refs 47
+        S$ dims 0 refs 3
+        X$ dims 0 refs 3
+        J3 dims 0 refs 2
+        A dims 0 refs 5
+        Q dims 0 refs 5
+        C$ dims 0 refs 3
+        L dims 1 refs 22
+        S dims 0 refs 11
+        K dims 0 refs 9
+        I1 dims 0 refs 2
+        X dims 1 refs 41
+        Y dims 1 refs 4
+        Z dims 0 refs 7
+        J1 dims 0 refs 10
+        K2 dims 0 refs 6
+        K3 dims 0 refs 4
+        K1 dims 0 refs 8
+        J2 dims 0 refs 6
+        J4 dims 0 refs 2
+        P dims 0 refs 7
+        O dims 0 refs 1
+
+Types
+         str 61
+         num 530
+
+Predefs
+         TAB 2
+         LEFT 6
+         INT 5
+Parsed program pool/test.bas (281 lines, 186 blocks, 87 orphans)
+
+Types
+         str 1
+Parsed program pool/test1.bas (2 lines, 1 blocks, 2 orphans)
+
+Vars: 11
+        B dims 0 refs 5
+        Q dims 0 refs 2
+        D dims 0 refs 9
+        E dims 0 refs 4
+        A dims 0 refs 2
+        M dims 0 refs 15
+        P dims 0 refs 4
+        C dims 0 refs 8
+        R dims 0 refs 2
+        S dims 0 refs 2
+        X dims 0 refs 2
+
+Types
+         num 78
+         str 10
+
+Functions
+        M refs 11
+
+Predefs
+         TAB 2
+         INT 2
+Parsed program pool/tictactoe1.bas (69 lines, 30 blocks, 13 orphans)
+
+Vars: 10
+        H dims 0 refs 4
+        J dims 0 refs 15
+        M dims 0 refs 12
+        I dims 0 refs 30
+        S dims 1 refs 76
+        C$ dims 0 refs 2
+        P$ dims 0 refs 3
+        Q$ dims 0 refs 3
+        G dims 0 refs 27
+        K dims 0 refs 17
+
+Types
+         num 340
+         str 33
+
+Predefs
+         INT 4
+         TAB 2
+Parsed program pool/tictactoe2.bas (114 lines, 165 blocks, 84 orphans)
+
+Vars: 18
+        E dims 0 refs 12
+        Q dims 0 refs 7
+        X dims 0 refs 2
+        C dims 0 refs 8
+        T dims 2 refs 17
+        N dims 0 refs 11
+        Y dims 0 refs 4
+        R dims 0 refs 11
+        W dims 0 refs 5
+        Z dims 0 refs 5
+        J dims 0 refs 5
+        D dims 0 refs 19
+        S dims 0 refs 4
+        M dims 0 refs 6
+        V dims 0 refs 7
+        U dims 0 refs 7
+        A$ dims 0 refs 4
+        K dims 0 refs 5
+
+Types
+         num 218
+         str 47
+
+Predefs
+         TAB 4
+         INT 1
+Parsed program pool/tower.bas (125 lines, 73 blocks, 37 orphans)
+
+Vars: 7
+        E dims 0 refs 4
+        A$ dims 0 refs 2
+        C dims 0 refs 3
+        D dims 0 refs 3
+        T dims 0 refs 4
+        A dims 0 refs 3
+        V dims 0 refs 3
+
+Types
+         num 44
+         str 18
+
+Predefs
+         TAB 2
+         RND 3
+         INT 4
+         ABS 1
+Parsed program pool/train.bas (24 lines, 8 blocks, 5 orphans)
+
+Vars: 8
+        N dims 0 refs 3
+        Z$ dims 0 refs 2
+        X dims 0 refs 6
+        Q dims 0 refs 3
+        A dims 0 refs 8
+        B dims 0 refs 6
+        R dims 0 refs 2
+        G dims 0 refs 4
+
+Types
+         num 44
+         str 26
+
+Predefs
+         INT 1
+         TAB 2
+         LEFT 1
+         RND 1
+Parsed program pool/trap.bas (49 lines, 21 blocks, 12 orphans)
+
+Vars: 14
+        B$ dims 0 refs 3
+        P dims 0 refs 7
+        N1 dims 0 refs 3
+        A1 dims 0 refs 5
+        J dims 0 refs 6
+        M1 dims 0 refs 3
+        V$ dims 0 refs 3
+        I dims 0 refs 3
+        N2 dims 0 refs 3
+        B1 dims 0 refs 5
+        A$ dims 1 refs 4
+        L dims 1 refs 7
+        K dims 0 refs 3
+        M2 dims 0 refs 3
+
+Types
+         str 35
+         num 78
+
+Predefs
+         TAB 2
+         RND 1
+         INT 3
+Parsed program pool/war.bas (68 lines, 31 blocks, 16 orphans)
+
+Vars: 25
+        K5 dims 0 refs 10
+        M1 dims 0 refs 5
+        A dims 0 refs 11
+        I dims 0 refs 3
+        D dims 0 refs 10
+        T1 dims 0 refs 4
+        A8 dims 0 refs 2
+        I2 dims 0 refs 2
+        Y2 dims 0 refs 2
+        B dims 0 refs 14
+        I7 dims 0 refs 11
+        K7 dims 0 refs 7
+        Y1 dims 0 refs 5
+        T dims 1 refs 3
+        I1 dims 0 refs 4
+        K6 dims 0 refs 11
+        E dims 0 refs 2
+        D1 dims 0 refs 5
+        M dims 0 refs 10
+        Y dims 0 refs 15
+        Y3 dims 0 refs 4
+        I5 dims 0 refs 11
+        I6 dims 0 refs 15
+        F dims 0 refs 4
+        K1 dims 0 refs 6
+
+Types
+         str 44
+         num 276
+
+Functions
+        A refs 2
+        B refs 2
+
+Predefs
+         INT 13
+         TAB 3
+Parsed program pool/weekday.bas (150 lines, 95 blocks, 44 orphans)
+
+Vars: 18
+        Q dims 0 refs 4
+        P$ dims 0 refs 4
+        S dims 1 refs 5
+        D dims 1 refs 1
+        P dims 1 refs 7
+        I dims 0 refs 29
+        G dims 0 refs 6
+        J dims 0 refs 10
+        A dims 1 refs 6
+        C dims 0 refs 2
+        S$ dims 0 refs 10
+        L$ dims 0 refs 4
+        G$ dims 0 refs 1
+        N dims 0 refs 2
+        M dims 0 refs 6
+        L dims 1 refs 8
+        A$ dims 0 refs 5
+        Q$ dims 0 refs 2
+
+Types
+         str 50
+         num 146
+
+Predefs
+         MID 2
+         ASC 2
+         CHR 3
+         TAB 2
+         RND 1
+         INT 1
+         LEN 4
+Parsed program pool/word.bas (65 lines, 25 blocks, 13 orphans)
+ 19695  *main.astAddOp
+ 17161  *main.astBoolOp
+ 23058  *main.astExpOp
+ 17161  *main.astExpr
+   106  *main.astFnCall
+ 11914  *main.astLit
+ 21736  *main.astMulOp
+ 23137  *main.astPart
+  1446  *main.astPredef
+ 17324  *main.astRelOp
+ 13465  *main.astVarRef
+   224  *main.cmdData
+    59  *main.cmdDim
+   106  *main.cmdEnd
+    20  *main.cmdFnDef
+   600  *main.cmdFor
+  3630  *main.cmdGo
+  2193  *main.cmdIf
+   350  *main.cmdInput
+  2833  *main.cmdLet
+   594  *main.cmdNext
+    72  *main.cmdOn
+  4863  *main.cmdPrint
+    46  *main.cmdRead
+   462  *main.cmdRem
+    11  *main.cmdRestore
+   174  *main.cmdReturn
+     2  *main.cmdRun
+    37  *main.cmdStop
+ 11780  *main.progLine
+   104  *main.program
+ 21285  main.astNumType
+  5540  main.astStrType
+  2273  main.token
+
+jucie@DESKTOP-0OUGGJV C:\pj\basic
+$

@@ -12,5 +12,5 @@ func newGeneratorForC() *generatorForC {
 }
 
 func (gen *generatorForC) generate(wr *bufio.Writer, prog *program) {
-	prog.blocks.generateC(wr)
+	prog.generateC(wr)
 }
