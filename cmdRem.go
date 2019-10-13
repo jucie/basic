@@ -10,7 +10,8 @@ type cmdRem struct {
 }
 
 func (p *parser) parseRem() *cmdRem {
-	return &cmdRem{text: p.lex.peek().s}
+	text := p.lex.peek().s
+	return &cmdRem{text: text}
 }
 
 func (c cmdRem) receive(g guest) {

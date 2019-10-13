@@ -66,7 +66,8 @@ func (lex *lexer) next0() {
 			break
 		}
 	}
-	lex.c <- lexeme{token: tok, pos: lex.pos, s: string(lex.buf.Bytes())}
+	text := string(lex.buf.Bytes())
+	lex.c <- lexeme{token: tok, pos: lex.pos, s: text}
 }
 
 func (lex *lexer) nextLine() {

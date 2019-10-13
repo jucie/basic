@@ -103,8 +103,8 @@ func (p *parser) parseCmd() (cmd, bool) {
 		}
 	case tokRem:
 		{
-			p.lex.next()
 			c := p.parseRem()
+			p.lex.next()
 			return c, c != nil
 		}
 	case tokRestore:
