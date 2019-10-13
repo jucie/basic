@@ -47,7 +47,7 @@ func (p *parser) parseDef() *cmdFnDef {
 	}
 	p.lex.next()
 
-	result.expr = p.parseExpr()
+	result.expr = p.parseExpr(false)
 
 	return result
 }

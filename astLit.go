@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"strconv"
 )
 
 type astLit struct {
@@ -31,7 +32,11 @@ func (a astLit) receive(g guest) {
 func (a astLit) generateC(wr *bufio.Writer) {
 	switch a.type_ {
 	case numType:
-		fmt.Fprintf(wr, "%s", a.val)
+		f, err := strconv.ParseFloat(a.val, 32)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprintf(wr, "%.4ff", f)
 	case strType:
 		fmt.Fprintf(wr, "\"%s\"", a.val)
 	}

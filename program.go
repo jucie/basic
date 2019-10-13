@@ -47,8 +47,9 @@ func (l *progLine) receive(g guest) {
 
 func (l *progLine) generateC(wr *bufio.Writer) {
 	if l.isDst {
-		fmt.Fprintf(wr, "\tcase %d:\n", l.id)
+		fmt.Fprintf(wr, "case %d: ", l.id)
 	}
+	fmt.Fprintf(wr, "/* line %d */\n", l.id)
 	l.cmds.generateC(wr)
 }
 

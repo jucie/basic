@@ -34,7 +34,7 @@ Loop:
 		case ':':
 			break Loop
 		default:
-			expr := p.parseExpr()
+			expr := p.parseExpr(false)
 			if expr == nil {
 				break Loop
 			}

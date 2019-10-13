@@ -18,7 +18,7 @@ func (p *parser) parseLet() *cmdLet {
 	}
 	p.lex.next()
 
-	src := p.parseExpr()
+	src := p.parseExpr(false)
 	if src == nil {
 		return nil
 	}

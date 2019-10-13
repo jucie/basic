@@ -15,7 +15,7 @@ func (p *parser) parseIf() *cmdIf {
 	result := &cmdIf{}
 	l := p.lex.peek()
 
-	result.expr = p.parseExpr()
+	result.expr = p.parseExpr(false)
 	if result.expr == nil {
 		return nil
 	}

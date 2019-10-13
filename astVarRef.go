@@ -32,7 +32,7 @@ func (p *parser) parseVarRef() *astVarRef {
 		p.lex.next()
 
 		for {
-			expr := p.parseExpr()
+			expr := p.parseExpr(false)
 			if expr == nil {
 				break
 			}

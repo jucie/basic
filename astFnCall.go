@@ -26,7 +26,7 @@ func (p *parser) parseFnCall() *astFnCall {
 	}
 	p.lex.next()
 
-	arg := p.parseExpr()
+	arg := p.parseExpr(false)
 	if arg == nil {
 		return nil
 	}

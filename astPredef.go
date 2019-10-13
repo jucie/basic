@@ -27,7 +27,7 @@ func (p *parser) parsePredef() *astPredef {
 	p.lex.next()
 
 	for {
-		arg := p.parseExpr()
+		arg := p.parseExpr(false)
 		if arg == nil {
 			return nil
 		}

@@ -62,7 +62,7 @@ func (c cmdGo) generateC(wr *bufio.Writer) {
 		returnAddress := createLabel()
 		fmt.Fprintf(wr, "\tstack[++sp] = %d;\n", returnAddress)
 		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
-		fmt.Fprintf(wr, "\tcase %d:\n", returnAddress)
+		fmt.Fprintf(wr, "case %d: /* gerado */\n", returnAddress)
 	} else {
 		fmt.Fprintf(wr, "\tgoto_line = %d; break;\n", c.dst.nbr)
 	}

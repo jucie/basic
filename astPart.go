@@ -28,7 +28,7 @@ func (p *parser) parsePart() *astPart {
 		result.val = p.parseVarRef()
 	case '(':
 		p.lex.next()
-		result.val = p.parseExpr()
+		result.val = p.parseExpr(true)
 		if l.token != ')' {
 			break
 		}

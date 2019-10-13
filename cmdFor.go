@@ -29,18 +29,18 @@ func (p *parser) parseFor() *cmdFor {
 	}
 	p.lex.next()
 
-	result.begin = p.parseExpr()
+	result.begin = p.parseExpr(false)
 
 	if l.token != tokTo {
 		return nil
 	}
 	p.lex.next()
 
-	result.end = p.parseExpr()
+	result.end = p.parseExpr(false)
 
 	if l.token == tokStep {
 		p.lex.next()
-		result.step = p.parseExpr()
+		result.step = p.parseExpr(false)
 	}
 
 	return result

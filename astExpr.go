@@ -4,14 +4,15 @@ import "bufio"
 
 type astExpr struct {
 	boolOp *astBoolOp
+	paren  bool
 }
 
-func (p *parser) parseExpr() *astExpr {
+func (p *parser) parseExpr(paren bool) *astExpr {
 	boolOp := p.parseBoolOp()
 	if boolOp == nil {
 		return nil
 	}
-	return &astExpr{boolOp: boolOp}
+	return &astExpr{boolOp: boolOp, paren: paren}
 }
 
 func (a astExpr) receive(g guest) {
@@ -19,6 +20,12 @@ func (a astExpr) receive(g guest) {
 }
 
 func (a astExpr) generateC(wr *bufio.Writer) {
+	if a.paren {
+		wr.WriteRune('(')
+		a.boolOp.generateC(wr)
+		wr.WriteRune(')')
+		return
+	}
 	a.boolOp.generateC(wr)
 }
 
