@@ -39,14 +39,14 @@ func (p *parser) parseInput() *cmdInput {
 func (c cmdInput) generateC(wr *bufio.Writer) {
 	fmt.Fprintf(wr, "\tfor(;;) {\n")
 	if c.label != "" {
-		fmt.Fprintf(wr, "\t\tprint_str(\"%s \");\n", c.label)
+		fmt.Fprintf(wr, "\t\tprint_str(\"%s?\");\n", c.label)
 	}
 	fmt.Fprintf(wr, "\t\tinput();\n")
 
 	for _, v := range c.vars {
 		fmt.Fprintf(wr, "\t\tif (!read_%s_from_input(&", v.finalType())
 		v.generateC(wr)
-		fmt.Fprintf(wr, ")){\t\t\tcontinue;\n\t\t}\n")
+		fmt.Fprintf(wr, ")){\n\t\t\tcontinue;\n\t\t}\n")
 	}
 	fmt.Fprintf(wr, "\t\tbreak;\n\t)\n")
 }
