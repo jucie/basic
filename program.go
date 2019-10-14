@@ -87,11 +87,11 @@ func (p program) receive(g guest) {
 
 func (p program) generateC(wr *bufio.Writer) {
 	p.generateCPrologue(wr)
-	fmt.Fprintf(wr, "int target = 0;\n")
+	fmt.Fprintf(wr, "int main(){\nint target = 0;\n")
 	fmt.Fprintf(wr, "for(;;){switch (target){\ncase 0:\n")
 	p.lines.generateC(wr)
 	fmt.Fprintf(wr, "case %d: exit(0);\n", createLabel())
-	fmt.Fprintf(wr, "default: fprintf(stderr, \"Undefined target line %s\", target); abort(); \n}}\n", "%d")
+	fmt.Fprintf(wr, "default: fprintf(stderr, \"Undefined target line %s\", target); abort(); \n}}\n} /* main */\n\n", "%d")
 
 	p.generateCFunctionDefinitions(wr)
 	p.generateCDataDefinitions(wr, strType)
