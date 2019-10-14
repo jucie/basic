@@ -57,7 +57,14 @@ func (c cmdFnDef) receive(g guest) {
 }
 
 func (c cmdFnDef) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "float fn_%s(float %s) {\n", c.id, c.arg)
+}
+
+func (c cmdFnDef) generateCDeclaration(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "static float fn_%s(float %s);\n", c.id, c.arg)
+}
+
+func (c cmdFnDef) generateCDefinition(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "static float fn_%s(float %s) {\n", c.id, c.arg)
 	fmt.Fprintf(wr, "\treturn ")
 	c.expr.generateC(wr)
 	fmt.Fprintf(wr, ";\n}\n\n")

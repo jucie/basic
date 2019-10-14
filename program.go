@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"strings"
 )
 
 type cmd interface {
@@ -54,12 +55,13 @@ func (l *progLine) generateC(wr *bufio.Writer) {
 }
 
 type program struct {
-	lines progLines
-	ids   map[int]int
+	lines       progLines
+	ids         map[int]int
+	dataCounter map[astType]int
 }
 
 func newProgram() *program {
-	return &program{ids: make(map[int]int)}
+	return &program{ids: make(map[int]int), dataCounter: make(map[astType]int)}
 }
 
 func (p *program) loadFrom(src *bufio.Reader) {
@@ -84,9 +86,62 @@ func (p program) receive(g guest) {
 }
 
 func (p program) generateC(wr *bufio.Writer) {
+	p.generateCPrologue(wr)
 	fmt.Fprintf(wr, "int target = 0;\n")
 	fmt.Fprintf(wr, "for(;;){switch (target){\ncase 0:\n")
 	p.lines.generateC(wr)
 	fmt.Fprintf(wr, "case %d: exit(0);\n", createLabel())
 	fmt.Fprintf(wr, "default: fprintf(stderr, \"Undefined target line %s\", target); abort(); \n}}\n", "%d")
+
+	p.generateCFunctionDefinitions(wr)
+	p.generateCDataDefinitions(wr, strType)
+	p.generateCDataDefinitions(wr, numType)
+}
+
+func (p *program) generateCDataDeclarations(wr *bufio.Writer, type_ astType) {
+	macro := fmt.Sprintf("SIZE_%s_DATA", strings.ToUpper(type_.String()))
+	fmt.Fprintf(wr, "#define %s %d\n", macro, p.dataCounter[type_])
+	fmt.Fprintf(wr, "static const %s data_area_for_%s[%s], *data_ptr = data_area_for_%s;\n", type_, type_, macro, type_)
+}
+
+func (p *program) generateCDataDefinitions(wr *bufio.Writer, type_ astType) {
+	macro := fmt.Sprintf("SIZE_%s_DATA", strings.ToUpper(type_.String()))
+	fmt.Fprintf(wr, "static const %s data_area_for_%s[%s]={\n", type_, type_, macro)
+	scan(p, func(h host) {
+		switch v := h.(type) {
+		case *cmdData:
+			v.generateCDefinition(wr, type_)
+		}
+	})
+	fmt.Fprintf(wr, "};\n\n")
+}
+
+func (p *program) generateCFunctionDeclarations(wr *bufio.Writer) {
+	scan(p, func(h host) {
+		switch v := h.(type) {
+		case *cmdFnDef:
+			v.generateCDeclaration(wr)
+		}
+	})
+	wr.WriteRune('\n')
+
+}
+
+func (p *program) generateCFunctionDefinitions(wr *bufio.Writer) {
+	scan(p, func(h host) {
+		switch v := h.(type) {
+		case *cmdFnDef:
+			v.generateCDefinition(wr)
+		}
+	})
+}
+
+func (p *program) generateCPrologue(wr *bufio.Writer) {
+	p.generateCDataDeclarations(wr, strType)
+	p.generateCDataDeclarations(wr, numType)
+	p.generateCFunctionDeclarations(wr)
+}
+
+func (p *program) incrementDataCounter(type_ astType) {
+	p.dataCounter[type_]++
 }

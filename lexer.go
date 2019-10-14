@@ -58,7 +58,7 @@ func (lex *lexer) next0() {
 	var tok token
 	for {
 		tok = lex.walk()
-		if tok == tokRem || tok == tokData {
+		if tok == tokRem {
 			lex.consumeLine()
 		}
 		lex.pos.col += lex.buf.Len()
