@@ -37,18 +37,18 @@ func (p *parser) parseInput() *cmdInput {
 }
 
 func (c cmdInput) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tfor(;;) {\n")
+	label := createLabel()
+	fmt.Fprintf(wr, "case %d:\n", label)
 	if c.label != "" {
-		fmt.Fprintf(wr, "\t\tprint_str(\"%s?\");\n", c.label)
+		fmt.Fprintf(wr, "\tprint_str(\"%s?\");\n", c.label)
 	}
-	fmt.Fprintf(wr, "\t\tinput();\n")
+	fmt.Fprintf(wr, "\tinput_to_buffer();\n")
 
 	for _, v := range c.vars {
-		fmt.Fprintf(wr, "\t\tif (!read_%s_from_input(&", v.finalType())
-		v.generateC(wr)
-		fmt.Fprintf(wr, ")){\n\t\t\tcontinue;\n\t\t}\n")
+		fmt.Fprintf(wr, "\tif (!")
+		v.generateCLValue(wr, "input")
+		fmt.Fprintf(wr, ")) { target = %d; break; }\n", label)
 	}
-	fmt.Fprintf(wr, "\t\tbreak;\n\t)\n")
 }
 
 func (c cmdInput) receive(g guest) {
