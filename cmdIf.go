@@ -48,10 +48,38 @@ func (c *cmdIf) receive(g guest) {
 	}
 }
 
+func (c *cmdIf) condBranchTarget() int {
+	if len(c.cmds) == 1 { // has only 1 conditional command
+		switch v := c.cmds[0].(type) {
+		case *cmdGo: // it's a GO command
+			if !v.sub { // it's not a GOSUB, so it's a GOTO
+				return v.dst.nbr
+			}
+		}
+	}
+	return 0
+}
+
 func (c *cmdIf) generateC(wr *bufio.Writer) {
+	label := c.condBranchTarget()
+	if label != 0 {
+		c.genCondBranch(wr, label)
+	} else {
+		c.genRegularIf(wr)
+	}
+}
+
+func (c *cmdIf) genCondBranch(wr *bufio.Writer, label int) {
 	fmt.Fprintf(wr, "\tif (")
 	c.expr.generateC(wr)
-	fmt.Fprintf(wr, "){\n")
+	fmt.Fprintf(wr, "){ target = %d; break; }\n", label)
+}
+
+func (c *cmdIf) genRegularIf(wr *bufio.Writer) {
+	label := createLabel()
+	fmt.Fprintf(wr, "\tif (!(")
+	c.expr.generateC(wr)
+	fmt.Fprintf(wr, ")){ target = %d; break; }\n", label)
 	c.cmds.generateC(wr)
-	fmt.Fprintf(wr, "\t}\n")
+	fmt.Fprintf(wr, "case %d:\n", label)
 }
