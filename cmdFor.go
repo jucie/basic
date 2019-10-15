@@ -57,9 +57,8 @@ func (c cmdFor) receive(g guest) {
 
 func (c cmdFor) generateC(wr *bufio.Writer) {
 	loopAddress := createLabel()
-	fmt.Fprintf(wr, "\tbegin_loop%s(&", c.index.type_)
-	c.index.generateC(wr)
-	fmt.Fprintf(wr, ",")
+	wr.WriteRune('\t')
+	c.index.generateCLValue(wr, "begin_loop")
 	c.begin.generateC(wr)
 	fmt.Fprintf(wr, ",")
 	c.end.generateC(wr)

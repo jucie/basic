@@ -33,10 +33,7 @@ func (c cmdLet) receive(g guest) {
 
 func (c cmdLet) generateC(wr *bufio.Writer) {
 	wr.WriteRune('\t')
-	parenPending := c.dst.generateCLValue(wr)
+	c.dst.generateCLValue(wr, "let")
 	c.src.generateC(wr)
-	if parenPending {
-		wr.WriteRune(')')
-	}
-	fmt.Fprintf(wr, ";\n")
+	fmt.Fprintf(wr, ");\n")
 }
