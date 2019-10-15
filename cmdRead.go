@@ -35,8 +35,8 @@ func (c cmdRead) receive(g guest) {
 
 func (c cmdRead) generateC(wr *bufio.Writer) {
 	for _, v := range c.vars {
-		fmt.Fprintf(wr, "\tread_data_%s(&", v.finalType())
-		v.generateC(wr)
+		wr.WriteRune('\t')
+		v.generateCLValue(wr, "read")
 		fmt.Fprintf(wr, ");\n")
 	}
 }
