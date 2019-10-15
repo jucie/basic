@@ -71,8 +71,8 @@ As an R value
 		  num       *n(1)        n             1.0000f
 
 As an L value
-		  str       let(s(1),    let(&s,
-		  num       *n(1)=       n=
+		  str       let_str(s(1),    let_str(&s,
+		  num       let_num(n(1),    let_num(&n,
 */
 
 // generateCVarRef emits C code for access to a variable.
@@ -99,30 +99,13 @@ func (a astVarRef) generateCVarRef(wr *bufio.Writer, shouldDeref bool) {
 // gererateCLValue generates code for the left side of an assignment.
 // returns a bool indicating wether a closing parenthesis is needed
 // The intricacies are due to the subtleties of several variable types.
-func (a astVarRef) generateCLValue(wr *bufio.Writer) bool {
-	parPending := false
-	if a.isArray() {
-		if a.finalType() == strType {
-			fmt.Fprintf(wr, "let(")
-			a.generateCVarRef(wr, false)
-			wr.WriteRune(',')
-			parPending = true
-		} else { // type is num
-			a.generateCVarRef(wr, true)
-			wr.WriteRune('=')
-		}
-	} else {
-		if a.finalType() == strType {
-			fmt.Fprintf(wr, "let(&")
-			a.generateCVarRef(wr, false)
-			wr.WriteRune(',')
-			parPending = true
-		} else {
-			a.generateCVarRef(wr, false)
-			wr.WriteRune('=')
-		}
+func (a astVarRef) generateCLValue(wr *bufio.Writer, fname string) {
+	fmt.Fprintf(wr, "%s_%s(", fname, a.finalType())
+	if !a.isArray() {
+		wr.WriteRune('&')
 	}
-	return parPending
+	a.generateCVarRef(wr, false)
+	wr.WriteRune(',')
 }
 
 func (a astVarRef) isArray() bool {
