@@ -105,7 +105,6 @@ func (a astVarRef) generateCLValue(wr *bufio.Writer, fname string) {
 		wr.WriteRune('&')
 	}
 	a.generateCVarRef(wr, false)
-	wr.WriteRune(',')
 }
 
 func (a astVarRef) isArray() bool {

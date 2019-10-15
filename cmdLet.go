@@ -34,6 +34,7 @@ func (c cmdLet) receive(g guest) {
 func (c cmdLet) generateC(wr *bufio.Writer) {
 	wr.WriteRune('\t')
 	c.dst.generateCLValue(wr, "let")
+	wr.WriteRune(',')
 	c.src.generateC(wr)
 	fmt.Fprintf(wr, ");\n")
 }
