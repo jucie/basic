@@ -38,7 +38,14 @@ func (a astLit) generateC(wr *bufio.Writer) {
 		}
 		fmt.Fprintf(wr, "%.4ff", f)
 	case strType:
-		fmt.Fprintf(wr, "\"%s\"", a.val)
+		wr.WriteRune('"')
+		for _, r := range a.val {
+			if r == '\'' {
+				wr.WriteRune('\\')
+			}
+			wr.WriteRune(r)
+		}
+		wr.WriteRune('"')
 	}
 }
 
