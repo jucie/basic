@@ -57,10 +57,10 @@ func (s *solver) consider(h host) {
 		vv.dims = len(v.index)
 	case *cmdDim:
 		for _, def := range v.vars {
-			vv, ok := s.vars[def.id]
+			vv, ok := s.vars[def.nameForC()]
 			if !ok {
 				vv = &variable{}
-				s.vars[def.id] = vv
+				s.vars[def.nameForC()] = vv
 			}
 			if vv.def != nil {
 				fmt.Fprintf(os.Stderr, "Multiple definition for variable %s.", def.id)
@@ -97,36 +97,6 @@ func (s *solver) consider(h host) {
 	case *cmdOn:
 		for i := 0; i < len(v.dsts); i++ {
 			s.dsts = append(s.dsts, &v.dsts[i])
-		}
-	}
-}
-
-func (s *solver) showStats() {
-	if len(s.vars) > 0 {
-		println("\nVars:", len(s.vars))
-		for key, val := range s.vars {
-			fmt.Printf("\t%s dims %d refs %d\n", key, val.dims, len(val.ref))
-		}
-	}
-
-	if len(s.types) > 0 {
-		println("\nTypes")
-		for key, val := range s.types {
-			println("\t", key, val)
-		}
-	}
-
-	if len(s.funcs) > 0 {
-		println("\nFunctions")
-		for key, val := range s.funcs {
-			fmt.Printf("\t%s refs %d\n", key, len(val.ref))
-		}
-	}
-
-	if len(s.predefs) > 0 {
-		println("\nPredefs")
-		for key, val := range s.predefs {
-			println("\t", predefs[key].name, val)
 		}
 	}
 }
