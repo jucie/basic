@@ -53,6 +53,9 @@ func (a astPredef) receive(g guest) {
 func (a astPredef) generateC(wr *bufio.Writer) {
 	predef := predefs[a.function]
 	fmt.Fprintf(wr, "predef_%s_%s(", predef.name, predef.type_)
+	if predef.type_ == strType {
+		fmt.Fprintf(wr, "temp_str[%d],", createTemp())
+	}
 	for i, arg := range a.args {
 		if i != 0 {
 			wr.WriteRune(',')
