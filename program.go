@@ -147,16 +147,11 @@ func (p *program) generateCPrologue(wr *bufio.Writer) {
 }
 
 func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
-	m := make(map[string]struct{})
+	m := make(map[string]*astVarRef)
 	scan(p, func(h host) {
 		switch v := h.(type) {
 		case *astVarRef:
-			key := v.finalType().String() + " "
-			if v.isArray() {
-				key += "*"
-			}
-			key += v.nameForC()
-			m[key] = struct{}{}
+			m[v.nameForC()] = v
 		}
 	})
 	var names []string
@@ -165,9 +160,33 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 	}
 	sort.Strings(names)
 	for _, k := range names {
-		fmt.Fprintf(wr, "static %s;\n", k)
+		v := m[k]
+		if v.isArray() {
+			fmt.Fprintf(wr, "static %s *%s_var;\n", v.finalType(), k)
+		} else {
+			fmt.Fprintf(wr, "static %s %s;\n", v.finalType(), k)
+		}
 	}
 	wr.WriteRune('\n')
+
+	for _, k := range names {
+		v := m[k]
+		if v.isArray() {
+			typeString := v.finalType().String()
+			fmt.Fprintf(wr, "static %s *%s(", typeString, k)
+			for i := 0; i != len(v.index); i++ {
+				if i != 0 {
+					wr.WriteRune(',')
+				}
+				fmt.Fprintf(wr, "num index%d", i)
+			}
+			fmt.Fprintf(wr, "){ return %s_in_array(%s", typeString, k)
+			for i := 0; i != len(v.index); i++ {
+				fmt.Fprintf(wr, ",index%d", i)
+			}
+			fmt.Fprintf(wr, ");}\n")
+		}
+	}
 }
 
 func (p *program) incrementDataCounter(type_ astType) {
