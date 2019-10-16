@@ -162,7 +162,7 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 	for _, k := range names {
 		v := m[k]
 		if v.isArray() {
-			fmt.Fprintf(wr, "static %s *%s_var;\n", v.finalType(), k)
+			fmt.Fprintf(wr, "static arr %s_var;\n", k)
 		} else {
 			fmt.Fprintf(wr, "static %s %s;\n", v.finalType(), k)
 		}
@@ -180,13 +180,14 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 				}
 				fmt.Fprintf(wr, "num index%d", i)
 			}
-			fmt.Fprintf(wr, "){ return %s_in_array(%s", typeString, k)
+			fmt.Fprintf(wr, "){ return %s_in_array(&%s_var,%d", typeString, k, len(v.index))
 			for i := 0; i != len(v.index); i++ {
 				fmt.Fprintf(wr, ",index%d", i)
 			}
 			fmt.Fprintf(wr, ");}\n")
 		}
 	}
+	wr.WriteRune('\n')
 }
 
 func (p *program) incrementDataCounter(type_ astType) {
