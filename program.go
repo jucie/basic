@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -141,7 +142,32 @@ func (p *program) generateCPrologue(wr *bufio.Writer) {
 	p.generateCDataDeclarations(wr, strType)
 	p.generateCDataDeclarations(wr, numType)
 	p.generateCFunctionDeclarations(wr)
+	p.generateCVarDefinitions(wr)
 	fmt.Fprintf(wr, "static str temp_str[];\n")
+}
+
+func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
+	m := make(map[string]struct{})
+	scan(p, func(h host) {
+		switch v := h.(type) {
+		case *astVarRef:
+			key := v.finalType().String() + " "
+			if v.isArray() {
+				key += "*"
+			}
+			key += v.nameForC()
+			m[key] = struct{}{}
+		}
+	})
+	var names []string
+	for k := range m {
+		names = append(names, k)
+	}
+	sort.Strings(names)
+	for _, k := range names {
+		fmt.Fprintf(wr, "static %s;\n", k)
+	}
+	wr.WriteRune('\n')
 }
 
 func (p *program) incrementDataCounter(type_ astType) {

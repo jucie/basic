@@ -38,7 +38,7 @@ func (c cmdDim) receive(g guest) {
 
 func (c cmdDim) generateC(wr *bufio.Writer) {
 	for _, v := range c.vars {
-		fmt.Fprintf(wr, "\tdim_%s(&%s_%s,%d,", v.type_, v.id, v.type_, len(v.index))
+		fmt.Fprintf(wr, "\tdim_%s(&%s,%d,", v.type_, v.nameForC(), len(v.index))
 		for i, index := range v.index {
 			if i != 0 {
 				wr.WriteRune(',')
