@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"sort"
-	"strings"
 )
 
 type cmd interface {
@@ -77,7 +76,6 @@ func (p *program) resolve() {
 		solver.consider(h)
 	})
 	solver.linkLines(p.lines)
-	solver.showStats()
 }
 
 func (p program) receive(g guest) {
@@ -87,6 +85,7 @@ func (p program) receive(g guest) {
 }
 
 func (p program) generateC(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "#include <basiclib.h>\n\n")
 	p.generateCPrologue(wr)
 	fmt.Fprintf(wr, "int main(){\nint target = 0;\n")
 	fmt.Fprintf(wr, "for(;;){switch (target){\ncase 0:\n")
@@ -100,15 +99,10 @@ func (p program) generateC(wr *bufio.Writer) {
 	fmt.Fprintf(wr, "static str temp_str[%d];\n", createTemp())
 }
 
-func (p *program) generateCDataDeclarations(wr *bufio.Writer, type_ astType) {
-	macro := fmt.Sprintf("SIZE_%s_DATA", strings.ToUpper(type_.String()))
-	fmt.Fprintf(wr, "#define %s %d\n", macro, p.dataCounter[type_])
-	fmt.Fprintf(wr, "static const %s data_area_for_%s[%s], *data_ptr = data_area_for_%s;\n", type_, type_, macro, type_)
-}
-
 func (p *program) generateCDataDefinitions(wr *bufio.Writer, type_ astType) {
-	macro := fmt.Sprintf("SIZE_%s_DATA", strings.ToUpper(type_.String()))
-	fmt.Fprintf(wr, "static const %s data_area_for_%s[%s]={\n", type_, type_, macro)
+	size := p.dataCounter[type_]
+	fmt.Fprintf(wr, "const size_t data_area_for_%s_cnt=%d;\n", type_, size)
+	fmt.Fprintf(wr, "const %s data_area_for_%s[%d]={\n", type_, type_, size)
 	scan(p, func(h host) {
 		switch v := h.(type) {
 		case *cmdData:
@@ -119,14 +113,17 @@ func (p *program) generateCDataDefinitions(wr *bufio.Writer, type_ astType) {
 }
 
 func (p *program) generateCFunctionDeclarations(wr *bufio.Writer) {
+	b := false
 	scan(p, func(h host) {
 		switch v := h.(type) {
 		case *cmdFnDef:
 			v.generateCDeclaration(wr)
+			b = true
 		}
 	})
-	wr.WriteRune('\n')
-
+	if b {
+		wr.WriteRune('\n')
+	}
 }
 
 func (p *program) generateCFunctionDefinitions(wr *bufio.Writer) {
@@ -139,11 +136,9 @@ func (p *program) generateCFunctionDefinitions(wr *bufio.Writer) {
 }
 
 func (p *program) generateCPrologue(wr *bufio.Writer) {
-	p.generateCDataDeclarations(wr, strType)
-	p.generateCDataDeclarations(wr, numType)
 	p.generateCFunctionDeclarations(wr)
 	p.generateCVarDefinitions(wr)
-	fmt.Fprintf(wr, "static str temp_str[];\n")
+	fmt.Fprintf(wr, "static str temp_str[];\n\n")
 }
 
 func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
