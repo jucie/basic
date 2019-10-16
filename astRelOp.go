@@ -56,10 +56,19 @@ func (a astRelOp) receive(g guest) {
 }
 
 func (a astRelOp) generateC(wr *bufio.Writer) {
+	if a.lhs.finalType() == strType && a.rhs != nil {
+		a.generateCForStr(wr)
+		return
+	}
 	a.lhs.generateC(wr)
 	if a.rhs == nil {
 		return
 	}
+	a.generateCOperator(wr)
+	a.rhs.generateC(wr)
+}
+
+func (a astRelOp) generateCOperator(wr *bufio.Writer) {
 	switch a.oper {
 	case '=':
 		fmt.Fprintf(wr, "==")
@@ -72,7 +81,6 @@ func (a astRelOp) generateC(wr *bufio.Writer) {
 	default:
 		fmt.Fprintf(wr, "%c", a.oper)
 	}
-	a.rhs.generateC(wr)
 }
 
 func (a astRelOp) finalType() astType {
@@ -80,4 +88,14 @@ func (a astRelOp) finalType() astType {
 		return numType
 	}
 	return a.lhs.finalType()
+}
+
+func (a astRelOp) generateCForStr(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "strcmp(")
+	a.lhs.generateC(wr)
+	wr.WriteRune(',')
+	a.rhs.generateC(wr)
+	wr.WriteRune(')')
+	a.generateCOperator(wr)
+	wr.WriteRune('0')
 }

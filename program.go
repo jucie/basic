@@ -96,6 +96,7 @@ func (p program) generateC(wr *bufio.Writer) {
 	p.generateCFunctionDefinitions(wr)
 	p.generateCDataDefinitions(wr, strType)
 	p.generateCDataDefinitions(wr, numType)
+	fmt.Fprintf(wr, "static str temp_str[%d];\n", createTemp())
 }
 
 func (p *program) generateCDataDeclarations(wr *bufio.Writer, type_ astType) {
@@ -140,6 +141,7 @@ func (p *program) generateCPrologue(wr *bufio.Writer) {
 	p.generateCDataDeclarations(wr, strType)
 	p.generateCDataDeclarations(wr, numType)
 	p.generateCFunctionDeclarations(wr)
+	fmt.Fprintf(wr, "static str temp_str[];\n")
 }
 
 func (p *program) incrementDataCounter(type_ astType) {

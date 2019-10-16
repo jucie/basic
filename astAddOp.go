@@ -57,6 +57,10 @@ func (a astAddOp) finalType() astType {
 }
 
 func (a astAddOp) generateC(wr *bufio.Writer) {
+	if a.head.finalType() == strType && len(a.tail) != 0 {
+		a.generateCForStr(wr)
+		return
+	}
 	a.head.generateC(wr)
 	for _, t := range a.tail {
 		t.generateC(wr)
@@ -66,4 +70,22 @@ func (a astAddOp) generateC(wr *bufio.Writer) {
 func (a astAddOpTail) generateC(wr *bufio.Writer) {
 	fmt.Fprintf(wr, "%c", a.oper)
 	a.val.generateC(wr)
+}
+
+func (a astAddOp) generateCForStr(wr *bufio.Writer) {
+	fmt.Fprintf(wr, "concat_str(&temp_str[%d],%d,", createTemp(), len(a.tail)+1)
+	a.head.generateC(wr)
+	for _, t := range a.tail {
+		wr.WriteRune(',')
+		t.val.generateC(wr)
+	}
+	wr.WriteRune(')')
+}
+
+var nextTemp = 0
+
+func createTemp() int {
+	val := nextTemp
+	nextTemp++
+	return val
 }
