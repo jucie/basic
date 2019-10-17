@@ -16,5 +16,5 @@ func (c cmdRestore) receive(g guest) {
 }
 
 func (c cmdRestore) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\treset_data_ptr();\n")
+	fmt.Fprintf(wr, "\trestore();\n")
 }
