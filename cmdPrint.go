@@ -61,7 +61,7 @@ func (scs printSubCmds) generateC(wr *bufio.Writer) {
 				previousIsSemicolon = true
 			} else {
 				previousIsSemicolon = false
-				fmt.Fprintf(wr, "\tputchar('\t');\n")
+				fmt.Fprintf(wr, "\tprint_char('\t');\n")
 			}
 		case *astExpr:
 			previousIsSemicolon = false
@@ -78,6 +78,6 @@ func (scs printSubCmds) generateC(wr *bufio.Writer) {
 		}
 	}
 	if !previousIsSemicolon {
-		fmt.Fprintf(wr, "\tputchar('\\n');\n")
+		fmt.Fprintf(wr, "\tprint_char('\\n');\n")
 	}
 }
