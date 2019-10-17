@@ -85,7 +85,7 @@ func (p program) receive(g guest) {
 }
 
 func (p program) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "#include <basiclib.h>\n\n")
+	fmt.Fprintf(wr, "#include \"basiclib.h\"\n\n")
 	p.generateCPrologue(wr)
 	fmt.Fprintf(wr, "int main(){\nint target = 0;\n")
 	fmt.Fprintf(wr, "for(;;){switch (target){\ncase 0:\n")
