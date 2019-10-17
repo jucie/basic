@@ -40,7 +40,7 @@ func (c cmdInput) generateC(wr *bufio.Writer) {
 	label := createLabel()
 	fmt.Fprintf(wr, "case %d:\n", label)
 	if c.label != "" {
-		fmt.Fprintf(wr, "\tprint_str(\"%s?\");\n", c.label)
+		fmt.Fprintf(wr, "\tprint_str(\"%s\");\n", c.label)
 	}
 	fmt.Fprintf(wr, "\tinput_to_buffer();\n")
 
