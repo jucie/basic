@@ -43,7 +43,7 @@ func (a astExpOp) generateC(wr *bufio.Writer) {
 		a.lhs.generateC(wr)
 		return
 	}
-	fmt.Fprintf(wr, "(float)pow(")
+	fmt.Fprintf(wr, "(num)pow(")
 	a.lhs.generateC(wr)
 	wr.WriteRune(',')
 	a.rhs.generateC(wr)
