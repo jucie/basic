@@ -37,7 +37,7 @@ static void dim(arr *a, size_t elem_size, int argcnt, va_list list) {
         }
         multiplier *= size +1;
     }
-    total += argcnt * sizeof(size_t) + multiplier * elem_size;
+    total = argcnt * sizeof(size_t) + multiplier * elem_size;
 
     p = *a = realloc_mem(*a, total);
     memset(p, 0, total);
@@ -309,7 +309,7 @@ void push_address(int address) {
     *address_stack_ptr = address;
 }
 
-int pop_address(int *address) {
+void pop_address(int *address) {
     if (!address_stack_ptr) {
         ops("RETURN without GOSUB");
     }
@@ -369,6 +369,7 @@ str CHR_str(str *dst, num val) {
     str s = *dst = realloc_mem(*dst, 2);
     s[0] = (unsigned char)val;
     s[1] = '\0';
+    return *dst;
 }
 
 num COS_num(num val) {
@@ -487,6 +488,7 @@ str STR_str(str *dst, num val) {
     *dst = realloc_mem(*dst, size +1);
     memcpy(*dst, buffer, size);
     *dst[size] = '\0';
+    return *dst;
 }
 
 num TAN_num(num val) {
