@@ -24,29 +24,28 @@ static void *realloc_mem(void *ptr, size_t size) {
 
 static void dim(arr *a, size_t elem_size, int argcnt, va_list list) {
     va_list ap;
-    size_t total;
+    size_t total, multiplier;
     int i;
     size_t *p;
 
     ap = list;
-    total = elem_size;
+    multiplier = 1;
     for (i = 0; i < argcnt; i++) {
         size_t size = va_arg(ap, size_t);
         if (size < 1) {
             ops("DIMension must be greater than zero");
         }
-        total *= size +1;
+        multiplier *= size +1;
     }
-    total += argcnt * sizeof(size_t);
+    total += argcnt * sizeof(size_t) + multiplier * elem_size;
 
-    p = *a;
-    p = realloc_mem(p, total);
+    p = *a = realloc_mem(*a, total);
     memset(p, 0, total);
-    *a = p;
 
     ap = list;
     for (i = 0; i < argcnt; i++) {
-        p[i] = va_arg(ap, size_t) +1;
+        size_t size = va_arg(ap, size_t);
+        p[i] = size +1;
     }
 }
 
@@ -75,13 +74,13 @@ static void *element_in_array(arr *a, size_t elem_size, int argcnt, va_list ap) 
     for (i = 0; i < argcnt; i++, p++) {
         size_t pos = va_arg(ap, size_t);
         if (pos >= *p) {
-            ops("Index out of bounds: %u. Limit is %u", pos, *p);
+            ops("Index out of bounds for dimension %d: %u. It should be a value from 0 up to %u", i, pos, *p -1);
         }
         offset += multiplier * pos;
         multiplier *= *p;
     }
-
-    return ((char*)p)+(offset * elem_size);
+    offset *= elem_size;
+    return ((char*)p)+offset;
 }
 
 num *num_in_array(arr *a, int argcnt, ...) {
@@ -117,6 +116,11 @@ void let_num(num *dst, num src) {
 }
 
 void let_str(str *dst, str src) {
+    if (!src) {
+        free(*dst);
+        *dst = NULL;
+        return;
+    }
     size_t size = strlen(src)+1;
     *dst = realloc_mem(*dst, size);
     strcpy(*dst, src);
