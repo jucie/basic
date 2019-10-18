@@ -10,6 +10,14 @@ static void ops(const char *msg){
     abort();
 }
 
+static void *realloc_mem(void *ptr, size_t size){
+    void *result = realloc(ptr, size);
+    if (!result){
+	ops("Out of memory");
+    }
+    return result;
+}
+
 static void dim(arr *a, size_t elem_size, int argcnt, va_list list){
     va_list ap;
     size_t total;
@@ -19,7 +27,7 @@ static void dim(arr *a, size_t elem_size, int argcnt, va_list list){
     ap = list;
     total = elem_size;
     for (i = 0; i < argcnt; i++){
-	size_t size = (size_t)va_arg(ap, num);
+	size_t size = va_arg(ap, size_t);
 	if (size < 1) {
 	    ops("DIMension must be greater than zero");
 	}
@@ -28,16 +36,13 @@ static void dim(arr *a, size_t elem_size, int argcnt, va_list list){
     total += argcnt * sizeof(size_t);
     
     p = *a;
-    p = realloc(p, total);
-    if (!p){
-	ops("Out of memory");
-    }
+    p = realloc_mem(p, total);
     memset(p, 0, total);
     *a = p;
 
     ap = list;
     for (i = 0; i < argcnt; i++){
-	p[i] = ((size_t)va_arg(ap, num)) +1;
+	p[i] = va_arg(ap, size_t) +1;
     }
 }
 
@@ -106,7 +111,7 @@ void let_num(num *dst, num src){
 
 void let_str(str *dst, str src){
     size_t size = strlen(src)+1;
-    *dst = realloc(*dst, size);
+    *dst = realloc_mem(*dst, size);
     strcpy(*dst, src);
 }
 
@@ -210,13 +215,13 @@ int input_str(str *dst){
     p = strchr(input_ptr, ',');
     if (p){
 	size = p - input_ptr;
-	*dst = realloc(*dst, size +1);
+	*dst = realloc_mem(*dst, size +1);
 	memcpy(*dst, input_ptr, size);
 	*dst[size] = '\0';
 	input_ptr = p+1;
     } else {
 	size = strlen(input_ptr);
-	*dst = realloc(*dst, size +1);
+	*dst = realloc_mem(*dst, size +1);
 	strcpy(*dst, input_ptr);
 	input_ptr = NULL; /* input is depleted */
     }
@@ -348,7 +353,7 @@ num ATN_num(num val){
 }
 
 str CHR_str(str *dst, num val){
-    str s = *dst = realloc(*dst, 2);
+    str s = *dst = realloc_mem(*dst, 2);
     s[0] = (unsigned char)val;
     s[1] = '\0';
 }
@@ -394,7 +399,7 @@ str RIGHT_str(str *dst, str s, num length){
 	return *dst = NULL;
     }
 
-    *dst = realloc(*dst, length +1);
+    *dst = realloc_mem(*dst, length +1);
     memcpy(*dst, s +size -length, length);
     *dst[length] = '\0';
     return *dst;
@@ -418,7 +423,7 @@ str LEFT_str(str *dst, str s, num length){
 	return *dst = NULL;
     }
 
-    *dst = realloc(*dst, length +1);
+    *dst = realloc_mem(*dst, length +1);
     memcpy(*dst, s, length);
     *dst[length] = '\0';
     return *dst;
@@ -462,7 +467,7 @@ num SQR_num(num val){
 str STR_str(str *dst, num val){
     char buffer[64];
     size_t size = sprintf(buffer, "%f", val);
-    *dst = realloc(*dst, size +1);
+    *dst = realloc_mem(*dst, size +1);
     memcpy(*dst, buffer, size);
     *dst[size] = '\0';
 }
