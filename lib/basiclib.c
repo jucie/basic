@@ -232,7 +232,7 @@ int input_str(str *dst) {
         size = p - input_ptr;
         *dst = realloc_mem(*dst, size +1);
         memcpy(*dst, input_ptr, size);
-        *dst[size] = '\0';
+        (*dst)[size] = '\0';
         input_ptr = p+1;
     } else {
         size = strlen(input_ptr);
@@ -420,7 +420,7 @@ str RIGHT_str(str *dst, str s, num length_num) {
 
     *dst = realloc_mem(*dst, length +1);
     memcpy(*dst, s +size -length, length);
-    *dst[length] = '\0';
+    (*dst)[length] = '\0';
     return *dst;
 }
 
@@ -445,7 +445,7 @@ str LEFT_str(str *dst, str s, num length_num) {
 
     *dst = realloc_mem(*dst, length +1);
     memcpy(*dst, s, length);
-    *dst[length] = '\0';
+    (*dst)[length] = '\0';
     return *dst;
 }
 
@@ -491,7 +491,7 @@ str STR_str(str *dst, num val) {
     size_t size = sprintf(buffer, "%f", val);
     *dst = realloc_mem(*dst, size +1);
     memcpy(*dst, buffer, size);
-    *dst[size] = '\0';
+    (*dst)[size] = '\0';
     return *dst;
 }
 
