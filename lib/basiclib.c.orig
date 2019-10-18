@@ -306,14 +306,14 @@ void push_address(int address) {
 }
 
 int pop_address(int *address) {
-    if (!address_stack_ptr) {
+    if (!address_stack_ptr){
         ops("RETURN without GOSUB");
     }
     *address = *address_stack_ptr;
     if (address_stack_ptr == address_stack) {
         address_stack_ptr = NULL;
     } else {
-        address_stack_ptr--;
+	address_stack_ptr--;
     }
 }
 
