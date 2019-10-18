@@ -43,6 +43,7 @@ func (c cmdDim) generateC(wr *bufio.Writer) {
 			if i != 0 {
 				wr.WriteRune(',')
 			}
+			fmt.Fprintf(wr, "(size_t)")
 			index.generateC(wr)
 		}
 		fmt.Fprintf(wr, ");\n")

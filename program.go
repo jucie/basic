@@ -177,7 +177,7 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 			}
 			fmt.Fprintf(wr, "){ return %s_in_array(&%s_var,%d", typeString, k, len(v.index))
 			for i := 0; i != len(v.index); i++ {
-				fmt.Fprintf(wr, ",index%d", i)
+				fmt.Fprintf(wr, ",(size_t)index%d", i)
 			}
 			fmt.Fprintf(wr, ");}\n")
 		}
