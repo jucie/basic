@@ -237,7 +237,7 @@ void print_char(char c) {
         break;
     case '\t':
     {
-        int pos = ((current_column / 8) + 1) * 8;
+        int pos = ((current_column / 16) + 1) * 16;
         while (current_column < pos) {
             print_char(' ');
         }
