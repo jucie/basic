@@ -394,8 +394,9 @@ num LOG_num(num val) {
     return (num)log(val);
 }
 
-str RIGHT_str(str *dst, str s, num length) {
+str RIGHT_str(str *dst, str s, num length_num) {
     size_t size;
+    size_t length = (size_t)length_num;
 
     if (!s) {
         free(*dst);
@@ -418,8 +419,9 @@ str RIGHT_str(str *dst, str s, num length) {
     return *dst;
 }
 
-str LEFT_str(str *dst, str s, num length) {
+str LEFT_str(str *dst, str s, num length_num) {
     size_t size;
+    size_t length = (size_t)length_num;
 
     if (!s) {
         free(*dst);
@@ -442,8 +444,10 @@ str LEFT_str(str *dst, str s, num length) {
     return *dst;
 }
 
-str MID_str(str *dst, str s, num start, num length) {
+str MID_str(str *dst, str s, num start_num, num length_num) {
     size_t size;
+    size_t start = (size_t)start_num;
+    size_t length = (size_t)length_num;
 
     if (!s) {
         free(*dst);
