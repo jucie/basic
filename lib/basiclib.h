@@ -31,7 +31,7 @@ void print_str(str val);
 void print_char(char c);
 
 void push_address(int address);
-int pop_address(int *address);
+void pop_address(int *address);
 
 void read_num(num *val);
 void read_str(str *val);
