@@ -5,8 +5,13 @@
 #include <math.h>
 #include <ctype.h>
 
-static void ops(const char *msg) {
-    fprintf(stderr, "\n%s\n", msg);
+static void ops(const char *format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    fputc('\n', stderr);
+    vfprintf(stderr, format, ap);
+    fputc('\n', stderr);
+    va_end(ap);
     abort();
 }
 
@@ -62,23 +67,16 @@ void dim_str(arr *a, int argcnt, ...) {
 
 
 static void *element_in_array(arr *a, size_t elem_size, int argcnt, va_list ap) {
-    size_t *p;
+    size_t *p = *a;
     size_t offset, multiplier;
     int i;
-
-    if (*a == NULL) { /* Was this array DIMensioned yet? No? OK then. 8^) */
-        dim_num(a, 1, 10); /* As weird as it seems, it's a BASIC thing. */
-        /* An array may be used without being DIMensioned beforehand. */
-        /* In this case, the "default" dimension is 1x10 (really 11). */
-    }
-    p = *a;
 
     offset = 0;
     multiplier = 1;
     for (i = 0; i < argcnt; i++, p++) {
         size_t pos = va_arg(ap, size_t);
         if (pos >= *p) {
-            ops("Index out of bounds");
+            ops("Index out of bounds: %u. Limit is %u", pos, *p);
         }
         offset += multiplier * pos;
         multiplier *= *p;
@@ -90,6 +88,11 @@ static void *element_in_array(arr *a, size_t elem_size, int argcnt, va_list ap) 
 num *num_in_array(arr *a, int argcnt, ...) {
     num *result;
     va_list ap;
+
+    if (*a == NULL) { /* Did the programmer forget to DIMension this array? */
+        dim_num(a, 1, 10); /* No problem. We can DIM it! It's a BASIC thing */
+    }
+
     va_start(ap, argcnt);
     result = (num*)element_in_array(a, sizeof(num), argcnt, ap);
     va_end(ap);
@@ -99,6 +102,11 @@ num *num_in_array(arr *a, int argcnt, ...) {
 str *str_in_array(arr *a, int argcnt, ...) {
     str *result;
     va_list ap;
+
+    if (*a == NULL) { /* Did the programmer forget to DIMension this array? */
+        dim_str(a, 1, 10); /* No problem. We can DIM it! It's a BASIC thing */
+    }
+
     va_start(ap, argcnt);
     result = (str*)element_in_array(a, sizeof(str), argcnt, ap);
     va_end(ap);
@@ -449,7 +457,7 @@ str MID_str(str *dst, str s, num start, num length) {
 num RND_num(num val) {
     val = val;
     /* see https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c#13409133 */
-    return ((float)rand()/(float)(RAND_MAX));
+    return ((num)rand()/(num)(RAND_MAX));
 }
 
 num SGN_num(num val) {
