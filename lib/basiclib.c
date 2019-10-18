@@ -1,3 +1,7 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS 1
+#endif
+
 #include "basiclib.h"
 
 #include <stdarg.h>
@@ -204,7 +208,7 @@ int input_num(num *dst) {
         return 0;
     }
 
-    *dst = atof(input_ptr);
+    *dst = (num)atof(input_ptr);
     p = strchr(input_ptr, ',');
     if (p) {
         input_ptr = p +1;
@@ -321,7 +325,7 @@ void pop_address(int *address) {
     }
 }
 
-static int data_area_for_num_index;
+static size_t data_area_for_num_index;
 
 void read_num(num *val) {
     extern const size_t data_area_for_num_cnt;
@@ -333,7 +337,7 @@ void read_num(num *val) {
     *val = data_area_for_num[data_area_for_num_index++];
 }
 
-static int data_area_for_str_index;
+static size_t data_area_for_str_index;
 
 void read_str(str *val) {
     extern const size_t data_area_for_str_cnt;
@@ -388,7 +392,7 @@ num LEN_num(str val) {
     if (!val) {
         return 0;
     }
-    return strlen(val);
+    return (num)strlen(val);
 }
 
 num LOG_num(num val) {
@@ -461,7 +465,7 @@ str MID_str(str *dst, str s, num start_num, num length_num) {
         free(*dst);
         return *dst = NULL;
     }
-    return LEFT_str(dst, s + start, length);
+    return LEFT_str(dst, s + start, (num)length);
 }
 
 num RND_num(num val) {
@@ -471,7 +475,7 @@ num RND_num(num val) {
 }
 
 num SGN_num(num val) {
-    return signbit(val);
+    return (num)signbit(val);
 }
 
 num SIN_num(num val) {
