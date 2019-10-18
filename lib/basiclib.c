@@ -2,7 +2,6 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
-#include <math.h>
 #include <ctype.h>
 
 static void ops(const char *format, ...) {
