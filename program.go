@@ -96,12 +96,20 @@ func (p program) generateC(wr *bufio.Writer) {
 	p.generateCFunctionDefinitions(wr)
 	p.generateCDataDefinitions(wr, strType)
 	p.generateCDataDefinitions(wr, numType)
-	fmt.Fprintf(wr, "static str temp_str[%d];\n", createTemp())
+
+	temp := createTemp()
+	if temp != 0 {
+		fmt.Fprintf(wr, "static str temp_str_area[%d], *temp_str = temp_str_area;\n", temp)
+	}
 }
 
 func (p *program) generateCDataDefinitions(wr *bufio.Writer, type_ astType) {
 	size := p.dataCounter[type_]
 	fmt.Fprintf(wr, "const size_t data_area_for_%s_cnt=%d;\n", type_, size)
+	if size == 0 {
+		fmt.Fprintf(wr, "const %s data_area_for_%s[1]={0};\n\n", type_, type_)
+		return
+	}
 	fmt.Fprintf(wr, "const %s data_area_for_%s[%d]={\n", type_, type_, size)
 	scan(p, func(h host) {
 		switch v := h.(type) {
@@ -138,7 +146,7 @@ func (p *program) generateCFunctionDefinitions(wr *bufio.Writer) {
 func (p *program) generateCPrologue(wr *bufio.Writer) {
 	p.generateCFunctionDeclarations(wr)
 	p.generateCVarDefinitions(wr)
-	fmt.Fprintf(wr, "static str temp_str[];\n\n")
+	fmt.Fprintf(wr, "static str *temp_str;\n\n")
 }
 
 func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
