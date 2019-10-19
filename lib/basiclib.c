@@ -203,7 +203,7 @@ void input_to_buffer() {
 int input_num(num *dst) {
     char *p;
     if (!input_ptr || *input_ptr == '\0') {
-        fprintf(stderr, "\nMissing number in input.\n");
+        fprintf(stderr, "\nMissing number in input. Please try again.\n");
         *dst = 0;
         return 0;
     }
@@ -223,7 +223,7 @@ int input_str(str *dst) {
     size_t size;
 
     if (!input_ptr || *input_ptr == '\0') {
-        fprintf(stderr, "\nMissing string in input.\n");
+        fprintf(stderr, "\nMissing string in input. Please try again.\n");
         return 0;
     }
 
@@ -470,8 +470,10 @@ str MID_str(str *dst, str s, num start_num, num length_num) {
 
 num RND_num(num val) {
     val = val;
+    double dummy;
+
     /* see https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c#13409133 */
-    return ((num)rand()/(num)(RAND_MAX));
+    return (num)modf(((num)rand()/(num)(RAND_MAX)), &dummy);
 }
 
 num SGN_num(num val) {
@@ -503,3 +505,33 @@ num VAL_num(str val) {
     return (num)atof(val);
 }
 
+str concat_str(str *dst, int argcnt, ...) {
+    va_list ap;
+    size_t size;
+    int i;
+    str p;
+
+    va_start(ap, argcnt);
+    size = 0;
+    for (i = 0; i < argcnt; i++) {
+        str s = va_arg(ap, str);
+        if (s) {
+            size += strlen(s);
+        }
+    }
+    p = *dst = realloc_mem(*dst, size +1);
+
+    va_start(ap, argcnt);
+    for (i = 0; i < argcnt; i++) {
+        str s = va_arg(ap, str);
+        if (s) {
+            size = strlen(s);
+            memcpy(p, s, size);
+            p += size;
+        }
+    }
+    *p = '\0';
+    va_end(ap);
+
+    return *dst;
+}
