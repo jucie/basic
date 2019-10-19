@@ -74,7 +74,7 @@ func (c cmdFnDef) generateCFunctionHeader(wr *bufio.Writer) {
 		if i != 0 {
 			wr.WriteRune(',')
 		}
-		fmt.Fprintf(wr, "num %s", v.nameForC())
+		fmt.Fprintf(wr, "num %s", v.unambiguousName())
 	}
 	fmt.Fprintf(wr, ")")
 }
@@ -88,7 +88,7 @@ func (c cmdFnDef) generateCDefinition(wr *bufio.Writer) {
 	c.generateCFunctionHeader(wr)
 	fmt.Fprintf(wr, "{\n")
 	for _, v := range c.args {
-		fmt.Fprintf(wr, "\t%s=%s;\n", v.nameForC(), v.nameForC())
+		fmt.Fprintf(wr, "\t%s=%s;\n", v.unambiguousName(), v.unambiguousName())
 	}
 	fmt.Fprintf(wr, "\treturn ")
 	c.expr.generateC(wr)
