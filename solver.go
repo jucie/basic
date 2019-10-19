@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 )
 
 type variable struct {
@@ -101,7 +102,7 @@ func (s *solver) consider(h host) {
 	}
 }
 
-func (s *solver) linkLines(lines progLines) {
+func (s *solver) linkLines(lines progLines) progLines {
 	m := make(map[int]*progLine)
 	for _, l := range lines {
 		m[l.id] = l
@@ -109,14 +110,14 @@ func (s *solver) linkLines(lines progLines) {
 	for i := range s.dsts {
 		dst := s.dsts[i]
 		l, ok := m[dst.nbr]
-		if !ok {
-			l = lines.find(dst.nbr)
+		if !ok { // target line doesn't exist
+			l = &progLine{id: dst.nbr}
+			m[dst.nbr] = l
+			lines = append(lines, l)
 		}
-		if l == nil {
-			fmt.Fprintf(os.Stderr, "Target line not found: %d\n", dst.nbr)
-		} else {
-			dst.adr = l
-			l.isDst = true
-		}
+		dst.adr = l
+		l.isDst = true
 	}
+	sort.Slice(lines, func(i, j int) bool { return lines[i].id < lines[j].id })
+	return lines
 }

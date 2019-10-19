@@ -25,15 +25,6 @@ type progLine struct {
 }
 type progLines []*progLine
 
-func (pl progLines) find(dst int) *progLine {
-	for _, l := range pl {
-		if l.id >= dst {
-			return l
-		}
-	}
-	return nil
-}
-
 func (pl progLines) generateC(wr *bufio.Writer) {
 	for _, l := range pl {
 		l.generateC(wr)
@@ -51,7 +42,9 @@ func (l *progLine) generateC(wr *bufio.Writer) {
 		fmt.Fprintf(wr, "case %d: ", l.id)
 	}
 	fmt.Fprintf(wr, "/* line %d */\n", l.id)
-	l.cmds.generateC(wr)
+	if len(l.cmds) != 0 {
+		l.cmds.generateC(wr)
+	}
 }
 
 type program struct {
@@ -75,7 +68,7 @@ func (p *program) resolve() {
 	scan(p, func(h host) {
 		solver.consider(h)
 	})
-	solver.linkLines(p.lines)
+	p.lines = solver.linkLines(p.lines)
 }
 
 func (p program) receive(g guest) {
