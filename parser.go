@@ -167,6 +167,24 @@ func (p *parser) unexpected() {
 		l.pos.row+1, l.pos.col+1, l.token, l.s)
 }
 
+func appendCmds(tail []cmd, cmd cmd) []cmd {
+	c, ok := cmd.(*cmdNext)
+	if ok { // it's a NEXT command
+		if len(c.vars) >= 2 { // it's multiple. NEXT A,B,C
+			// let's substitute for several single var NEXT
+			for _, v := range c.vars {
+				n := &cmdNext{vars: []*astVarRef{v}}
+				n.createLabels()
+				tail = append(tail, n)
+			}
+			return tail
+		}
+		c.createLabels()
+	}
+	tail = append(tail, cmd)
+	return tail
+}
+
 func (p *parser) parseLineTail() []cmd {
 	var result []cmd
 	l := p.lex.peek()
@@ -179,7 +197,7 @@ func (p *parser) parseLineTail() []cmd {
 			p.unexpected()
 			break
 		}
-		result = append(result, cmd)
+		result = appendCmds(result, cmd)
 		if l.token == ':' {
 			p.lex.next() // skip separator
 			continue
