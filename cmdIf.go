@@ -48,6 +48,8 @@ func (c *cmdIf) receive(g guest) {
 	}
 }
 
+// condBranchTarget return the target address of the conditional branch
+// or zero if this command is not a conditional branch.
 func (c *cmdIf) condBranchTarget() int {
 	if len(c.cmds) == 1 { // has only 1 conditional command
 		switch v := c.cmds[0].(type) {
