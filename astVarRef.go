@@ -79,13 +79,13 @@ As an L value
 // The intricacies are due to the subtleties of several variable types.
 func (a astVarRef) generateCVarRef(wr *bufio.Writer, shouldDeref bool) {
 	if !a.isArray() {
-		fmt.Fprintf(wr, "%s", a.nameForC())
+		fmt.Fprintf(wr, "%s", a.unambiguousName())
 		return
 	}
 	if shouldDeref {
 		wr.WriteRune('*')
 	}
-	fmt.Fprintf(wr, "%s", a.nameForC())
+	fmt.Fprintf(wr, "%s", a.unambiguousName())
 	wr.WriteRune('(')
 	for i, v := range a.index {
 		if i != 0 {
@@ -115,10 +115,14 @@ func (a astVarRef) finalType() astType {
 	return a.type_
 }
 
-func (a astVarRef) nameForC() string {
+func (a astVarRef) unambiguousName() string {
 	name := fmt.Sprintf("%s_%s", a.id, a.type_)
 	if a.isArray() {
 		name += "_array"
 	}
 	return name
+}
+
+func (a *astVarRef) equals(other *astVarRef) bool {
+	return a.id == other.id && a.type_ == other.type_ && len(a.index) == len(other.index)
 }
