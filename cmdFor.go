@@ -10,6 +10,7 @@ type cmdFor struct {
 	begin *astExpr
 	end   *astExpr
 	step  *astExpr
+	next  *cmdNext
 }
 
 func (p *parser) parseFor() *cmdFor {
