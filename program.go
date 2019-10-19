@@ -68,6 +68,7 @@ func (p *program) resolve() {
 	scan(p, func(h host) {
 		solver.consider(h)
 	})
+	solver.linkForNext(p)
 	p.lines = solver.linkLines(p.lines)
 }
 
@@ -147,7 +148,7 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 	scan(p, func(h host) {
 		switch v := h.(type) {
 		case *astVarRef:
-			m[v.nameForC()] = v
+			m[v.unambiguousName()] = v
 		}
 	})
 	var names []string

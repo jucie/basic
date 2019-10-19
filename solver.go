@@ -58,10 +58,10 @@ func (s *solver) consider(h host) {
 		vv.dims = len(v.index)
 	case *cmdDim:
 		for _, def := range v.vars {
-			vv, ok := s.vars[def.nameForC()]
+			vv, ok := s.vars[def.unambiguousName()]
 			if !ok {
 				vv = &variable{}
-				s.vars[def.nameForC()] = vv
+				s.vars[def.unambiguousName()] = vv
 			}
 			if vv.def != nil {
 				fmt.Fprintf(os.Stderr, "Multiple definition for variable %s.", def.id)
@@ -120,4 +120,28 @@ func (s *solver) linkLines(lines progLines) progLines {
 	}
 	sort.Slice(lines, func(i, j int) bool { return lines[i].id < lines[j].id })
 	return lines
+}
+
+func (s *solver) linkForNext(p *program) {
+	stack := make([]*cmdFor, 64) // max levels deep
+	sp := -1
+	scan(p, func(h host) {
+		switch v := h.(type) {
+		case *cmdFor:
+			sp++
+			if sp >= cap(stack) {
+				panic("Too many nested FOR loops.")
+			}
+			stack[sp] = v
+		case *cmdNext:
+			for sp >= 0 {
+				f := stack[sp]
+				if len(v.vars) > 0 && !v.vars[0].equals(f.index) { // FOR doesn't match NEXT
+					break
+				}
+				f.next = v
+				sp--
+			}
+		}
+	})
 }
