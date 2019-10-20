@@ -40,7 +40,7 @@ func (a astLit) generateC(wr *bufio.Writer) {
 	case strType:
 		wr.WriteRune('"')
 		for _, r := range a.val {
-			if r == '\'' {
+			if r == '\'' || r == '\\' {
 				wr.WriteRune('\\')
 			}
 			wr.WriteRune(r)
