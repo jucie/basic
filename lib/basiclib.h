@@ -20,7 +20,8 @@ void let_num(num *dst, num src);
 void let_str(str *dst, str src);
 
 void for_num(num *var, num start, num end, num step, int target);
-int next(int *target);
+int should_get_out();
+void next(int *target);
 
 void input_to_buffer();
 int input_num(num *dst);
@@ -57,5 +58,7 @@ str STR_str(str *dst, num val);
 void TAB_void(num val);
 num TAN_num(num val);
 num VAL_num(str val);
+
+str concat_str(str *dst, int argcnt, ...);
 
 #endif /* BASICLIB_H */

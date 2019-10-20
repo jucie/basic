@@ -72,4 +72,5 @@ func (c cmdFor) generateC(wr *bufio.Writer) {
 	}
 	fmt.Fprintf(wr, ",%d);\n", label)
 	fmt.Fprintf(wr, "case %d:\n", label)
+	fmt.Fprintf(wr, "\tif (should_get_out()){ target = %d; break; }\n", c.next.labelExit)
 }

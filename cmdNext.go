@@ -6,9 +6,8 @@ import (
 )
 
 type cmdNext struct {
-	vars           []*astVarRef
-	labelCondition int
-	labelExit      int
+	vars      []*astVarRef
+	labelExit int
 }
 
 func (p *parser) parseNext() *cmdNext {
@@ -39,13 +38,11 @@ func (c cmdNext) receive(g guest) {
 }
 
 func (c cmdNext) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tif (next(&target)) break; /* NEXT */")
-	// for _, v := range c.vars {
-	// 	fmt.Fprintf(wr, "\tif (next(&target)) break; /* NEXT %s */\n", v.id)
-	// }
+	fmt.Fprintf(wr, "\tnext(&target); break; /* NEXT ")
+	c.vars[0].generateC(wr)
+	fmt.Fprintf(wr, " */\ncase %d:\n", c.labelExit)
 }
 
-func (c *cmdNext) createLabels() {
-	c.labelCondition = createLabel()
+func (c *cmdNext) createLabel() {
 	c.labelExit = createLabel()
 }

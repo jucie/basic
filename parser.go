@@ -174,12 +174,10 @@ func appendCmds(tail []cmd, cmd cmd) []cmd {
 			// let's substitute for several single var NEXT
 			for _, v := range c.vars {
 				n := &cmdNext{vars: []*astVarRef{v}}
-				n.createLabels()
 				tail = append(tail, n)
 			}
 			return tail
 		}
-		c.createLabels()
 	}
 	tail = append(tail, cmd)
 	return tail

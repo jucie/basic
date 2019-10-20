@@ -131,7 +131,6 @@ void let_str(str *dst, str src) {
 }
 
 #define LOOP_TABLE_SIZE 64
-
 typedef struct {
     num *var;
     num start;
@@ -158,20 +157,16 @@ void for_num(num *var, num start, num end, num step, int target) {
     *var = start;
 }
 
-int next(int *target) {
+int should_get_out() {
     if (!current_loop) {
-        ops("NEXT without FOR");
+        ops("missing loop control");
     }
 
-    *current_loop->var += current_loop->step;
-
-    if (current_loop->start < current_loop->end && *current_loop->var <= current_loop->end) {
-        *target = current_loop->target;
-        return 1;
+    if (current_loop->step > 0 && *current_loop->var <= current_loop->end) {
+        return 0; /* proceed */
     }
-    if (current_loop->start > current_loop->end && *current_loop->var >= current_loop->end) {
-        *target = current_loop->target;
-        return 1;
+    if (current_loop->step < 0 && *current_loop->var >= current_loop->end) {
+        return 0; /* proceed */
     }
 
     if (current_loop == tab_loop_ctrl) {
@@ -179,7 +174,16 @@ int next(int *target) {
     } else {
         current_loop--;
     }
-    return 0;
+    return 1; /* get out */
+}
+
+void next(int *target) {
+    if (!current_loop) {
+        ops("NEXT without FOR");
+    }
+
+    *current_loop->var += current_loop->step;
+    *target = current_loop->target;
 }
 
 

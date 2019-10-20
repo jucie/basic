@@ -129,17 +129,29 @@ func (s *solver) linkForNext(p *program) {
 		switch v := h.(type) {
 		case *cmdFor:
 			sp++
-			if sp >= cap(stack) {
+			if sp >= len(stack) {
 				panic("Too many nested FOR loops.")
 			}
 			stack[sp] = v
 		case *cmdNext:
+			v.createLabel()
+			if sp < 0 {
+				panic("NEXT without FOR")
+			}
+			if len(v.vars) == 0 { // NEXT without a var only matches the most recent FOR
+				f := stack[sp]
+				f.next = v
+				v.vars = append(v.vars, f.index)
+				sp--
+			}
+			// NEXT with a var
 			for sp >= 0 {
 				f := stack[sp]
-				if len(v.vars) > 0 && !v.vars[0].equals(f.index) { // FOR doesn't match NEXT
+				if !v.vars[0].equals(f.index) { // FOR doesn't match NEXT
 					break
 				}
 				f.next = v
+				v.vars = append(v.vars, f.index)
 				sp--
 			}
 		}
