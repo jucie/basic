@@ -51,13 +51,18 @@ func (c cmdOn) receive(g guest) {
 }
 
 func (c cmdOn) generateC(wr *bufio.Writer) {
-	label := createLabel()
-	fmt.Fprintf(wr, "\tswitch ((int)(")
+	labelExit := createLabel()
+	fmt.Fprintf(wr, "\ttarget = (int)(")
 	c.expr.generateC(wr)
-	fmt.Fprintf(wr, ")){\n")
+	fmt.Fprintf(wr, ");\n")
+	fmt.Fprintf(wr, "\tif (target < 1 || target > %d) {target = %d; break;}\n", len(c.dsts), labelExit)
+	fmt.Fprintf(wr, "\ttarget = (const int[]){")
 	for i, line := range c.dsts {
-		fmt.Fprintf(wr, "\t\tcase %d: target = %d; break;\n", i+1, line.nbr)
+		if i != 0 {
+			wr.WriteRune(',')
+		}
+		fmt.Fprintf(wr, "%d", line.nbr)
 	}
-	fmt.Fprintf(wr, "\t\tdefault: target = %d; break;\n", label)
-	fmt.Fprintf(wr, "\t}\n\tbreak;\ncase %d:\n", label)
+	fmt.Fprintf(wr, "}[target -1]; break;\n")
+	fmt.Fprintf(wr, "case %d:\n", labelExit)
 }
