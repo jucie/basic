@@ -130,63 +130,6 @@ void let_str(str *dst, str src) {
     strcpy(*dst, src);
 }
 
-#define LOOP_TABLE_SIZE 64
-typedef struct {
-    num *var;
-    num start;
-    num end;
-    num step;
-    int target;
-} loop_ctrl;
-loop_ctrl tab_loop_ctrl[LOOP_TABLE_SIZE], *current_loop;
-
-void for_num(num *var, num start, num end, num step, int target) {
-    if (!current_loop) {
-        current_loop = tab_loop_ctrl;
-    } else {
-        if (current_loop - tab_loop_ctrl >= LOOP_TABLE_SIZE) {
-            ops("Too many nested FOR...NEXT loops");
-        }
-        current_loop++;
-    }
-    current_loop->var = var;
-    current_loop->start = start;
-    current_loop->end = end;
-    current_loop->step = step;
-    current_loop->target = target;
-    *var = start;
-}
-
-int should_get_out() {
-    if (!current_loop) {
-        ops("missing loop control");
-    }
-
-    if (current_loop->step > 0 && *current_loop->var <= current_loop->end) {
-        return 0; /* proceed */
-    }
-    if (current_loop->step < 0 && *current_loop->var >= current_loop->end) {
-        return 0; /* proceed */
-    }
-
-    if (current_loop == tab_loop_ctrl) {
-        current_loop = NULL;
-    } else {
-        current_loop--;
-    }
-    return 1; /* get out */
-}
-
-void next(int *target) {
-    if (!current_loop) {
-        ops("NEXT without FOR");
-    }
-
-    *current_loop->var += current_loop->step;
-    *target = current_loop->target;
-}
-
-
 static char input_buffer[4 * 1024], *input_ptr;
 
 void input_to_buffer() {

@@ -18,10 +18,6 @@ str *str_in_array(arr *a, int argcnt, ...);
 void let_num(num *dst, num src);
 void let_str(str *dst, str src);
 
-void for_num(num *var, num start, num end, num step, int target);
-int should_get_out();
-void next(int *target);
-
 void input_to_buffer();
 int input_num(num *dst);
 int input_str(str *dst);
