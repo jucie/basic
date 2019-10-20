@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
 
 typedef float num;
@@ -60,5 +59,6 @@ num TAN_num(num val);
 num VAL_num(str val);
 
 str concat_str(str *dst, int argcnt, ...);
+int compare_str(str lhs, str rhs);
 
 #endif /* BASICLIB_H */

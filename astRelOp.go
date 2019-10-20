@@ -91,7 +91,7 @@ func (a astRelOp) finalType() astType {
 }
 
 func (a astRelOp) generateCForStr(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "strcmp(")
+	fmt.Fprintf(wr, "compare_str(")
 	a.lhs.generateC(wr)
 	wr.WriteRune(',')
 	a.rhs.generateC(wr)

@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <string.h>
 
 static void ops(const char *format, ...) {
     va_list ap;
@@ -538,4 +538,14 @@ str concat_str(str *dst, int argcnt, ...) {
     va_end(ap);
 
     return *dst;
+}
+
+int compare_str(str lhs, str rhs) {
+    if (!lhs) {
+        lhs = "";
+    }
+    if (!rhs) {
+        rhs = "";
+    }
+    return strcmp(lhs, rhs);
 }
