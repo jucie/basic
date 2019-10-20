@@ -134,7 +134,7 @@ func (s *solver) linkForNext(p *program) {
 				panic("Too many nested FOR loops.")
 			}
 			stack[sp] = v
-			m[v.index.id] = struct{}{}
+			m[v.index.unambiguousName()] = struct{}{}
 		case *cmdNext:
 			v.createLabel()
 			if sp < 0 {

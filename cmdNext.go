@@ -38,7 +38,7 @@ func (c cmdNext) receive(g guest) {
 }
 
 func (c cmdNext) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\ttarget=%s_target; break;\n", c.vars[0].id)
+	fmt.Fprintf(wr, "\ttarget=%s_target; break;\n", c.vars[0].unambiguousName())
 	fmt.Fprintf(wr, "case %d:\n", c.labelExit)
 }
 

@@ -78,10 +78,9 @@ func (c cmdFor) generateC(wr *bufio.Writer) {
 	labelInc := createLabel()
 	labelCond := createLabel()
 
-	// loop control structure fullfilment
-	fmt.Fprintf(wr, "\t%s_target = %d;\n", c.index.id, labelInc)
+	fmt.Fprintf(wr, "\t%s_target = %d;\n", c.index.unambiguousName(), labelInc)
 
-	// index first attribution
+	// first index attribution
 	wr.WriteRune('\t')
 	c.index.generateCLValue(wr, "let")
 	wr.WriteRune(',')
