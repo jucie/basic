@@ -9,6 +9,7 @@ import (
 type cmdOn struct {
 	expr *astExpr
 	dsts []targetLine
+	sub  bool
 }
 
 func (p *parser) parseOn() *cmdOn {
@@ -24,7 +25,9 @@ func (p *parser) parseOn() *cmdOn {
 		return nil
 	}
 	p.lex.next()
-	if l.token != tokTo {
+	if l.token == tokSub {
+		result.sub = true
+	} else if l.token != tokTo {
 		return nil
 	}
 	p.lex.next()
@@ -56,6 +59,9 @@ func (c cmdOn) generateC(wr *bufio.Writer) {
 	c.expr.generateC(wr)
 	fmt.Fprintf(wr, ");\n")
 	fmt.Fprintf(wr, "\tif (target < 1 || target > %d) {target = %d; break;}\n", len(c.dsts), labelExit)
+	if c.sub {
+		fmt.Fprintf(wr, "\tpush_address(%d);\n", labelExit)
+	}
 	fmt.Fprintf(wr, "\ttarget = (const int[]){")
 	for i, line := range c.dsts {
 		if i != 0 {
