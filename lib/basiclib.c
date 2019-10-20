@@ -347,10 +347,18 @@ void read_str(str *val) {
     extern const size_t data_area_for_str_cnt;
     extern const str data_area_for_str[];
 
+    size_t size;
+    str src;
+    str dst;
+
     if (data_area_for_str_index >= data_area_for_str_cnt) {
         ops("READ string past DATA");
     }
-    *val = data_area_for_str[data_area_for_str_index++];
+    src = data_area_for_str[data_area_for_str_index++];
+    size = strlen(src);
+    dst = *val = realloc_mem(*val, size +1);
+    memcpy(dst, src, size);
+    dst[size] = '\0';
 }
 
 void restore(void) {
@@ -438,7 +446,7 @@ str LEFT_str(str *dst, str s, num length_num) {
     }
 
     size = strlen(s);
-    if (size <= length) {
+    if (size < length) {
         length = size;
     }
 
