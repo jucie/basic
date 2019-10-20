@@ -13,6 +13,22 @@ type cmdFor struct {
 	next  *cmdNext
 }
 
+var step1 = &astExpr{
+	boolOp: &astBoolOp{
+		head: &astRelOp{
+			lhs: &astAddOp{
+				head: &astMulOp{
+					head: &astExpOp{
+						lhs: &astPart{
+							val: &astLit{val: "1", type_: numType},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+
 func (p *parser) parseFor() *cmdFor {
 	result := &cmdFor{}
 	l := p.lex.peek()
@@ -42,6 +58,8 @@ func (p *parser) parseFor() *cmdFor {
 	if l.token == tokStep {
 		p.lex.next()
 		result.step = p.parseExpr(false)
+	} else {
+		result.step = step1
 	}
 
 	return result
@@ -57,20 +75,44 @@ func (c cmdFor) receive(g guest) {
 }
 
 func (c cmdFor) generateC(wr *bufio.Writer) {
-	label := createLabel()
+	labelInc := createLabel()
+	labelCond := createLabel()
+
+	// loop control structure fullfilment
+	fmt.Fprintf(wr, "\t%s_target = %d;\n", c.index.id, labelInc)
+
+	// index first attribution
 	wr.WriteRune('\t')
-	c.index.generateCLValue(wr, "for")
+	c.index.generateCLValue(wr, "let")
 	wr.WriteRune(',')
 	c.begin.generateC(wr)
-	fmt.Fprintf(wr, ",")
+	fmt.Fprintf(wr, ");\n")
+	fmt.Fprintf(wr, "\ttarget = %d; break;\n", labelCond)
+
+	// Increment
+	fmt.Fprintf(wr, "case %d:\n", labelInc)
+	wr.WriteRune('\t')
+	c.index.generateCLValue(wr, "let")
+	wr.WriteRune(',')
+	c.index.generateC(wr)
+	wr.WriteRune('+')
+	c.step.generateC(wr)
+	fmt.Fprintf(wr, ");\n")
+
+	// index value bounds checking
+	fmt.Fprintf(wr, "case %d:\n", labelCond)
+	fmt.Fprintf(wr, "\tif (")
+	c.step.generateC(wr)
+	fmt.Fprintf(wr, " > 0 && ")
+	c.index.generateC(wr)
+	fmt.Fprintf(wr, " > ")
 	c.end.generateC(wr)
-	fmt.Fprintf(wr, ",")
-	if c.step == nil {
-		fmt.Fprintf(wr, "1.0f")
-	} else {
-		c.step.generateC(wr)
-	}
-	fmt.Fprintf(wr, ",%d);\n", label)
-	fmt.Fprintf(wr, "case %d:\n", label)
-	fmt.Fprintf(wr, "\tif (should_get_out()){ target = %d; break; }\n", c.next.labelExit)
+	fmt.Fprintf(wr, ") { target=%d; break; }\n", c.next.labelExit)
+	fmt.Fprintf(wr, "\telse if (")
+	c.step.generateC(wr)
+	fmt.Fprintf(wr, " < 0 && ")
+	c.index.generateC(wr)
+	fmt.Fprintf(wr, " < ")
+	c.end.generateC(wr)
+	fmt.Fprintf(wr, ") { target=%d; break; }\n", c.next.labelExit)
 }

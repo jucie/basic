@@ -51,6 +51,7 @@ type program struct {
 	lines       progLines
 	ids         map[int]int
 	dataCounter map[astType]int
+	loopVars    []string
 }
 
 func newProgram() *program {
@@ -81,8 +82,11 @@ func (p program) receive(g guest) {
 func (p program) generateC(wr *bufio.Writer) {
 	fmt.Fprintf(wr, "#include \"basiclib.h\"\n\n")
 	p.generateCPrologue(wr)
-	fmt.Fprintf(wr, "int main(){\nint target = 0;\n")
-	fmt.Fprintf(wr, "for(;;){switch (target){\ncase 0:\n")
+	fmt.Fprintf(wr, "int main(){\n")
+	for _, s := range p.loopVars {
+		fmt.Fprintf(wr, "int %s_target;\n", s)
+	}
+	fmt.Fprintf(wr, "int target = 0;\nfor(;;){switch (target){\ncase 0:\n")
 	p.lines.generateC(wr)
 	fmt.Fprintf(wr, "case %d: exit(0);\n", createLabel())
 	fmt.Fprintf(wr, "default: fprintf(stderr, \"Undefined target line %s\", target); abort(); \n}}\n} /* main */\n\n", "%d")

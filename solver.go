@@ -123,6 +123,7 @@ func (s *solver) linkLines(lines progLines) progLines {
 }
 
 func (s *solver) linkForNext(p *program) {
+	m := make(map[string]struct{})
 	stack := make([]*cmdFor, 64) // max levels deep
 	sp := -1
 	scan(p, func(h host) {
@@ -133,6 +134,7 @@ func (s *solver) linkForNext(p *program) {
 				panic("Too many nested FOR loops.")
 			}
 			stack[sp] = v
+			m[v.index.id] = struct{}{}
 		case *cmdNext:
 			v.createLabel()
 			if sp < 0 {
@@ -156,4 +158,10 @@ func (s *solver) linkForNext(p *program) {
 			}
 		}
 	})
+	v := make([]string, 0, len(m))
+	for k := range m {
+		v = append(v, k)
+	}
+	sort.Strings(v)
+	p.loopVars = v
 }

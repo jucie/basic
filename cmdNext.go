@@ -38,9 +38,8 @@ func (c cmdNext) receive(g guest) {
 }
 
 func (c cmdNext) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tnext(&target); break; /* NEXT ")
-	c.vars[0].generateC(wr)
-	fmt.Fprintf(wr, " */\ncase %d:\n", c.labelExit)
+	fmt.Fprintf(wr, "\ttarget=%s_target; break;\n", c.vars[0].id)
+	fmt.Fprintf(wr, "case %d:\n", c.labelExit)
 }
 
 func (c *cmdNext) createLabel() {
