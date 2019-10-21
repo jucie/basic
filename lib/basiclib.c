@@ -26,16 +26,14 @@ static void *realloc_mem(void *ptr, size_t size) {
     return result;
 }
 
-static void dim(arr *a, size_t elem_size, int argcnt, va_list list) {
-    va_list ap;
+static void dim(arr *a, size_t elem_size, int argcnt, va_list ap0, va_list ap1) {
     size_t total, multiplier;
     int i;
     size_t *p;
 
-    ap = list;
     multiplier = 1;
     for (i = 0; i < argcnt; i++) {
-        size_t size = va_arg(ap, size_t);
+        size_t size = va_arg(ap0, size_t);
         if (size < 1) {
             ops("DIMension must be greater than zero");
         }
@@ -46,25 +44,28 @@ static void dim(arr *a, size_t elem_size, int argcnt, va_list list) {
     p = *a = realloc_mem(*a, total);
     memset(p, 0, total);
 
-    ap = list;
     for (i = 0; i < argcnt; i++) {
-        size_t size = va_arg(ap, size_t);
+        size_t size = va_arg(ap1, size_t);
         p[i] = size +1;
     }
 }
 
 void dim_num(arr *a, int argcnt, ...) {
-    va_list ap;
-    va_start(ap, argcnt);
-    dim(a, sizeof(num), argcnt, ap);
-    va_end(ap);
+    va_list ap0, ap1;
+    va_start(ap0, argcnt);
+    va_start(ap1, argcnt);
+    dim(a, sizeof(num), argcnt, ap0, ap1);
+    va_end(ap0);
+    va_end(ap1);
 }
 
 void dim_str(arr *a, int argcnt, ...) {
-    va_list ap;
-    va_start(ap, argcnt);
-    dim(a, sizeof(str), argcnt, ap);
-    va_end(ap);
+    va_list ap0, ap1;
+    va_start(ap0, argcnt);
+    va_start(ap1, argcnt);
+    dim(a, sizeof(str), argcnt, ap0, ap1);
+    va_end(ap0);
+    va_end(ap1);
 }
 
 
