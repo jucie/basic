@@ -148,6 +148,7 @@ void input_num(num *dst) {
     char *p;
     if (!input_ptr || *input_ptr == '\0') {
         *dst = 0;
+		return;
     }
 
     *dst = (num)atof(input_ptr);
