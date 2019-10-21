@@ -116,10 +116,6 @@ str *str_in_array(arr *a, int argcnt, ...) {
     return result;
 }
 
-void let_num(num *dst, num src) {
-    *dst = src;
-}
-
 void let_str(str *dst, str src) {
     if (!src) {
         free(*dst);
@@ -306,19 +302,11 @@ void restore(void) {
     data_area_for_str_index = 0;
 }
 
-num ABS_num(num val) {
-    return (num)fabs(val);
-}
-
 num ASC_num(str val) {
     if (!val) {
         ops("Trying to perform ASC function on an empty string");
     }
     return *val;
-}
-
-num ATN_num(num val) {
-    return (num)atan(val);
 }
 
 str CHR_str(str *dst, num val) {
@@ -328,27 +316,11 @@ str CHR_str(str *dst, num val) {
     return *dst;
 }
 
-num COS_num(num val) {
-    return (num)cos(val);
-}
-
-num EXP_num(num val) {
-    return (num)exp(val);
-}
-
-num INT_num(num val) {
-    return (num)(int)val;
-}
-
 num LEN_num(str val) {
     if (!val) {
         return 0;
     }
     return (num)strlen(val);
-}
-
-num LOG_num(num val) {
-    return (num)log(val);
 }
 
 str RIGHT_str(str *dst, str s, num length_num) {
@@ -428,18 +400,6 @@ num RND_num(num val) {
     return (num)modf(((num)rand()/(num)(RAND_MAX)), &dummy);
 }
 
-num SGN_num(num val) {
-    return (num)signbit(val);
-}
-
-num SIN_num(num val) {
-    return (num)sin(val);
-}
-
-num SQR_num(num val) {
-    return (num)sqrt(val);
-}
-
 str STR_str(str *dst, num val) {
     char buffer[64];
     size_t size = sprintf(buffer, "%f", val);
@@ -447,14 +407,6 @@ str STR_str(str *dst, num val) {
     memcpy(*dst, buffer, size);
     (*dst)[size] = '\0';
     return *dst;
-}
-
-num TAN_num(num val) {
-    return (num)tan(val);
-}
-
-num VAL_num(str val) {
-    return (num)atof(val);
 }
 
 str concat_str(str *dst, int argcnt, ...) {

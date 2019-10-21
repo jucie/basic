@@ -15,7 +15,7 @@ void dim_str(arr *a, int argcnt, ...);
 num *num_in_array(arr *a, int argcnt, ...);
 str *str_in_array(arr *a, int argcnt, ...);
 
-void let_num(num *dst, num src);
+#define let_num(dst,src) (*(dst) = (src))
 void let_str(str *dst, str src);
 
 void input_to_buffer();
@@ -33,26 +33,26 @@ void read_num(num *val);
 void read_str(str *val);
 void restore(void);
 
-num ABS_num(num val);
+#define ABS_num(val) ((num)fabs(val))
 num ASC_num(str val);
-num ATN_num(num val);
+#define ATN_num(val) ((num)atan(val))
 str CHR_str(str *dst, num val);
-num COS_num(num val);
-num EXP_num(num val);
-num INT_num(num val);
+#define COS_num(val) ((num)cos(val))
+#define EXP_num(val) ((num)exp(val))
+#define INT_num(val) ((num)(int)(val))
 str LEFT_str(str *dst, str s, num length);
 num LEN_num(str val);
-num LOG_num(num val);
+#define LOG_num(val) ((num)log(val))
 str MID_str(str *dst, str s, num start, num length);
 str RIGHT_str(str *dst, str s, num length);
 num RND_num(num val);
-num SGN_num(num val);
-num SIN_num(num val);
-num SQR_num(num val);
+#define SGN_num(val) ((num)signbit(val))
+#define SIN_num(val) ((num)sin(val))
+#define SQR_num(val) ((num)sqrt(val))
 str STR_str(str *dst, num val);
 void TAB_void(num val);
-num TAN_num(num val);
-num VAL_num(str val);
+#define TAN_num(val) ((num)tan(val))
+#define VAL_num(val) ((num)atof(val))
 
 str concat_str(str *dst, int argcnt, ...);
 int compare_str(str lhs, str rhs);
