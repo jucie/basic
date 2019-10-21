@@ -62,13 +62,13 @@ func (c cmdOn) generateC(wr *bufio.Writer) {
 	if c.sub {
 		fmt.Fprintf(wr, "\tpush_address(%d);\n", labelExit)
 	}
-	fmt.Fprintf(wr, "\ttarget = (const int[]){")
+	fmt.Fprintf(wr, "\t{static const int tab[]={")
 	for i, line := range c.dsts {
 		if i != 0 {
 			wr.WriteRune(',')
 		}
 		fmt.Fprintf(wr, "%d", line.adr.switchID)
 	}
-	fmt.Fprintf(wr, "}[target -1]; break;\n")
+	fmt.Fprintf(wr, "}; target = tab[target -1]; break;}\n")
 	fmt.Fprintf(wr, "case %d:\n", labelExit)
 }
