@@ -230,7 +230,7 @@ void print_str(str val) {
 
 void TAB_void(num val) {
     int column = (int)val;
-    if (column <= current_column) {
+    if (column < current_column) {
         print_char('\n');
     }
     while (current_column < column) {
