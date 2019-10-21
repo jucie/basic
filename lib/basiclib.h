@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 
-typedef float num;
+typedef double num;
 typedef unsigned char* str;
 typedef size_t* arr;
 
@@ -19,8 +19,8 @@ void let_num(num *dst, num src);
 void let_str(str *dst, str src);
 
 void input_to_buffer();
-int input_num(num *dst);
-int input_str(str *dst);
+void input_num(num *dst);
+void input_str(str *dst);
 
 void print_num(num val);
 void print_str(str val);
