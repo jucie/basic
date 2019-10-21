@@ -78,7 +78,7 @@ static void *element_in_array(arr *a, size_t elem_size, int argcnt, va_list ap) 
     for (i = 0; i < argcnt; i++, p++) {
         size_t pos = va_arg(ap, size_t);
         if (pos >= *p) {
-            ops("Index out of bounds for dimension %d: %u. It should be a value from 0 up to %u", i, pos, *p -1);
+            ops("Index out of bounds for dimension %d: %u. It should be a value from 0 up to %u", i+1, pos, *p -1);
         }
         offset += multiplier * pos;
         multiplier *= *p;
@@ -147,12 +147,10 @@ void input_to_buffer() {
     input_ptr = input_buffer;
 }
 
-int input_num(num *dst) {
+void input_num(num *dst) {
     char *p;
     if (!input_ptr || *input_ptr == '\0') {
-        fprintf(stderr, "\nMissing number in input. Please try again.\n");
         *dst = 0;
-        return 0;
     }
 
     *dst = (num)atof(input_ptr);
@@ -162,16 +160,15 @@ int input_num(num *dst) {
     } else {
         input_ptr = NULL;
     }
-    return 1;
 }
 
-int input_str(str *dst) {
+void input_str(str *dst) {
     char *p;
     size_t size;
 
     if (!input_ptr || *input_ptr == '\0') {
-        fprintf(stderr, "\nMissing string in input. Please try again.\n");
-        return 0;
+        free(*dst);
+        *dst = NULL;
     }
 
     p = strchr(input_ptr, ',');
@@ -187,7 +184,6 @@ int input_str(str *dst) {
         strcpy(*dst, input_ptr);
         input_ptr = NULL; /* input is depleted */
     }
-    return 1;
 }
 
 static int current_column;
