@@ -100,6 +100,14 @@ func (c cmdFor) generateC(wr *bufio.Writer) {
 
 	// index value bounds checking
 	fmt.Fprintf(wr, "case %d:\n", labelCond)
+	if c.step == step1 {
+		fmt.Fprintf(wr, "\tif (")
+		c.index.generateC(wr)
+		fmt.Fprintf(wr, " > ")
+		c.end.generateC(wr)
+		fmt.Fprintf(wr, ") { target=%d; break; }\n", c.next.labelExit)
+		return
+	}
 	fmt.Fprintf(wr, "\tif (")
 	c.step.generateC(wr)
 	fmt.Fprintf(wr, " > 0 && ")
