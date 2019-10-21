@@ -55,7 +55,7 @@ func (c *cmdIf) condBranchTarget() int {
 		switch v := c.cmds[0].(type) {
 		case *cmdGo: // it's a GO command
 			if !v.sub { // it's not a GOSUB, so it's a GOTO
-				return v.dst.nbr
+				return v.dst.adr.switchID
 			}
 		}
 	}

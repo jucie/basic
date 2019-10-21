@@ -61,9 +61,9 @@ func (c cmdGo) generateC(wr *bufio.Writer) {
 	if c.sub {
 		returnAddress := createLabel()
 		fmt.Fprintf(wr, "\tpush_address(%d);\n", returnAddress)
-		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.nbr)
+		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.adr.switchID)
 		fmt.Fprintf(wr, "case %d:\n", returnAddress)
 	} else {
-		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.nbr)
+		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.adr.switchID)
 	}
 }

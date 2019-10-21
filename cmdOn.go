@@ -67,7 +67,7 @@ func (c cmdOn) generateC(wr *bufio.Writer) {
 		if i != 0 {
 			wr.WriteRune(',')
 		}
-		fmt.Fprintf(wr, "%d", line.nbr)
+		fmt.Fprintf(wr, "%d", line.adr.switchID)
 	}
 	fmt.Fprintf(wr, "}[target -1]; break;\n")
 	fmt.Fprintf(wr, "case %d:\n", labelExit)

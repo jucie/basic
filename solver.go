@@ -119,6 +119,13 @@ func (s *solver) linkLines(lines progLines) progLines {
 		l.isDst = true
 	}
 	sort.Slice(lines, func(i, j int) bool { return lines[i].id < lines[j].id })
+	cnt := 0
+	for _, l := range lines {
+		if l.isDst {
+			cnt++
+			l.switchID = cnt
+		}
+	}
 	return lines
 }
 
