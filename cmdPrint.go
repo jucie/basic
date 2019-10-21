@@ -61,7 +61,7 @@ func (scs printSubCmds) generateC(wr *bufio.Writer) {
 				previousIsSemicolon = true
 			} else {
 				previousIsSemicolon = false
-				fmt.Fprintf(wr, "\tprint_char('\t');\n")
+				fmt.Fprintf(wr, "\tprint_char('\\t');\n")
 			}
 		case *astExpr:
 			previousIsSemicolon = false
