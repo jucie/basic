@@ -64,6 +64,6 @@ func (a astMulOp) generateC(wr *bufio.Writer) {
 }
 
 func (a astMulOpTail) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "%c", a.oper)
+	fmt.Fprintf(wr, "%c ", a.oper)
 	a.val.generateC(wr)
 }
