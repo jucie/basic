@@ -16,5 +16,5 @@ func (c cmdStop) receive(g guest) {
 }
 
 func (c cmdStop) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tabort();\n")
+	fmt.Fprintf(wr, "\texit(0);\n")
 }
