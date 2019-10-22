@@ -53,18 +53,18 @@ func (c cmdPrint) receive(g guest) {
 
 func (scs printSubCmds) generateC(wr *bufio.Writer) {
 	var type_ astType
-	previousIsSemicolon := false
+	shouldNL := true
 	for _, subCmd := range scs {
 		switch cmd := subCmd.(type) {
 		case token:
 			if cmd == ';' {
-				previousIsSemicolon = true
-			} else {
-				previousIsSemicolon = false
+				shouldNL = false
+			} else if cmd == ',' {
+				shouldNL = false
 				fmt.Fprintf(wr, "\tprint_char('\\t');\n")
 			}
 		case *astExpr:
-			previousIsSemicolon = false
+			shouldNL = true
 			type_ = cmd.finalType()
 			if type_ == voidType {
 				fmt.Fprintf(wr, "\t")
@@ -77,7 +77,7 @@ func (scs printSubCmds) generateC(wr *bufio.Writer) {
 			}
 		}
 	}
-	if !previousIsSemicolon {
+	if shouldNL {
 		fmt.Fprintf(wr, "\tprint_char('\\n');\n")
 	}
 }
