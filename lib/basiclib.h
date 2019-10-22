@@ -47,7 +47,7 @@ num LEN_num(str val);
 str MID_str(str *dst, str s, num start, num length);
 str RIGHT_str(str *dst, str s, num length);
 num RND_num(num val);
-#define SGN_num(val) ((num)signbit(val))
+num SGN_num(num val);
 #define SIN_num(val) ((num)sin(val))
 #define SQR_num(val) ((num)sqrt(val))
 str STR_str(str *dst, num val);

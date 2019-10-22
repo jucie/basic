@@ -401,6 +401,12 @@ num RND_num(num val) {
     return (num)modf(((num)rand()/(num)(RAND_MAX)), &dummy);
 }
 
+num SGN_num(num val) {
+    if (val > 0) return 1;
+    if (val < 0) return -1;
+    return 0;
+}
+
 str STR_str(str *dst, num val) {
     char buffer[64];
     size_t size = sprintf(buffer, "%f", val);
