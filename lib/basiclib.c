@@ -148,7 +148,7 @@ void input_num(num *dst) {
     char *p;
     if (!input_ptr || *input_ptr == '\0') {
         *dst = 0;
-		return;
+        return;
     }
 
     *dst = (num)atof(input_ptr);
@@ -231,9 +231,6 @@ void print_str(str val) {
 
 void TAB_void(num val) {
     int column = (int)val;
-    if (column < current_column) {
-        print_char('\n');
-    }
     while (current_column < column) {
         print_char(' ');
     }
