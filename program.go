@@ -87,7 +87,7 @@ func (p program) generateC(wr *bufio.Writer) {
 	for _, s := range p.loopVars {
 		fmt.Fprintf(wr, "int %s_target;\n", s)
 	}
-	fmt.Fprintf(wr, "int target = 0;\n\nsrand(time(0));\nfor(;;){switch (target){\ncase 0:\n")
+	fmt.Fprintf(wr, "int target = 0;\n\nsrand((unsigned)time(0));\nfor(;;){switch (target){\ncase 0:\n")
 	p.lines.generateC(wr)
 	fmt.Fprintf(wr, "case %d: exit(0);\n", createLabel())
 	fmt.Fprintf(wr, "default: fprintf(stderr, \"Undefined target %s\", target); abort(); \n}}\n} /* main */\n\n", "%d")
