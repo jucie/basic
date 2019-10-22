@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+static int current_column;
+
 static void ops(const char *format, ...) {
     va_list ap;
     va_start(ap, format);
@@ -140,6 +142,7 @@ void input_to_buffer() {
     p = strchr(input_buffer, '\n');
     if (p) {
         *p = '\0';
+        current_column = 0;
     }
     input_ptr = input_buffer;
 }
@@ -184,8 +187,6 @@ void input_str(str *dst) {
     }
 }
 
-static int current_column;
-
 void print_char(char c) {
     switch (c) {
     case '\n':
@@ -193,7 +194,8 @@ void print_char(char c) {
         break;
     case '\t':
     {
-        int pos = ((current_column / 16) + 1) * 16;
+        const int TAB_WIDTH = 14;
+        int pos = ((current_column / TAB_WIDTH) + 1) * TAB_WIDTH;
         while (current_column < pos) {
             print_char(' ');
         }
