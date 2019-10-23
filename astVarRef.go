@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"strconv"
 )
 
 type astVarRef struct {
@@ -119,6 +120,9 @@ func (a astVarRef) unambiguousName() string {
 	name := fmt.Sprintf("%s_%s", a.id, a.type_)
 	if a.isArray() {
 		name += "_array"
+		if len(a.index) > 1 {
+			name += strconv.Itoa(len(a.index))
+		}
 	}
 	return name
 }
