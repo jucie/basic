@@ -69,7 +69,7 @@ func (c cmdFnDef) generateC(wr *bufio.Writer) {
 }
 
 func (c cmdFnDef) generateCFunctionHeader(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "static num fn_%s(", c.id)
+	fmt.Fprintf(wr, "static %s fn_%s(", c.expr.finalType(), c.id)
 	for i, v := range c.args {
 		if i != 0 {
 			wr.WriteRune(',')
