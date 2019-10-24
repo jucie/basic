@@ -24,7 +24,7 @@ func (p *parser) parseAddOp() *astAddOp {
 
 	for {
 		oper := p.lex.peek().token
-		if !isAddOp(oper) {
+		if !isAddOp(oper) || head.finalType() == strType && oper == '-' {
 			break
 		}
 		p.lex.next()
