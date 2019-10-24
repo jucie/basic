@@ -119,12 +119,13 @@ str *str_in_array(arr *a, int argcnt, ...) {
 }
 
 void let_str(str *dst, str src) {
+    size_t size;
     if (!src) {
         free(*dst);
         *dst = NULL;
         return;
     }
-    size_t size = strlen(src)+1;
+    size = strlen(src)+1;
     *dst = realloc_mem(*dst, size);
     strcpy(*dst, src);
 }
@@ -393,8 +394,8 @@ str MID_str(str *dst, str s, num start_num, num length_num) {
 }
 
 num RND_num(num val) {
-    val = val;
     double dummy;
+    val = val;
 
     /* see https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c#13409133 */
     return (num)modf(((num)rand()/(num)(RAND_MAX)), &dummy);
