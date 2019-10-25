@@ -1,7 +1,7 @@
 # basic
 A compiler for BASIC programming language.
 
-First and foremost, this compiler accepts source code for a very old school BASIC (line numberl et. al). 
+First and foremost, this compiler accepts source code for a very old school BASIC (line numbers, etc). 
 
 This tool has been tested against every program from the 70's bestseller "BASIC Computer Games" by David H. Ahl.
 The source files for the programs in the book are available in the "pool" folder for your delight.
