@@ -92,8 +92,6 @@ pool/superstartrek.bas
 pool/superstartrekins.bas
 pool/synonym.bas
 pool/target.bas
-pool/test.bas
-pool/test1.bas
 pool/tictactoe1.bas
 pool/tictactoe2.bas
 pool/tower.bas
