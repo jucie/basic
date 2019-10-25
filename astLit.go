@@ -8,7 +8,7 @@ import (
 
 type astLit struct {
 	val   string
-	type_ astType
+	_type astType
 }
 
 func (p *parser) parseLit() *astLit {
@@ -17,20 +17,20 @@ func (p *parser) parseLit() *astLit {
 	switch l.token {
 	case tokNumber:
 		p.lex.next()
-		return &astLit{val: val, type_: numType}
+		return &astLit{val: val, _type: numType}
 	case tokString:
 		p.lex.next()
-		return &astLit{val: val, type_: strType}
+		return &astLit{val: val, _type: strType}
 	}
 	return nil
 }
 
 func (a astLit) receive(g guest) {
-	g.visit(a.type_)
+	g.visit(a._type)
 }
 
 func (a astLit) generateC(wr *bufio.Writer) {
-	switch a.type_ {
+	switch a._type {
 	case numType:
 		f, err := strconv.ParseFloat(a.val, 32)
 		if err != nil {
@@ -50,5 +50,5 @@ func (a astLit) generateC(wr *bufio.Writer) {
 }
 
 func (a astLit) finalType() astType {
-	return a.type_
+	return a._type
 }

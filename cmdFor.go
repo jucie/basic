@@ -20,7 +20,7 @@ var step1 = &astExpr{
 				head: &astMulOp{
 					head: &astExpOp{
 						lhs: &astPart{
-							val: &astLit{val: "1", type_: numType},
+							val: &astLit{val: "1", _type: numType},
 						},
 					},
 				},

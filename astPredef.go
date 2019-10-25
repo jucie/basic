@@ -52,8 +52,8 @@ func (a astPredef) receive(g guest) {
 
 func (a astPredef) generateC(wr *bufio.Writer) {
 	predef := predefs[a.function]
-	fmt.Fprintf(wr, "%s_%s(", predef.name, predef.type_)
-	if predef.type_ == strType {
+	fmt.Fprintf(wr, "%s_%s(", predef.name, predef._type)
+	if predef._type == strType {
 		fmt.Fprintf(wr, "&temp_str[%d],", createTemp())
 	}
 	for i, arg := range a.args {
@@ -66,13 +66,13 @@ func (a astPredef) generateC(wr *bufio.Writer) {
 }
 
 func (a astPredef) finalType() astType {
-	return predefs[a.function].type_
+	return predefs[a.function]._type
 }
 
 type predef struct {
 	token
 	name   string
-	type_  astType
+	_type  astType
 	params []astType
 }
 

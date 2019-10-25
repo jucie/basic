@@ -34,11 +34,11 @@ func (c cmdData) generateC(wr *bufio.Writer) {
 	//does nothing. Data is not generated inline.
 }
 
-func (c cmdData) generateCDefinition(wr *bufio.Writer, type_ astType) {
+func (c cmdData) generateCDefinition(wr *bufio.Writer, _type astType) {
 	emittedSome := false
 	//does nothing. Data is not generated here.
 	for _, v := range c.values {
-		if v.finalType() == type_ {
+		if v.finalType() == _type {
 			v.generateC(wr)
 			wr.WriteRune(',')
 			emittedSome = true

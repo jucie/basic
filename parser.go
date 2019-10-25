@@ -243,6 +243,6 @@ func (p *parser) parseProgram(prog *program) {
 	}
 }
 
-func (p *parser) incrementDataCounter(type_ astType) {
-	p.prog.incrementDataCounter(type_)
+func (p *parser) incrementDataCounter(_type astType) {
+	p.prog.incrementDataCounter(_type)
 }

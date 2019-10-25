@@ -52,7 +52,7 @@ func (c cmdPrint) receive(g guest) {
 }
 
 func (scs printSubCmds) generateC(wr *bufio.Writer) {
-	var type_ astType
+	var _type astType
 	shouldNL := true
 	for _, subCmd := range scs {
 		switch cmd := subCmd.(type) {
@@ -65,13 +65,13 @@ func (scs printSubCmds) generateC(wr *bufio.Writer) {
 			}
 		case *astExpr:
 			shouldNL = true
-			type_ = cmd.finalType()
-			if type_ == voidType {
+			_type = cmd.finalType()
+			if _type == voidType {
 				fmt.Fprintf(wr, "\t")
 				cmd.generateC(wr)
 				fmt.Fprintf(wr, ";\n")
 			} else {
-				fmt.Fprintf(wr, "\tprint_%s(", type_)
+				fmt.Fprintf(wr, "\tprint_%s(", _type)
 				cmd.generateC(wr)
 				fmt.Fprintf(wr, ");\n")
 			}

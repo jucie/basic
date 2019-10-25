@@ -102,18 +102,18 @@ func (p program) generateC(wr *bufio.Writer) {
 	}
 }
 
-func (p *program) generateCDataDefinitions(wr *bufio.Writer, type_ astType) {
-	size := p.dataCounter[type_]
-	fmt.Fprintf(wr, "const size_t data_area_for_%s_cnt=%d;\n", type_, size)
+func (p *program) generateCDataDefinitions(wr *bufio.Writer, _type astType) {
+	size := p.dataCounter[_type]
+	fmt.Fprintf(wr, "const size_t data_area_for_%s_cnt=%d;\n", _type, size)
 	if size == 0 {
-		fmt.Fprintf(wr, "const %s data_area_for_%s[1]={0};\n\n", type_, type_)
+		fmt.Fprintf(wr, "const %s data_area_for_%s[1]={0};\n\n", _type, _type)
 		return
 	}
-	fmt.Fprintf(wr, "const %s data_area_for_%s[%d]={\n", type_, type_, size)
+	fmt.Fprintf(wr, "const %s data_area_for_%s[%d]={\n", _type, _type, size)
 	scan(p, func(h host) {
 		switch v := h.(type) {
 		case *cmdData:
-			v.generateCDefinition(wr, type_)
+			v.generateCDefinition(wr, _type)
 		}
 	})
 	fmt.Fprintf(wr, "};\n\n")
@@ -192,6 +192,6 @@ func (p *program) generateCVarDefinitions(wr *bufio.Writer) {
 	wr.WriteRune('\n')
 }
 
-func (p *program) incrementDataCounter(type_ astType) {
-	p.dataCounter[type_]++
+func (p *program) incrementDataCounter(_type astType) {
+	p.dataCounter[_type]++
 }
