@@ -8,7 +8,7 @@ https://www.atariarchives.org/basicgames
 The source files for the programs in the book are available in the "pool" folder for your delight.
 Please keep in mind that those programs are very antique and extremely simple for today standards.
 
-To be able to compile those program, this compiler accepts source code for a very old school BASIC. In David H. Ahl's own words "The programs in this book are meant to run on the gold standard of microcomputer BASICs: MITS Altair 8K BASIC, Rev. 4.0 (ix)."
+To be able to compile such antique source code, this compiler understands what is in David H. Ahl's own words "the gold standard of microcomputer BASICs: MITS Altair 8K BASIC, Rev. 4.0 (ix)."
 
 By default this BASIC compiler reads from standard input and writes to standard output.
 That behaviour may be modified by specifying paths for input and output files. E.g:
