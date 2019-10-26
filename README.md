@@ -6,26 +6,28 @@ It has been tested against every program from Ahl's bestseller "BASIC Computer G
 
 https://www.atariarchives.org/basicgames
 
+Please keep in mind that those programs are extremely simple if compared to today standards. They were written to be used with TTY terminals.
+
+To clone and generate the compiler:
+
+go get -u github.com/jucie/basic
+
 You can download the entire set of games as a tarball or a ZIP archive:
 
 http://vintage-basic.net/downloads/bcg.tar.gz
 
 http://vintage-basic.net/downloads/bcg.zip
 
-Please keep in mind that those programs are extremely simple if compared to today standards. They were written to be used with TTY terminals.
+To generate the C code for a game run the BASIC compiler like that:
 
-By default this BASIC compiler reads from standard input and writes to standard output.
-That behaviour may be modified by specifying paths for input and output files, like this:
+basic game.bas game.c
 
-basic -in civilwar.bas -out civilwar.c
+The lib folder has some support files to be compiled with the generated C code. Be sure to have then in the folder as the game C file.
+Then use youc C compiler of choice to generate the executable binary:
 
-For generating the final executable you may use your C compiler of choice. Any compiler supporting C89 or later will do.
-Be sure to have the basiclib files from "lib" available in the same folder as the main source file. 
-Then, invoke the C compiler like that:
+gcc game.c basiclib.c
 
-gcc civilwar.c basiclib.c
-
-The generated code has been tested on half a dozen distinct C compilers and works fine.
+The programs have been tested on half a dozen distinct C compilers in both Windows and Linux.
 
 I would like to thank:
 
