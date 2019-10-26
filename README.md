@@ -1,5 +1,5 @@
 # basic
-A compiler for BASIC programming language.
+A compiler for BASIC programming language. It generates C code that you submits to the C compiler for your particular platform.
 
 This tool understands what is in David H. Ahl's own words "the gold standard of microcomputer BASICs: MITS Altair 8K BASIC, Rev. 4.0 (ix)."
 It has been tested against every program from Ahl's bestseller "BASIC Computer Games". More information can be found here:
