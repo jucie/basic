@@ -23,6 +23,7 @@ gcc civilwar.c basiclib.c
 The generated code has been tested on half a dozen distinct C compilers and works fine.
 
 I would like to thank:
+
 .David Ahl for the awesome book
 
 .Lyle Kopnicky for inspiration (he wrote a BASIC interpreter)
