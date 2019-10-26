@@ -9,6 +9,7 @@ https://www.atariarchives.org/basicgames
 You can download the entire set of games as a tarball or a ZIP archive:
 
 http://vintage-basic.net/downloads/bcg.tar.gz
+
 http://vintage-basic.net/downloads/bcg.zip
 
 Please keep in mind that those programs are extremely simple if compared to today standards. They were written to be used with TTY terminals.
