@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"strconv"
 )
 
@@ -55,15 +53,4 @@ var nextLabel = 0
 func createLabel() int {
 	nextLabel--
 	return nextLabel
-}
-
-func (c cmdGo) generateC(wr *bufio.Writer) {
-	if c.sub {
-		returnAddress := createLabel()
-		fmt.Fprintf(wr, "\tpush_address(%d);\n", returnAddress)
-		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.adr.switchID)
-		fmt.Fprintf(wr, "case %d:\n", returnAddress)
-	} else {
-		fmt.Fprintf(wr, "\ttarget = %d; break;\n", c.dst.adr.switchID)
-	}
 }

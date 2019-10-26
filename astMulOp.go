@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type astMulOpTail struct {
 	oper token
 	val  *astExpOp
@@ -54,16 +49,4 @@ func (a astMulOp) finalType() astType {
 		return a.head.finalType()
 	}
 	return numType
-}
-
-func (a astMulOp) generateC(wr *bufio.Writer) {
-	a.head.generateC(wr)
-	for _, t := range a.tail {
-		t.generateC(wr)
-	}
-}
-
-func (a astMulOpTail) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "%c ", a.oper)
-	a.val.generateC(wr)
 }

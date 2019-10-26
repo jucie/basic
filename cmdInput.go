@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type cmdInput struct {
 	label string // optional
 	vars  []*astVarRef
@@ -34,19 +29,6 @@ func (p *parser) parseInput() *cmdInput {
 		return nil
 	}
 	return result
-}
-
-func (c cmdInput) generateC(wr *bufio.Writer) {
-	if c.label != "" {
-		fmt.Fprintf(wr, "\tprint_str(\"%s\");\n", c.label)
-	}
-	fmt.Fprintf(wr, "\tinput_to_buffer();\n")
-
-	for _, v := range c.vars {
-		fmt.Fprintf(wr, "\t")
-		v.generateCLValue(wr, "input")
-		fmt.Fprintf(wr, ");\n")
-	}
 }
 
 func (c cmdInput) receive(g guest) {

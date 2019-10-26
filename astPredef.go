@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type astPredef struct {
 	function token
 	args     []*astExpr
@@ -48,21 +43,6 @@ func (a astPredef) receive(g guest) {
 	for _, arg := range a.args {
 		g.visit(arg)
 	}
-}
-
-func (a astPredef) generateC(wr *bufio.Writer) {
-	predef := predefs[a.function]
-	fmt.Fprintf(wr, "%s_%s(", predef.name, predef._type)
-	if predef._type == strType {
-		fmt.Fprintf(wr, "&temp_str[%d],", createTemp())
-	}
-	for i, arg := range a.args {
-		if i != 0 {
-			wr.WriteRune(',')
-		}
-		arg.generateC(wr)
-	}
-	wr.WriteRune(')')
 }
 
 func (a astPredef) finalType() astType {

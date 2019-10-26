@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type astExpOp struct {
 	lhs *astPart
 	rhs *astPart
@@ -36,18 +31,6 @@ func (a astExpOp) receive(g guest) {
 	if a.rhs != nil {
 		g.visit(a.rhs)
 	}
-}
-
-func (a astExpOp) generateC(wr *bufio.Writer) {
-	if a.rhs == nil {
-		a.lhs.generateC(wr)
-		return
-	}
-	fmt.Fprintf(wr, "((num)pow(")
-	a.lhs.generateC(wr)
-	wr.WriteRune(',')
-	a.rhs.generateC(wr)
-	fmt.Fprintf(wr, "))")
 }
 
 func (a astExpOp) finalType() astType {

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"strconv"
 )
 
@@ -51,24 +49,4 @@ func (p *parser) parseOn() *cmdOn {
 
 func (c cmdOn) receive(g guest) {
 	g.visit(c.expr)
-}
-
-func (c cmdOn) generateC(wr *bufio.Writer) {
-	labelExit := createLabel()
-	fmt.Fprintf(wr, "\ttarget = (int)(")
-	c.expr.generateC(wr)
-	fmt.Fprintf(wr, ");\n")
-	fmt.Fprintf(wr, "\tif (target < 1 || target > %d) {target = %d; break;}\n", len(c.dsts), labelExit)
-	if c.sub {
-		fmt.Fprintf(wr, "\tpush_address(%d);\n", labelExit)
-	}
-	fmt.Fprintf(wr, "\t{static const int tab[]={")
-	for i, line := range c.dsts {
-		if i != 0 {
-			wr.WriteRune(',')
-		}
-		fmt.Fprintf(wr, "%d", line.adr.switchID)
-	}
-	fmt.Fprintf(wr, "}; target = tab[target -1]; break;}\n")
-	fmt.Fprintf(wr, "case %d:\n", labelExit)
 }

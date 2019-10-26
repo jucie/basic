@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type cmdFnDef struct {
 	id   string
 	args []*astVarRef
@@ -63,34 +58,4 @@ func (p *parser) parseDef() *cmdFnDef {
 
 func (c cmdFnDef) receive(g guest) {
 	g.visit(c.expr)
-}
-
-func (c cmdFnDef) generateC(wr *bufio.Writer) {
-}
-
-func (c cmdFnDef) generateCFunctionHeader(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "static %s fn_%s(", c.expr.finalType(), c.id)
-	for i, v := range c.args {
-		if i != 0 {
-			wr.WriteRune(',')
-		}
-		fmt.Fprintf(wr, "num %s", v.unambiguousName())
-	}
-	fmt.Fprintf(wr, ")")
-}
-
-func (c cmdFnDef) generateCDeclaration(wr *bufio.Writer) {
-	c.generateCFunctionHeader(wr)
-	fmt.Fprintf(wr, ";\n")
-}
-
-func (c cmdFnDef) generateCDefinition(wr *bufio.Writer) {
-	c.generateCFunctionHeader(wr)
-	fmt.Fprintf(wr, "{\n")
-	for _, v := range c.args {
-		fmt.Fprintf(wr, "\t%s=%s;\n", v.unambiguousName(), v.unambiguousName())
-	}
-	fmt.Fprintf(wr, "\treturn ")
-	c.expr.generateC(wr)
-	fmt.Fprintf(wr, ";\n}\n\n")
 }

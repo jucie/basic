@@ -8,7 +8,7 @@ import (
 )
 
 type generator interface {
-	generate(wr *bufio.Writer, prog *program)
+	generate(prog *program)
 }
 
 func help() {
@@ -43,14 +43,15 @@ func main() {
 	rd := bufio.NewReader(srcFile)
 	prog.loadFrom(rd)
 
+	wr := bufio.NewWriter(dstFile)
+	defer wr.Flush()
+
 	var gen generator
 	switch *outputFormat {
 	case "c":
-		gen = newGeneratorForC()
+		gen = newGeneratorForC(wr)
 	default:
 		panic(fmt.Sprintf("unknown output format: \"%s\"", *outputFormat))
 	}
-	wr := bufio.NewWriter(dstFile)
-	defer wr.Flush()
-	gen.generate(wr, prog)
+	gen.generate(prog)
 }

@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type cmdRun struct {
 	arg string
 }
@@ -23,8 +18,4 @@ func (p *parser) parseRun() *cmdRun {
 }
 
 func (c cmdRun) receive(g guest) {
-}
-
-func (c cmdRun) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\tsystem(\"%s\");\n", c.arg)
 }

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"strconv"
 )
 
@@ -60,28 +58,4 @@ func (c *cmdIf) condBranchTarget() int {
 		}
 	}
 	return 0
-}
-
-func (c *cmdIf) generateC(wr *bufio.Writer) {
-	label := c.condBranchTarget()
-	if label != 0 {
-		c.genCondBranch(wr, label)
-	} else {
-		c.genRegularIf(wr)
-	}
-}
-
-func (c *cmdIf) genCondBranch(wr *bufio.Writer, label int) {
-	fmt.Fprintf(wr, "\tif (")
-	c.expr.generateC(wr)
-	fmt.Fprintf(wr, "){ target = %d; break; }\n", label)
-}
-
-func (c *cmdIf) genRegularIf(wr *bufio.Writer) {
-	label := createLabel()
-	fmt.Fprintf(wr, "\tif (!(")
-	c.expr.generateC(wr)
-	fmt.Fprintf(wr, ")){ target = %d; break; }\n", label)
-	c.cmds.generateC(wr)
-	fmt.Fprintf(wr, "case %d:\n", label)
 }

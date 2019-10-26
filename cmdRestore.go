@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type cmdRestore struct {
 }
 
@@ -13,8 +8,4 @@ func (p *parser) parseRestore() *cmdRestore {
 }
 
 func (c cmdRestore) receive(g guest) {
-}
-
-func (c cmdRestore) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\trestore();\n")
 }

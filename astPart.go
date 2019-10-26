@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type astPart struct {
 	coord
 	signal token
@@ -94,11 +89,4 @@ func (a astPart) receive(g guest) {
 
 func (a astPart) finalType() astType {
 	return a.val.finalType()
-}
-
-func (a astPart) generateC(wr *bufio.Writer) {
-	if a.signal != 0 {
-		fmt.Fprintf(wr, "%c", a.signal)
-	}
-	a.val.generateC(wr)
 }

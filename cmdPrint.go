@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type subCmd interface {
 	host
 }
@@ -48,36 +43,5 @@ Loop:
 func (c cmdPrint) receive(g guest) {
 	for _, subCmd := range c.printSubCmds {
 		g.visit(subCmd)
-	}
-}
-
-func (scs printSubCmds) generateC(wr *bufio.Writer) {
-	var _type astType
-	shouldNL := true
-	for _, subCmd := range scs {
-		switch cmd := subCmd.(type) {
-		case token:
-			if cmd == ';' {
-				shouldNL = false
-			} else if cmd == ',' {
-				shouldNL = false
-				fmt.Fprintf(wr, "\tprint_char('\\t');\n")
-			}
-		case *astExpr:
-			shouldNL = true
-			_type = cmd.finalType()
-			if _type == voidType {
-				fmt.Fprintf(wr, "\t")
-				cmd.generateC(wr)
-				fmt.Fprintf(wr, ";\n")
-			} else {
-				fmt.Fprintf(wr, "\tprint_%s(", _type)
-				cmd.generateC(wr)
-				fmt.Fprintf(wr, ");\n")
-			}
-		}
-	}
-	if shouldNL {
-		fmt.Fprintf(wr, "\tprint_char('\\n');\n")
 	}
 }

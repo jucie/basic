@@ -1,9 +1,5 @@
 package main
 
-import (
-	"bufio"
-)
-
 type cmdData struct {
 	values []*astPart
 }
@@ -28,23 +24,4 @@ func (p *parser) parseData() *cmdData {
 }
 
 func (c cmdData) receive(g guest) {
-}
-
-func (c cmdData) generateC(wr *bufio.Writer) {
-	//does nothing. Data is not generated inline.
-}
-
-func (c cmdData) generateCDefinition(wr *bufio.Writer, _type astType) {
-	emittedSome := false
-	//does nothing. Data is not generated here.
-	for _, v := range c.values {
-		if v.finalType() == _type {
-			v.generateC(wr)
-			wr.WriteRune(',')
-			emittedSome = true
-		}
-	}
-	if emittedSome {
-		wr.WriteRune('\n')
-	}
 }

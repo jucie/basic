@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-)
-
 type cmdNext struct {
 	vars      []*astVarRef
 	labelExit int
@@ -35,11 +30,6 @@ func (c cmdNext) receive(g guest) {
 	for _, v := range c.vars {
 		g.visit(v)
 	}
-}
-
-func (c cmdNext) generateC(wr *bufio.Writer) {
-	fmt.Fprintf(wr, "\ttarget=%s_target; break;\n", c.vars[0].unambiguousName())
-	fmt.Fprintf(wr, "case %d:\n", c.labelExit)
 }
 
 func (c *cmdNext) createLabel() {
