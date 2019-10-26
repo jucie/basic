@@ -11,30 +11,33 @@ type generator interface {
 	generate(wr *bufio.Writer, prog *program)
 }
 
+func help() {
+	fmt.Println(
+		`basic v1.0.0 Copyright(C) 2019 Jucie Dias Andrade
+Use:
+		basic input.bas output.c`)
+}
+
 func main() {
 	var outputFormat = flag.String("gen", "c", "output format")
-	var srcFilePath = flag.String("in", "", "input file")
-	var dstFilePath = flag.String("out", "", "output file")
 	flag.Parse()
 
-	var err error
-	var srcFile = os.Stdin
-	var dstFile = os.Stdout
+	if len(flag.Args()) < 2 {
+		help()
+		return
+	}
 
-	if *srcFilePath != "" {
-		srcFile, err = os.Open(*srcFilePath)
-		if err != nil {
-			panic(err)
-		}
-		defer srcFile.Close()
+	srcFile, err := os.Open(flag.Arg(0))
+	if err != nil {
+		panic(err)
 	}
-	if *dstFilePath != "" {
-		dstFile, err = os.Create(*dstFilePath)
-		if err != nil {
-			panic(err)
-		}
-		defer dstFile.Close()
+	defer srcFile.Close()
+
+	dstFile, err := os.Create(flag.Arg(1))
+	if err != nil {
+		panic(err)
 	}
+	defer dstFile.Close()
 
 	prog := newProgram()
 	rd := bufio.NewReader(srcFile)
