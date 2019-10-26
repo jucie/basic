@@ -6,7 +6,11 @@ It has been tested against every program from Ahl's bestseller "BASIC Computer G
 
 https://www.atariarchives.org/basicgames
 
-Source files from the book are available in bcg.zip for your convenience.
+You can download the entire set of games as a tarball or a ZIP archive:
+
+http://vintage-basic.net/downloads/bcg.tar.gz
+http://vintage-basic.net/downloads/bcg.zip
+
 Please keep in mind that those programs are extremely simple if compared to today standards. They were written to be used with TTY terminals.
 
 By default this BASIC compiler reads from standard input and writes to standard output.
@@ -24,9 +28,9 @@ The generated code has been tested on half a dozen distinct C compilers and work
 
 I would like to thank:
 
-.David Ahl for the awesome book
+.David Ahl for the awesome work collecting all those programs and promoting BASIC
 
-.Lyle Kopnicky for inspiration (he wrote a BASIC interpreter)
+.Lyle Kopnicky for inspiration (he wrote a BASIC interpreter. Check it out at http://vintage-basic.net )
 
 .Atari Archives for the already typed program files
 
