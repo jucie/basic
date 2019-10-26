@@ -13,7 +13,7 @@ type generator interface {
 
 func help() {
 	fmt.Println(
-		`basic v1.0.0 Copyright(C) 2019 Jucie Dias Andrade
+		`basic v1.0.1 Copyright(C) 2019 Jucie Dias Andrade
 Use:
 		basic input.bas output.c`)
 }
