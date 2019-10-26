@@ -1,17 +1,16 @@
 # basic
 A compiler for BASIC programming language.
 
-This tool has been tested against every program from the 70's bestseller "BASIC Computer Games" by David H. Ahl. More information can be found here:
+This tool understands what is in David H. Ahl's own words "the gold standard of microcomputer BASICs: MITS Altair 8K BASIC, Rev. 4.0 (ix)."
+It has been tested against every program from Ahl's bestseller "BASIC Computer Games". More information can be found here:
 
 https://www.atariarchives.org/basicgames
 
-Source files for the book programs are available in the "pool" folder for your delight.
-Please keep in mind that those programs are extremely simple if compared to today standards.
-
-To be able to compile such antique source code, this compiler understands what is in David H. Ahl's own words "the gold standard of microcomputer BASICs: MITS Altair 8K BASIC, Rev. 4.0 (ix)."
+Source files from the book are available in bcg.zip for your convenience.
+Please keep in mind that those programs are extremely simple if compared to today standards. They were written to be used with TTY terminals.
 
 By default this BASIC compiler reads from standard input and writes to standard output.
-That behaviour may be modified by specifying paths for input and output files. E.g:
+That behaviour may be modified by specifying paths for input and output files, like this:
 
 basic -in civilwar.bas -out civilwar.c
 
@@ -22,3 +21,5 @@ Then, invoke the C compiler like that:
 gcc civilwar.c basiclib.c
 
 The generated code has been tested on half a dozen distinct C compilers and works fine.
+
+I would like to thank David Ahl for the awesome book and Lyle Kopnicky for the already typed program files and inspiration for this project.
