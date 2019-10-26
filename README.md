@@ -22,7 +22,7 @@ To generate the C code for a game run the BASIC compiler like that:
 
 basic game.bas game.c
 
-The lib folder has some support files to be compiled with the generated C code. Be sure to have then in the folder as the game C file.
+The lib folder has some support files to be compiled with the generated C code. Be sure to have then in the same folder as the game C file.
 Then use youc C compiler of choice to generate the executable binary:
 
 gcc game.c basiclib.c
