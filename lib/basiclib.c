@@ -171,6 +171,7 @@ void input_str(str *dst) {
     if (!input_ptr || *input_ptr == '\0') {
         free(*dst);
         *dst = NULL;
+		return;
     }
 
     p = strchr(input_ptr, ',');
