@@ -38,4 +38,4 @@ I would like to thank:
 
 A similar project by Everton Marques:
 
-github.com\udhos\basgo
+https://www.github.com\udhos\basgo
