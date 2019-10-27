@@ -36,3 +36,6 @@ I would like to thank:
 
 .Atari Archives for the already typed program files
 
+A similar project by Everton Marques:
+
+github.com\udhos\basgo
